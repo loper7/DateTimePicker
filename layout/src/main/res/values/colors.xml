@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1FA4FF</color>
+    <color name="colorPrimaryDark">#0075C4</color>
+    <color name="colorAccent">#1FA4FF</color>
+    <color name="colorAccentLight">#CEECFF</color>
+    <color name="colorAccentDark">#0075C4</color>
+
+    <!--字体颜色-->
+    <color name="colorTextHint">#B2B2B2</color>
+    <color name="colorTextBlack">#333333</color>
+    <color name="colorTextBlackLight">#4d4d4d</color>
+    <color name="colorTextGrayLight">#C3C3C3</color>
+    <color name="colorTextGrayDark">#666666</color>
+    <color name="colorTextGray">#999999</color>
+    <color name="colorTextGold">#fff8b62b</color>
+    <color name="colorTextOrange">#FFFFAC04</color>
+    <color name="colorTextRed">#FE4A29</color>
+    <color name="colorTextGreen">#00BE82</color>
+    <color name="colorTextWhite">#ffffff</color>
+    <color name="colorTextPink">#ff6daf</color>
+
+
+</resources>
