@@ -1,6 +1,7 @@
 package com.loper7.layout;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -33,10 +34,24 @@ public class DateTimePicker extends FrameLayout {
 
     private int[] displayType = {YEAR, MONTH, DAY, HOUR, MIN};
 
+    private boolean showLabel = true;
+
+
+    public DateTimePicker(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
+        super(context, attrs);
+        TypedArray attributesArray = context.obtainStyledAttributes(
+                attrs, R.styleable.DateTimePicker, defStyle, 0);
+        showLabel = attributesArray.getBoolean(R.styleable.DateTimePicker_showLabel, true);
+        attributesArray.recycle();
+
+        init(context);
+
+    }
 
     public DateTimePicker(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
+
     }
 
     public DateTimePicker(Context context) {
@@ -135,7 +150,8 @@ public class DateTimePicker extends FrameLayout {
         mYearSpinner = (NumberPicker) this.findViewById(R.id.np_datetime_year);
         mYearSpinner.setMaxValue(2040);
         mYearSpinner.setMinValue(1990);
-        mYearSpinner.setLabel("年");
+        if (showLabel)
+            mYearSpinner.setLabel("年");
         mYearSpinner.setValue(mYear);
         mYearSpinner.setFocusable(true);
         mYearSpinner.setFocusableInTouchMode(true);
@@ -145,7 +161,8 @@ public class DateTimePicker extends FrameLayout {
         mMonthSpinner = (NumberPicker) this.findViewById(R.id.np_datetime_month);
         mMonthSpinner.setMaxValue(12);
         mMonthSpinner.setMinValue(1);
-        mMonthSpinner.setLabel("月");
+        if (showLabel)
+            mMonthSpinner.setLabel("月");
         mMonthSpinner.setValue(mMonth);
         mYearSpinner.setFocusable(true);
         mYearSpinner.setFocusableInTouchMode(true);
@@ -157,7 +174,8 @@ public class DateTimePicker extends FrameLayout {
         judgeMonth();//判断是否闰年，从而设置2月份的天数
         mDay = mDate.get(Calendar.DAY_OF_MONTH);
         mDaySpinner.setFormatter(formatter);
-        mDaySpinner.setLabel("日");
+        if (showLabel)
+            mDaySpinner.setLabel("日");
         mYearSpinner.setFocusable(true);
         mYearSpinner.setFocusableInTouchMode(true);
         mDaySpinner.setValue(mDay);
@@ -168,7 +186,8 @@ public class DateTimePicker extends FrameLayout {
         mHourSpinner.setMaxValue(23);
         mHourSpinner.setMinValue(0);
         mHourSpinner.setLabel("时");
-        mYearSpinner.setFocusable(true);
+        if (showLabel)
+            mYearSpinner.setFocusable(true);
         mYearSpinner.setFocusableInTouchMode(true);
         mHourSpinner.setValue(mHour);
         mHourSpinner.setFormatter(formatter);
@@ -178,7 +197,8 @@ public class DateTimePicker extends FrameLayout {
         mMinuteSpinner = (NumberPicker) this.findViewById(R.id.np_datetime_minute);
         mMinuteSpinner.setMaxValue(59);
         mMinuteSpinner.setMinValue(0);
-        mMinuteSpinner.setLabel("分");
+        if (showLabel)
+            mMinuteSpinner.setLabel("分");
         mYearSpinner.setFocusable(true);
         mYearSpinner.setFocusableInTouchMode(true);
         mMinuteSpinner.setValue(mMinute);
@@ -186,6 +206,22 @@ public class DateTimePicker extends FrameLayout {
         mMinuteSpinner.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         mMinuteSpinner.setOnValueChangedListener(mOnMinuteChangedListener);
 
+    }
+
+    private void refreshUI(){
+        if (showLabel) {
+            mYearSpinner.setLabel("年");
+            mMonthSpinner.setLabel("月");
+            mDaySpinner.setLabel("日");
+            mHourSpinner.setLabel("时");
+            mMinuteSpinner.setLabel("分");
+        }else {
+            mYearSpinner.setLabel("");
+            mMonthSpinner.setLabel("");
+            mDaySpinner.setLabel("");
+            mHourSpinner.setLabel("");
+            mMinuteSpinner.setLabel("");
+        }
     }
 
     private NumberPicker.OnValueChangeListener mOnYearChangedListener = new NumberPicker.OnValueChangeListener() {
@@ -248,13 +284,6 @@ public class DateTimePicker extends FrameLayout {
         void onDateTimeChanged(DateTimePicker view, long millisecond, int year, int month, int day, int hour, int minute);
     }
 
-    /*
-     *对外的公开方法
-     */
-    public void setOnDateTimeChangedListener(OnDateTimeChangedListener callback) {
-        mOnDateTimeChangedListener = callback;
-        onDateTimeChanged();
-    }
 
     /**
      * 日期发生变化
@@ -271,7 +300,7 @@ public class DateTimePicker extends FrameLayout {
      */
     private void judgeYear() {
         if (mMonth == 2) {
-            if (mYear % 4 == 0) {
+            if (isLeapYear(mYear)) {
                 if (mDaySpinner.getMaxValue() != 29) {
                     mDaySpinner.setDisplayedValues(null);
                     mDaySpinner.setMinValue(1);
@@ -303,7 +332,7 @@ public class DateTimePicker extends FrameLayout {
      */
     private void judgeMonth() {
         if (mMonth == 2) {
-            if (mYear % 4 == 0) {
+            if (isLeapYear(mYear)) {
                 if (mDaySpinner.getMaxValue() != 29) {
                     mDaySpinner.setDisplayedValues(null);
                     mDaySpinner.setMinValue(1);
@@ -343,5 +372,36 @@ public class DateTimePicker extends FrameLayout {
 
         mDay = mDaySpinner.getValue();
 
+    }
+
+
+    /**
+     * 是否为闰年
+     *
+     * @param year 当前年份
+     * @return true or false
+     */
+    private boolean isLeapYear(int year) {
+        Calendar c = Calendar.getInstance();
+        c.set(year, 2, 1);
+        c.add(Calendar.DAY_OF_MONTH, -1);
+        return c.get(Calendar.DAY_OF_MONTH) == 28;
+    }
+
+    /*
+     *对外的公开方法
+     */
+    public void setOnDateTimeChangedListener(OnDateTimeChangedListener callback) {
+        mOnDateTimeChangedListener = callback;
+        onDateTimeChanged();
+    }
+
+    /**
+     * 是否显示label
+     * @param b
+     */
+    public void showLabel(boolean b) {
+        this.showLabel = b;
+        refreshUI();
     }
 }

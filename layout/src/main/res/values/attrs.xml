@@ -27,4 +27,8 @@
 
         <attr name="divider" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="DateTimePicker">
+        <attr name="showLabel" format="boolean" />
+    </declare-styleable>
 </resources>

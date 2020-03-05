@@ -24,6 +24,7 @@
           android:textStyle="bold"
           android:id="@+id/np__numberpicker_input"
           android:layout_width="fill_parent"
+        android:textColor="@color/colorAccent"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:singleLine="true"

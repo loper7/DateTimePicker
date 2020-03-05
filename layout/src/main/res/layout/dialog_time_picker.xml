@@ -16,9 +16,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:text="执行时间"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:text="选择日期及时间"
+            android:textStyle="bold"
             android:textColor="@color/colorTextBlack"
             android:textSize="18sp" />
 
@@ -26,15 +27,15 @@
             android:id="@+id/tv_choose_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:layout_gravity="center_horizontal"
-            android:text="2019 年 07 月 15 日 周一"
+            android:text=""
             android:textColor="@color/colorTextBlack"
             android:textSize="15sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.6dp"
-            android:layout_marginTop="10dp"
             android:background="#E5E5E5" />
 
         <com.loper7.layout.DateTimePicker
@@ -95,7 +96,7 @@
                 android:padding="16dp"
                 android:text="取消"
                 android:textColor="@color/colorTextGray"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:visibility="visible" />
 
             <View
@@ -117,7 +118,7 @@
                 android:padding="16dp"
                 android:text="确定"
                 android:textColor="@color/colorAccent"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
     </LinearLayout>

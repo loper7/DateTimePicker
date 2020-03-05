@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.loper7.layout.DateTimePicker
 import com.loper7.layout.R
 import com.loper7.layout.StringUtils
+import kotlinx.android.synthetic.main.dialog_time_picker.*
 import java.util.*
 
 
@@ -25,7 +26,7 @@ import java.util.*
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-class DateTimePickerDialog(context: Context) : BottomSheetDialog(context),View.OnClickListener {
+class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
 
     private var listener: OnHandleListener? = null
 
@@ -41,6 +42,8 @@ class DateTimePickerDialog(context: Context) : BottomSheetDialog(context),View.O
 
     private var millisecond: Long = 0
     private var backNow: Boolean = true
+    private var focusDateInfo: Boolean = true
+    private var dateLabel: Boolean = true
 
 
     private var titleValue: String? = null
@@ -69,9 +72,15 @@ class DateTimePickerDialog(context: Context) : BottomSheetDialog(context),View.O
         //标题
         if (!TextUtils.isEmpty(titleValue))
             tv_title!!.text = titleValue
+
+        //显示标签
+        datePicker!!.showLabel(dateLabel)
+
         //显示模式
-        if (displayTypes != null)
-            datePicker!!.setDisplayType(displayTypes)
+        if (displayTypes == null)
+            displayTypes= intArrayOf(DateTimePicker.YEAR,DateTimePicker.MONTH,DateTimePicker.DAY,DateTimePicker.HOUR,DateTimePicker.MIN)
+
+        datePicker!!.setDisplayType(displayTypes)
         //回到当前时间展示
         if (displayTypes != null) {
             var year_month_day_hour = 0
@@ -100,6 +109,7 @@ class DateTimePickerDialog(context: Context) : BottomSheetDialog(context),View.O
 
         }
         linear_now!!.visibility = if (backNow) View.VISIBLE else View.GONE
+        tv_choose_date!!.visibility = if (focusDateInfo) View.VISIBLE else View.GONE
 
         //设置最小时间
         datePicker!!.setMinMillisecond(minTime)
@@ -114,7 +124,9 @@ class DateTimePickerDialog(context: Context) : BottomSheetDialog(context),View.O
         datePicker!!.setOnDateTimeChangedListener { view, millisecond, year, month, day, hour, minute ->
             this.millisecond = millisecond
             tv_choose_date!!.text =
-                (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(millisecond))
+                (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
+                    millisecond
+                ))
         }
 
 
@@ -138,7 +150,7 @@ class DateTimePickerDialog(context: Context) : BottomSheetDialog(context),View.O
     }
 
 
-    public fun setTitle(value: String):DateTimePickerDialog {
+    public fun setTitle(value: String): CardDatePickerDialog {
         this.titleValue = value
         return this
     }
@@ -147,7 +159,7 @@ class DateTimePickerDialog(context: Context) : BottomSheetDialog(context),View.O
     /**
      * 设置默认时间
      */
-    public fun setDefaultTime(millisecond: Long):DateTimePickerDialog {
+    public fun setDefaultTime(millisecond: Long): CardDatePickerDialog {
         this.defaultMillisecond = millisecond
         return this
     }
@@ -155,23 +167,42 @@ class DateTimePickerDialog(context: Context) : BottomSheetDialog(context),View.O
     /**
      * 设置范围最小值
      */
-    public fun setMinTime(millisecond: Long): DateTimePickerDialog {
+    public fun setMinTime(millisecond: Long): CardDatePickerDialog {
         this.minTime = millisecond
         return this
     }
 
+
+
     /**
      * 是否显示回到当前
      */
-    public fun showBackNow(b: Boolean): DateTimePickerDialog {
+    public fun showBackNow(b: Boolean): CardDatePickerDialog {
         this.backNow = b
+        return this
+    }
+
+    /**
+     * 是否显示单位标签
+     */
+    public fun showFocusDateInfo(b: Boolean): CardDatePickerDialog {
+        this.focusDateInfo = b
+        return this
+    }
+
+
+    /**
+     * 是否显示选中日期信息
+     */
+    public fun showDateLabel(b: Boolean): CardDatePickerDialog {
+        this.dateLabel = b
         return this
     }
 
     /**
      * 设置显示值
      */
-    public fun setDisplayType(vararg types: Int): DateTimePickerDialog {
+    public fun setDisplayType(vararg types: Int): CardDatePickerDialog {
         this.displayTypes = types
         return this
     }
@@ -179,7 +210,7 @@ class DateTimePickerDialog(context: Context) : BottomSheetDialog(context),View.O
     /**
      * 绑定监听
      */
-    public fun setOnHandleListener(listener: OnHandleListener): DateTimePickerDialog {
+    public fun setOnHandleListener(listener: OnHandleListener): CardDatePickerDialog {
         this.listener = listener
         return this
     }
