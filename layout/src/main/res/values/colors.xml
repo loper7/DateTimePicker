@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1FA4FF</color>
-    <color name="colorPrimaryDark">#1FA4FF</color>
-    <color name="colorAccent">#1FA4FF</color>
-    <color name="colorAccentLight">#CEECFF</color>
-    <color name="colorAccentDark">#0075C4</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorAccentLight">#000000</color>
+    <color name="colorAccentDark">#000000</color>
 
     <!--字体颜色-->
     <color name="colorTextHint">#B2B2B2</color>

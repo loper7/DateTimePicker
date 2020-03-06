@@ -8,11 +8,11 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.loper7.layout.DateTimePicker
 import com.loper7.layout.R
 import com.loper7.layout.StringUtils
-import kotlinx.android.synthetic.main.dialog_time_picker.*
 import java.util.*
 
 
@@ -27,8 +27,12 @@ import java.util.*
  * @Email:          loper7@163.com
  */
 class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
+    companion object{
+        val CARD=0
+        val CUBE=1
+    }
 
-    private var listener: OnHandleListener? = null
+    private var listener: OnChooseListener? = null
 
 
     private var tv_cancel: TextView? = null
@@ -39,17 +43,18 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     private var datePicker: DateTimePicker? = null
     private var tv_go_back: TextView? = null
     private var linear_now: LinearLayout? = null
+    private var linear_bg: LinearLayout? = null
 
     private var millisecond: Long = 0
+
     private var backNow: Boolean = true
     private var focusDateInfo: Boolean = true
     private var dateLabel: Boolean = true
-
-
     private var titleValue: String? = null
     private var defaultMillisecond: Long = 0
     private var minTime: Long = 0
     private var displayTypes: IntArray? = null
+    private var model:Int= CARD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dialog_time_picker)
@@ -67,8 +72,24 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         tv_choose_date = findViewById(R.id.tv_choose_date)
         tv_go_back = findViewById(R.id.tv_go_back)
         linear_now = findViewById(R.id.linear_now)
+        linear_bg = findViewById(R.id.linear_bg)
 
-        //设置一些初始值
+
+        //背景模式
+       var parmas = LinearLayout.LayoutParams(linear_bg!!.layoutParams)
+        when(model){
+            CARD-> {
+                parmas.setMargins(dip2px(10f), dip2px(10f), dip2px(10f), dip2px(10f))
+                linear_bg!!.layoutParams=parmas
+                linear_bg!!.setBackgroundResource(R.drawable.shape_bg_round_white)
+            }
+            CUBE->{
+                parmas.setMargins(0, 0, 0, 0)
+                linear_bg!!.layoutParams=parmas
+                linear_bg!!.setBackgroundColor(ContextCompat.getColor(context,R.color.colorTextWhite))
+            }
+        }
+
         //标题
         if (!TextUtils.isEmpty(titleValue))
             tv_title!!.text = titleValue
@@ -77,8 +98,15 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         datePicker!!.showLabel(dateLabel)
 
         //显示模式
-        if (displayTypes == null)
-            displayTypes= intArrayOf(DateTimePicker.YEAR,DateTimePicker.MONTH,DateTimePicker.DAY,DateTimePicker.HOUR,DateTimePicker.MIN)
+        if (displayTypes == null) {
+            displayTypes = intArrayOf(
+                DateTimePicker.YEAR,
+                DateTimePicker.MONTH,
+                DateTimePicker.DAY,
+                DateTimePicker.HOUR,
+                DateTimePicker.MIN
+            )
+        }
 
         datePicker!!.setDisplayType(displayTypes)
         //回到当前时间展示
@@ -121,15 +149,13 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         tv_submit!!.setOnClickListener(this)
         btn_today!!.setOnClickListener(this)
 
-        datePicker!!.setOnDateTimeChangedListener { view, millisecond, year, month, day, hour, minute ->
+        datePicker!!.setOnDateTimeChangedListener{ _, millisecond, _, _, _, _, minute ->
             this.millisecond = millisecond
             tv_choose_date!!.text =
                 (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
                     millisecond
                 ))
         }
-
-
     }
 
     override fun onClick(v: View) {
@@ -139,22 +165,23 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         when (v.id) {
 
             R.id.btn_today -> {
-                listener?.onChooseDate(Calendar.getInstance().timeInMillis)
+                listener?.onChoose(Calendar.getInstance().timeInMillis)
             }
             R.id.dialog_submit -> {
-                listener?.onChooseDate(millisecond)
+                listener?.onChoose(millisecond)
             }
         }
 
         this.dismiss()
     }
 
-
+    /**
+     * 设置标题
+     */
     public fun setTitle(value: String): CardDatePickerDialog {
         this.titleValue = value
-        return this
+        return this;
     }
-
 
     /**
      * 设置默认时间
@@ -171,7 +198,6 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         this.minTime = millisecond
         return this
     }
-
 
 
     /**
@@ -208,14 +234,52 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     }
 
     /**
+     * 设置显示值
+     */
+    public fun setDisplayType(types: MutableList<Int>): CardDatePickerDialog {
+        this.displayTypes = types.toIntArray()
+        return this
+    }
+
+    /**
+     * 显示模式
+     */
+    public fun setModel(model :Int): CardDatePickerDialog {
+        this.model = model
+        return this
+    }
+    /**
      * 绑定监听
      */
-    public fun setOnHandleListener(listener: OnHandleListener): CardDatePickerDialog {
+    public fun setOnChooseListener(listener: OnChooseListener): CardDatePickerDialog {
         this.listener = listener
         return this
     }
 
-    interface OnHandleListener {
-        fun onChooseDate(millisecond: Long)
+    interface OnChooseListener {
+        fun onChoose(millisecond: Long)
+    }
+
+
+    /**
+     * 根据手机的分辨率dp 转成px(像素)
+     */
+    private fun dip2px(dpValue: Float): Int {
+        val scale = context.resources.displayMetrics.density
+        return (dpValue * scale + 0.5f).toInt()
+    }
+
+    /**
+     * 根据手机的分辨率px(像素) 转成dp
+     */
+    private fun px2dip( pxValue: Float): Int {
+        val scale = getContext().resources.displayMetrics.density
+        return (pxValue / scale + 0.5f).toInt()
+    }
+
+
+    private fun sp2px(sp: Float): Float {
+        val scale = context.resources.displayMetrics.scaledDensity
+        return sp * scale
     }
 }

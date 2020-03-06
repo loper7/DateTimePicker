@@ -18,90 +18,157 @@
             android:layout_height="wrap_content"
             android:text="CardDatePickerDialog Examples"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Display Type"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/btnDefault"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_button_bg"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:text="Default"
-                android:textColor="#333333" />
+            <CheckBox
+                android:id="@+id/checkYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年"
+                android:checked="true"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
 
-            <TextView
-                android:id="@+id/btnNoToday"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
+            <CheckBox
+                android:id="@+id/checkMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_button_bg"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:text="No Today"
-                android:textColor="#333333" />
+                android:text="月"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
 
-            <TextView
-                android:id="@+id/btnNoWeek"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
+            <CheckBox
+                android:id="@+id/checkDay"
+                android:layout_width="wrap_content"
+                android:checked="true"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_button_bg"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:text="No Week"
-                android:textColor="#333333" />
+                android:text="日"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+
+            <CheckBox
+                android:id="@+id/checkHour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginLeft="10dp"
+                android:text="时"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+
+            <CheckBox
+                android:id="@+id/checkMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="分"
+                android:checked="true"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Dialog Config"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/btnNoDateLabel"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
+            <CheckBox
+                android:id="@+id/checkDateInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="日期信息"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+
+            <CheckBox
+                android:id="@+id/checkBackNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_button_bg"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:text="No Date Label"
-                android:textColor="#333333" />
+                android:text="回到当前"
+                android:checked="true"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
 
-
-            <TextView
-                android:id="@+id/btnFreedom"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
+            <CheckBox
+                android:id="@+id/checkUnitLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_button_bg"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:text="Freedom"
-                android:textColor="#333333" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
+                android:checked="true"
+                android:text="单位标签"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
         </LinearLayout>
 
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center_vertical"
+           android:layout_marginLeft="10dp"
+           android:layout_marginTop="10dp"
+           android:orientation="horizontal">
+           <TextView
+               android:id="@+id/btnCardDialogShow"
+               android:layout_width="100dp"
+               android:textColor="#333333"
+               android:paddingLeft="16dp"
+               android:paddingRight="10dp"
+               android:text="show"
+               android:textSize="16sp"
+               android:drawableLeft="@drawable/ic_action_smile"
+               android:gravity="center"
+               android:layout_height="38dp"
+               android:background="@drawable/shape_button_bg" />
+
+           <TextView
+               android:id="@+id/tvChooseDate"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="20dp"
+               android:text=""
+               android:textColor="#AAFFFFFF"
+               android:textSize="15sp" />
+       </LinearLayout>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
