@@ -139,6 +139,59 @@
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Show Model"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/radioModelCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Card"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+
+            <RadioButton
+                android:id="@+id/radioModelCube"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:text="Cube"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+            <RadioButton
+                android:id="@+id/radioModelStack"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:text="Stack"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+            <RadioButton
+                android:id="@+id/radioModelCustom"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:text="Custom"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+
+
+        </RadioGroup>
 
        <LinearLayout
            android:layout_width="match_parent"

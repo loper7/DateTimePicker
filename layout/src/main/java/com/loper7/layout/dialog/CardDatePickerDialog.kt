@@ -30,6 +30,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     companion object{
         val CARD=0
         val CUBE=1
+        val STACK=2
     }
 
     private var listener: OnChooseListener? = null
@@ -76,17 +77,34 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
 
         //背景模式
-       var parmas = LinearLayout.LayoutParams(linear_bg!!.layoutParams)
-        when(model){
-            CARD-> {
-                parmas.setMargins(dip2px(10f), dip2px(10f), dip2px(10f), dip2px(10f))
-                linear_bg!!.layoutParams=parmas
-                linear_bg!!.setBackgroundResource(R.drawable.shape_bg_round_white)
-            }
-            CUBE->{
-                parmas.setMargins(0, 0, 0, 0)
-                linear_bg!!.layoutParams=parmas
-                linear_bg!!.setBackgroundColor(ContextCompat.getColor(context,R.color.colorTextWhite))
+        if(model!=0) {
+            var parmas = LinearLayout.LayoutParams(linear_bg!!.layoutParams)
+            when (model) {
+                CARD -> {
+                    parmas.setMargins(dip2px(12f), dip2px(12f), dip2px(12f), dip2px(12f))
+                    linear_bg!!.layoutParams = parmas
+                    linear_bg!!.setBackgroundResource(R.drawable.shape_bg_round_white_5)
+                }
+                CUBE -> {
+                    parmas.setMargins(0, 0, 0, 0)
+                    linear_bg!!.layoutParams = parmas
+                    linear_bg!!.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorTextWhite
+                        )
+                    )
+                }
+                STACK -> {
+                    parmas.setMargins(0, 0, 0, 0)
+                    linear_bg!!.layoutParams = parmas
+                    linear_bg!!.setBackgroundResource(R.drawable.shape_bg_top_round_white_15)
+                }
+                else->{
+                    parmas.setMargins(0, 0, 0, 0)
+                    linear_bg!!.layoutParams = parmas
+                    linear_bg!!.setBackgroundResource(model)
+                }
             }
         }
 

@@ -148,8 +148,8 @@ public class DateTimePicker extends FrameLayout {
 
 
         mYearSpinner = (NumberPicker) this.findViewById(R.id.np_datetime_year);
-        mYearSpinner.setMaxValue(2040);
-        mYearSpinner.setMinValue(1990);
+        mYearSpinner.setMaxValue(2100);
+        mYearSpinner.setMinValue(1900);
         if (showLabel)
             mYearSpinner.setLabel("年");
         mYearSpinner.setValue(mYear);
