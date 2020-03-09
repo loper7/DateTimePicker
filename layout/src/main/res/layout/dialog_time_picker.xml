@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -67,7 +68,7 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/shape_bg_oval_accent"
-                android:elevation="4dp"
+                android:elevation="2dp"
                 android:gravity="center"
                 android:text="今"
                 android:textColor="@color/colorTextWhite"

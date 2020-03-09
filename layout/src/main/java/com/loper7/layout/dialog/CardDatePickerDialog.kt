@@ -1,13 +1,16 @@
 package com.loper7.layout.dialog
 
+import android.R.attr.fillColor
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.loper7.layout.DateTimePicker
@@ -27,10 +30,10 @@ import java.util.*
  * @Email:          loper7@163.com
  */
 class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
-    companion object{
-        val CARD=0
-        val CUBE=1
-        val STACK=2
+    companion object {
+        val CARD = 0
+        val CUBE = 1
+        val STACK = 2
     }
 
     private var listener: OnChooseListener? = null
@@ -54,8 +57,10 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     private var titleValue: String? = null
     private var defaultMillisecond: Long = 0
     private var minTime: Long = 0
+    private var maxTime: Long = 0
     private var displayTypes: IntArray? = null
-    private var model:Int= CARD
+    private var model: Int = CARD
+    private var themeColor:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dialog_time_picker)
@@ -77,7 +82,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
 
         //背景模式
-        if(model!=0) {
+        if (model != 0) {
             var parmas = LinearLayout.LayoutParams(linear_bg!!.layoutParams)
             when (model) {
                 CARD -> {
@@ -100,7 +105,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
                     linear_bg!!.layoutParams = parmas
                     linear_bg!!.setBackgroundResource(R.drawable.shape_bg_top_round_white_15)
                 }
-                else->{
+                else -> {
                     parmas.setMargins(0, 0, 0, 0)
                     linear_bg!!.layoutParams = parmas
                     linear_bg!!.setBackgroundResource(model)
@@ -159,15 +164,28 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         //设置最小时间
         datePicker!!.setMinMillisecond(minTime)
+        //设置最大时间
+        datePicker!!.setMaxMillisecond(maxTime)
 
-        if (defaultMillisecond != 0L)
-            datePicker!!.setDefaultMillisecond(defaultMillisecond)
+        datePicker!!.setDefaultMillisecond(defaultMillisecond)
+
+
+        datePicker!!.setTextSize(15)
+        if(themeColor!=0) {
+            datePicker!!.setThemeColor(themeColor)
+            tv_submit!!.setTextColor(themeColor)
+
+            val gd = GradientDrawable()
+            gd.setColor(themeColor)
+            gd.cornerRadius = dip2px(60f).toFloat()
+            btn_today!!.background=gd
+        }
 
         tv_cancel!!.setOnClickListener(this)
         tv_submit!!.setOnClickListener(this)
         btn_today!!.setOnClickListener(this)
 
-        datePicker!!.setOnDateTimeChangedListener{ _, millisecond, _, _, _, _, minute ->
+        datePicker!!.setOnDateTimeChangedListener { _, millisecond, _, _, _, _, minute ->
             this.millisecond = millisecond
             tv_choose_date!!.text =
                 (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
@@ -217,6 +235,11 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         return this
     }
 
+    public fun setMaxTime(millisecond: Long): CardDatePickerDialog {
+        this.maxTime = millisecond
+        return this
+    }
+
 
     /**
      * 是否显示回到当前
@@ -262,10 +285,16 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     /**
      * 显示模式
      */
-    public fun setModel(model :Int): CardDatePickerDialog {
+    public fun setBackGroundModel(model: Int): CardDatePickerDialog {
         this.model = model
         return this
     }
+
+    public fun setThemeColor(@ColorInt themeColor : Int):CardDatePickerDialog{
+        this.themeColor=themeColor
+        return this
+    }
+
     /**
      * 绑定监听
      */
@@ -290,14 +319,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     /**
      * 根据手机的分辨率px(像素) 转成dp
      */
-    private fun px2dip( pxValue: Float): Int {
+    private fun px2dip(pxValue: Float): Int {
         val scale = getContext().resources.displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
     }
 
-
-    private fun sp2px(sp: Float): Float {
-        val scale = context.resources.displayMetrics.scaledDensity
-        return sp * scale
-    }
 }

@@ -53,6 +53,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.core.content.ContextCompat;
+
 import com.loper7.layout.R;
 
 import java.text.DecimalFormatSymbols;
@@ -251,7 +254,7 @@ public class NumberPicker extends LinearLayout {
     /**
      * The height of the text.
      */
-    private final int mTextSize;
+    private int mTextSize;
 
     /**
      * The height of the gap between text elements if the selector wheel.
@@ -311,7 +314,7 @@ public class NumberPicker extends LinearLayout {
     /**
      * The {@link Paint} for drawing the selector.
      */
-    private final Paint mSelectorWheelPaint;
+    private Paint mSelectorWheelPaint;
 
     /**
      * The {@link Drawable} for pressed virtual (increment/decrement) buttons.
@@ -2678,5 +2681,17 @@ public class NumberPicker extends LinearLayout {
     
     public String getLabel(){
     	return label;
+    }
+
+
+    public void setTextSize(int sp){
+        mInputText.setTextSize(sp-1);
+        mTextSize= (int) mInputText.getTextSize();
+        mSelectorWheelPaint.setTextSize(mTextSize);
+        mInputText.setTextSize(sp);
+    }
+
+    public void setTextColor(@ColorInt int color){
+        mInputText.setTextColor(color);
     }
 }

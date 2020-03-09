@@ -30,5 +30,7 @@
 
     <declare-styleable name="DateTimePicker">
         <attr name="showLabel" format="boolean" />
+        <attr name="themeColor" format="color" />
+        <attr name="textSize" format="dimension" />
     </declare-styleable>
 </resources>

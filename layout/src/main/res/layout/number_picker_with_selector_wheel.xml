@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 **
 ** Copyright 2012, The Android Open Source Project
 **
@@ -17,17 +16,19 @@
 */
 -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <view class="com.loper7.layout.number_picker.NumberPicker$CustomEditText"
-          android:textSize="14sp"
-          android:textStyle="bold"
-          android:id="@+id/np__numberpicker_input"
-          android:layout_width="fill_parent"
+    <view
+        android:id="@+id/np__numberpicker_input"
+        class="com.loper7.layout.number_picker.NumberPicker$CustomEditText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="center"
+        android:singleLine="true"
         android:textColor="@color/colorAccent"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          android:singleLine="true"
-          android:background="@null"/>
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
 </merge>
