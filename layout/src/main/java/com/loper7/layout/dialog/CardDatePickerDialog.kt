@@ -31,9 +31,9 @@ import java.util.*
  */
 class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
     companion object {
-        val CARD = 0
-        val CUBE = 1
-        val STACK = 2
+        val CARD = 0//卡片
+        val CUBE = 1//方形
+        val STACK = 2//顶部圆角
     }
 
     private var listener: OnChooseListener? = null
@@ -60,7 +60,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     private var maxTime: Long = 0
     private var displayTypes: IntArray? = null
     private var model: Int = CARD
-    private var themeColor:Int=0
+    private var themeColor: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dialog_time_picker)
@@ -171,14 +171,14 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
 
         datePicker!!.setTextSize(15)
-        if(themeColor!=0) {
+        if (themeColor != 0) {
             datePicker!!.setThemeColor(themeColor)
             tv_submit!!.setTextColor(themeColor)
 
             val gd = GradientDrawable()
             gd.setColor(themeColor)
             gd.cornerRadius = dip2px(60f).toFloat()
-            btn_today!!.background=gd
+            btn_today!!.background = gd
         }
 
         tv_cancel!!.setOnClickListener(this)
@@ -290,8 +290,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         return this
     }
 
-    public fun setThemeColor(@ColorInt themeColor : Int):CardDatePickerDialog{
-        this.themeColor=themeColor
+    public fun setThemeColor(@ColorInt themeColor: Int): CardDatePickerDialog {
+        this.themeColor = themeColor
         return this
     }
 

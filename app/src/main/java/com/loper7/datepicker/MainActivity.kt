@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var context: Context
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -70,7 +71,8 @@ class MainActivity : AppCompatActivity() {
                     @SuppressLint("SetTextI18n")
                     override fun onChoose(millisecond: Long) {
                         defaultDate = millisecond
-                        tvDefaultDate.text = StringUtils.conversionTime(millisecond, "yyyy-MM-dd HH:mm")
+                        tvDefaultDate.text =
+                            StringUtils.conversionTime(millisecond, "yyyy-MM-dd HH:mm")
                     }
                 }).show()
         }
@@ -79,8 +81,6 @@ class MainActivity : AppCompatActivity() {
             defaultDate = 0L
             tvDefaultDate.text = ""
         }
-
-
 
 
         btnCardDialogShow.setOnClickListener {
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                 .setDefaultTime(defaultDate)
                 .setMaxTime(maxDate)
                 .setMinTime(minDate)
-                .setThemeColor(if(model== R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
+                .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)
                 .showFocusDateInfo(checkDateInfo.isChecked)
                 .setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
@@ -127,6 +127,13 @@ class MainActivity : AppCompatActivity() {
                         )}    ${StringUtils.getWeek(millisecond)}"
                     }
                 }).show()
+        }
+
+        dateTimePicker.setOnDateTimeChangedListener { view, millisecond, year, month, day, hour, minute ->
+            tvDateTimePickerValue.text =
+                "${StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 HH时mm分")}  ${StringUtils.getWeek(
+                    millisecond
+                )}"
         }
     }
 }
