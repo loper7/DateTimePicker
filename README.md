@@ -13,6 +13,7 @@ DateTimePicker 一个简约、漂亮的日期时间选择器，支持大面积�
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/main.gif)
 <br/>
 ### 快速体验
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/app_qrcode.png)
-[点击下载](http://fir.cqtencent.cn/dtpicker)
+扫码&ensp;![](https://github.com/loperSeven/DateTimePicker/blob/master/images/app_qrcode.png)
+<br/>
+或者&ensp;[点击下载](http://fir.cqtencent.cn/dtpicker)
 
