@@ -34,7 +34,7 @@ Step 2. 添加 Gradle依赖
 ```
 dependencies {
     ...
-    implementation 'com.github.loperSeven:DateTimePicker:0.0.1'
+    implementation 'com.github.loperSeven:DateTimePicker:$version'
 }
 ```
 ### 如何使用
