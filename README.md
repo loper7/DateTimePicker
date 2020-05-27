@@ -12,12 +12,12 @@ DateTimePicker 一个简约、漂亮的日期时间选择器，支持大面积�
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/custom.gif)
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/main.gif)
 <br/>
-### 快速体验
+## 快速体验
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/app_qrcode.png)
 <br/>
 或者&ensp;[点击下载](http://fir.cqtencent.cn/dtpicker)
 <br/>
-### 如何引入
+## 如何引入
 Step 1. 添加 JitPack repository 
 ```
 allprojects {
@@ -34,18 +34,18 @@ dependencies {
     implementation 'com.github.loperSeven:DateTimePicker:$version'
 }
 ```
-### 如何使用
+## 如何使用
 更新中...
 <br/>
-### 混淆
+## 混淆
 ```
 -dontwarn com.loper7.layout.**
 -keep class com.loper7.layout.**{*;}
 ```
-### 感谢
+## 感谢
 [Number Picker](https://github.com/ShawnLin013/NumberPicker)
 <br/>
-### Licenses
+## Licenses
 ```
 Copyright 2020 loperSeven
 
