@@ -5,7 +5,7 @@
 <br/>
 DateTimePicker 一个简约、漂亮的日期时间选择器，支持大面积自定义UI，内置日期时间选择弹窗，可直接使用。
 <br/>
-### 预览
+## 预览
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/card.gif)
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/cube.gif)
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/sta.gif)
