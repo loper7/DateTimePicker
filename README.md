@@ -13,7 +13,48 @@ DateTimePicker 一个简约、漂亮的日期时间选择器，支持大面积�
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/main.gif)
 <br/>
 ### 快速体验
-扫码<br/>![](https://github.com/loperSeven/DateTimePicker/blob/master/images/app_qrcode.png)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/app_qrcode.png)
 <br/>
-或者<br/>[点击下载](http://fir.cqtencent.cn/dtpicker)
+或者&ensp;[点击下载](http://fir.cqtencent.cn/dtpicker)
+<br/>
+### 如何引入
+Step 1. 添加 JitPack repository 
+```
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
+	}
+}
+```
+Step 2. 添加 Gradle依赖
+```
+dependencies {
+    ...
+    implementation 'com.github.loperSeven:DateTimePicker:0.0.1'
+}
+```
+<br/>
+### 如何使用
+更新中...
+<br/>
+### 混淆
+```
+-dontwarn com.loper7.layout.**
+-keep class com.loper7.layout.**{*;}
+```
+<br/>
+### 感谢
+[Number Picker](https://github.com/ShawnLin013/NumberPicker)
+<br/>
+### Licenses
+```
+Copyright 020 loperSeven
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
 
