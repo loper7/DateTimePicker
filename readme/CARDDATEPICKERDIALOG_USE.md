@@ -20,7 +20,6 @@
                 .showDateLabel(true)
                 .showFocusDateInfo(true)
                 .build().setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
-                    @SuppressLint("SetTextI18n")
                     override fun onChoose(millisecond: Long) {
        
                     }
