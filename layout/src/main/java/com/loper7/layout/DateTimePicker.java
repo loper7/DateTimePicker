@@ -44,8 +44,6 @@ public class DateTimePicker extends FrameLayout {
     private boolean showLabel = true;
     private int themeColor;
     private int textSize;
-//    private Drawable divider;
-//    private int dividerHeight;
 
 
     public DateTimePicker(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
@@ -62,8 +60,6 @@ public class DateTimePicker extends FrameLayout {
         showLabel = attributesArray.getBoolean(R.styleable.DateTimePicker_showLabel, true);
         themeColor = attributesArray.getColor(R.styleable.DateTimePicker_themeColor, ContextCompat.getColor(context, R.color.colorAccent));
         textSize = (int) px2dip(attributesArray.getDimensionPixelSize(R.styleable.DateTimePicker_textSize, (int) dip2px(15f)));
-//        divider= attributesArray.getDrawable(R.styleable.DateTimePicker_divider);
-//        dividerHeight =(int) px2dip( attributesArray.getDimensionPixelSize(R.styleable.DateTimePicker_dividerHeight, (int) dip2px(0.6f)));
         attributesArray.recycle();
         init(context);
 
@@ -74,118 +70,6 @@ public class DateTimePicker extends FrameLayout {
 
         init(context);
     }
-
-    /**
-     * 设置显示类型
-     *
-     * @param types
-     */
-    public void setDisplayType(int[] types) {
-        if (types == null || types.length <= 0)
-            return;
-        this.displayType = types;
-        mYearSpinner.setVisibility(GONE);
-        mMonthSpinner.setVisibility(GONE);
-        mDaySpinner.setVisibility(GONE);
-        mHourSpinner.setVisibility(GONE);
-        mMinuteSpinner.setVisibility(GONE);
-        for (int i = 0; i < types.length; i++) {
-            if (displayType[i] == YEAR)
-                mYearSpinner.setVisibility(VISIBLE);
-            if (displayType[i] == MONTH)
-                mMonthSpinner.setVisibility(VISIBLE);
-            if (displayType[i] == DAY)
-                mDaySpinner.setVisibility(VISIBLE);
-            if (displayType[i] == HOUR)
-                mHourSpinner.setVisibility(VISIBLE);
-            if (displayType[i] == MIN)
-                mMinuteSpinner.setVisibility(VISIBLE);
-        }
-    }
-
-    /**
-     * 设置默认时间戳
-     *
-     * @param time
-     */
-    public void setDefaultMillisecond(long time) {
-        if (time != 0)
-            mDate.setTime(new Date(time));
-        mYear = mDate.get(Calendar.YEAR);
-        mMonth = mDate.get(Calendar.MONTH) + 1;
-        mDay = mDate.get(Calendar.DAY_OF_MONTH);
-        mHour = mDate.get(Calendar.HOUR_OF_DAY);
-        mMinute = mDate.get(Calendar.MINUTE);
-        millisecond = mDate.getTimeInMillis();
-
-        mYearSpinner.setValue(mYear);
-        mMonthSpinner.setValue(mMonth);
-        mDaySpinner.setValue(mDay);
-        mHourSpinner.setValue(mHour);
-        mMinuteSpinner.setValue(mMinute);
-
-        limitMaxMin();
-        onDateTimeChanged();
-    }
-
-    /**
-     * 设置最小选择时间
-     *
-     * @param time
-     */
-    public void setMinMillisecond(long time) {
-        if (time == 0)
-            return;
-        Calendar mDate = Calendar.getInstance();
-        mDate.setTime(new Date(time));
-        int mYear = mDate.get(Calendar.YEAR);
-        minMonth = mDate.get(Calendar.MONTH) + 1;
-        minDay = mDate.get(Calendar.DAY_OF_MONTH);
-        minHour = mDate.get(Calendar.HOUR_OF_DAY);
-        minMinute = mDate.get(Calendar.MINUTE);
-
-        mYearSpinner.setMinValue(mYear);
-        mMonthSpinner.setMinValue(mMonth);
-        mDaySpinner.setMinValue(minDay);
-        mHourSpinner.setMinValue(minDay);
-        mMinuteSpinner.setMinValue(minDay);
-
-        limitMaxMin();
-
-        if (this.mDate.getTimeInMillis() < mDate.getTimeInMillis())
-            setDefaultMillisecond(time);
-
-    }
-
-    /**
-     * 设置最大选择时间
-     *
-     * @param time
-     */
-    public void setMaxMillisecond(long time) {
-        if (time == 0)
-            return;
-        Calendar mDate = Calendar.getInstance();
-        mDate.setTime(new Date(time));
-        int mYear = mDate.get(Calendar.YEAR);
-        maxMonth = mDate.get(Calendar.MONTH) + 1;
-        maxDay = mDate.get(Calendar.DAY_OF_MONTH);
-        maxHour = mDate.get(Calendar.HOUR_OF_DAY);
-        maxMinute = mDate.get(Calendar.MINUTE);
-
-        mYearSpinner.setMaxValue(mYear);
-        mMonthSpinner.setMaxValue(maxMonth);
-        mDaySpinner.setMaxValue(maxDay);
-        mHourSpinner.setMaxValue(maxHour);
-        mMinuteSpinner.setMaxValue(maxMinute);
-
-        limitMaxMin();
-
-        if (this.mDate.getTimeInMillis() > mDate.getTimeInMillis())
-            setDefaultMillisecond(time);
-
-    }
-
 
     private void init(Context context) {
         mDate = Calendar.getInstance();
@@ -525,6 +409,117 @@ public class DateTimePicker extends FrameLayout {
     public void setOnDateTimeChangedListener(OnDateTimeChangedListener callback) {
         mOnDateTimeChangedListener = callback;
         onDateTimeChanged();
+    }
+
+    /**
+     * 设置显示类型
+     *
+     * @param types
+     */
+    public void setDisplayType(int[] types) {
+        if (types == null || types.length <= 0)
+            return;
+        this.displayType = types;
+        mYearSpinner.setVisibility(GONE);
+        mMonthSpinner.setVisibility(GONE);
+        mDaySpinner.setVisibility(GONE);
+        mHourSpinner.setVisibility(GONE);
+        mMinuteSpinner.setVisibility(GONE);
+        for (int i = 0; i < types.length; i++) {
+            if (displayType[i] == YEAR)
+                mYearSpinner.setVisibility(VISIBLE);
+            if (displayType[i] == MONTH)
+                mMonthSpinner.setVisibility(VISIBLE);
+            if (displayType[i] == DAY)
+                mDaySpinner.setVisibility(VISIBLE);
+            if (displayType[i] == HOUR)
+                mHourSpinner.setVisibility(VISIBLE);
+            if (displayType[i] == MIN)
+                mMinuteSpinner.setVisibility(VISIBLE);
+        }
+    }
+
+    /**
+     * 设置默认时间戳
+     *
+     * @param time
+     */
+    public void setDefaultMillisecond(long time) {
+        if (time != 0)
+            mDate.setTime(new Date(time));
+        mYear = mDate.get(Calendar.YEAR);
+        mMonth = mDate.get(Calendar.MONTH) + 1;
+        mDay = mDate.get(Calendar.DAY_OF_MONTH);
+        mHour = mDate.get(Calendar.HOUR_OF_DAY);
+        mMinute = mDate.get(Calendar.MINUTE);
+        millisecond = mDate.getTimeInMillis();
+
+        mYearSpinner.setValue(mYear);
+        mMonthSpinner.setValue(mMonth);
+        mDaySpinner.setValue(mDay);
+        mHourSpinner.setValue(mHour);
+        mMinuteSpinner.setValue(mMinute);
+
+        limitMaxMin();
+        onDateTimeChanged();
+    }
+
+    /**
+     * 设置最小选择时间
+     *
+     * @param time
+     */
+    public void setMinMillisecond(long time) {
+        if (time == 0)
+            return;
+        Calendar mDate = Calendar.getInstance();
+        mDate.setTime(new Date(time));
+        int mYear = mDate.get(Calendar.YEAR);
+        minMonth = mDate.get(Calendar.MONTH) + 1;
+        minDay = mDate.get(Calendar.DAY_OF_MONTH);
+        minHour = mDate.get(Calendar.HOUR_OF_DAY);
+        minMinute = mDate.get(Calendar.MINUTE);
+
+        mYearSpinner.setMinValue(mYear);
+        mMonthSpinner.setMinValue(mMonth);
+        mDaySpinner.setMinValue(minDay);
+        mHourSpinner.setMinValue(minDay);
+        mMinuteSpinner.setMinValue(minDay);
+
+        limitMaxMin();
+
+        if (this.mDate.getTimeInMillis() < mDate.getTimeInMillis())
+            setDefaultMillisecond(time);
+
+    }
+
+    /**
+     * 设置最大选择时间
+     *
+     * @param time
+     */
+    public void setMaxMillisecond(long time) {
+        if (time == 0)
+            return;
+        Calendar mDate = Calendar.getInstance();
+        mDate.setTime(new Date(time));
+        int mYear = mDate.get(Calendar.YEAR);
+        maxMonth = mDate.get(Calendar.MONTH) + 1;
+        maxDay = mDate.get(Calendar.DAY_OF_MONTH);
+        maxHour = mDate.get(Calendar.HOUR_OF_DAY);
+        maxMinute = mDate.get(Calendar.MINUTE);
+
+        mYearSpinner.setMaxValue(mYear);
+        mMonthSpinner.setMaxValue(maxMonth);
+        mDaySpinner.setMaxValue(maxDay);
+        mHourSpinner.setMaxValue(maxHour);
+        mMinuteSpinner.setMaxValue(maxMinute);
+
+        limitMaxMin();
+
+        if (this.mDate.getTimeInMillis() > mDate.getTimeInMillis())
+            setDefaultMillisecond(time);
+
     }
 
     /**
