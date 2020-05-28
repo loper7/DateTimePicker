@@ -37,7 +37,9 @@ dependencies {
 
 ```
 ## 如何使用
-更新中...
+&ensp;&ensp;[DateTimePicker 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/DATETIMEPICKER_USE.md)
+<br/>
+&ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
 <br/>
 ## 混淆
 ```
