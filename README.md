@@ -31,10 +31,10 @@ Step 2. 添加 Gradle依赖
 ```
 dependencies {
     ...
-    implementation 'com.github.loperSeven:DateTimePicker:$version'
+    implementation 'com.github.loperSeven:DateTimePicker:$version'//具体版本请看顶部jitpack标识，仅支持androidx
 }
 
-仅支持androidx
+
 ```
 ## 如何使用
 更新中...
