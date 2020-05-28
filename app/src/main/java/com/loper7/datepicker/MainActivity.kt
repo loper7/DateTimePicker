@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.loper7.layout.DateTimePicker
 import com.loper7.layout.StringUtils
 import com.loper7.layout.dialog.CardDatePickerDialog
@@ -31,8 +32,9 @@ class MainActivity : AppCompatActivity() {
 
 
         tvMaxDate.setOnClickListener {
-            CardDatePickerDialog(this)
+            CardDatePickerDialog.builder(this)
                 .setTitle("SET MAX DATE")
+                .build()
                 .setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
                     @SuppressLint("SetTextI18n")
                     override fun onChoose(millisecond: Long) {
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                         tvMaxDate.text = StringUtils.conversionTime(millisecond, "yyyy-MM-dd HH:mm")
                     }
                 }).show()
+
         }
 
         btnClearMax.setOnClickListener {
@@ -48,8 +51,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         tvMinDate.setOnClickListener {
-            CardDatePickerDialog(this)
+            CardDatePickerDialog.builder(this)
                 .setTitle("SET MIN DATE")
+                .build()
                 .setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
                     @SuppressLint("SetTextI18n")
                     override fun onChoose(millisecond: Long) {
@@ -65,8 +69,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         tvDefaultDate.setOnClickListener {
-            CardDatePickerDialog(this)
+            CardDatePickerDialog.builder(this)
                 .setTitle("SET DEFAULT DATE")
+                .build()
                 .setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
                     @SuppressLint("SetTextI18n")
                     override fun onChoose(millisecond: Long) {
@@ -107,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             if (radioModelCustom.isChecked)
                 model = R.drawable.shape_bg_dialog_custom
 
-            CardDatePickerDialog(this)
+            CardDatePickerDialog.builder(context)
                 .setTitle("CARD DATE PICKER DIALOG")
                 .setDisplayType(displayList)
                 .setBackGroundModel(model)
@@ -118,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)
                 .showFocusDateInfo(checkDateInfo.isChecked)
-                .setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
+                .build().setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
                     @SuppressLint("SetTextI18n")
                     override fun onChoose(millisecond: Long) {
                         tvChooseDate.text = "◉  ${StringUtils.conversionTime(
@@ -131,9 +136,13 @@ class MainActivity : AppCompatActivity() {
 
         dateTimePicker.setOnDateTimeChangedListener { view, millisecond, year, month, day, hour, minute ->
             tvDateTimePickerValue.text =
-                "${StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 HH时mm分")}  ${StringUtils.getWeek(
+                "${StringUtils.conversionTime(
+                    millisecond,
+                    "yyyy年MM月dd日 HH时mm分"
+                )}  ${StringUtils.getWeek(
                     millisecond
                 )}"
         }
+
     }
 }

@@ -34,10 +34,17 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         val CARD = 0//卡片
         val CUBE = 1//方形
         val STACK = 2//顶部圆角
+
+        private var builder: Builder? = null
+        fun builder(context: Context): Builder {
+            builder = Builder(context)
+            return builder!!
+        }
     }
 
-    private var listener: OnChooseListener? = null
+    private var builder: Builder? = null
 
+    private var listener: OnChooseListener? = null
 
     private var tv_cancel: TextView? = null
     private var tv_submit: TextView? = null
@@ -51,16 +58,16 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
     private var millisecond: Long = 0
 
-    private var backNow: Boolean = true
-    private var focusDateInfo: Boolean = true
-    private var dateLabel: Boolean = true
-    private var titleValue: String? = null
-    private var defaultMillisecond: Long = 0
-    private var minTime: Long = 0
-    private var maxTime: Long = 0
-    private var displayTypes: IntArray? = null
-    private var model: Int = CARD
-    private var themeColor: Int = 0
+
+    init {
+        if (builder == null) {
+            builder = Builder(context)
+        }
+    }
+
+    constructor(context: Context, builder: Builder) : this(context) {
+        this.builder = builder
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dialog_time_picker)
@@ -82,9 +89,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
 
         //背景模式
-        if (model != 0) {
+        if (builder!!.model != 0) {
             var parmas = LinearLayout.LayoutParams(linear_bg!!.layoutParams)
-            when (model) {
+            when (builder!!.model) {
                 CARD -> {
                     parmas.setMargins(dip2px(12f), dip2px(12f), dip2px(12f), dip2px(12f))
                     linear_bg!!.layoutParams = parmas
@@ -108,21 +115,21 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
                 else -> {
                     parmas.setMargins(0, 0, 0, 0)
                     linear_bg!!.layoutParams = parmas
-                    linear_bg!!.setBackgroundResource(model)
+                    linear_bg!!.setBackgroundResource(builder!!.model)
                 }
             }
         }
 
         //标题
-        if (!TextUtils.isEmpty(titleValue))
-            tv_title!!.text = titleValue
+        if (!TextUtils.isEmpty(builder!!.titleValue))
+            tv_title!!.text = builder!!.titleValue
 
         //显示标签
-        datePicker!!.showLabel(dateLabel)
+        datePicker!!.showLabel(builder!!.dateLabel)
 
         //显示模式
-        if (displayTypes == null) {
-            displayTypes = intArrayOf(
+        if (builder!!.displayTypes == null) {
+            builder!!.displayTypes = intArrayOf(
                 DateTimePicker.YEAR,
                 DateTimePicker.MONTH,
                 DateTimePicker.DAY,
@@ -131,11 +138,11 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
             )
         }
 
-        datePicker!!.setDisplayType(displayTypes)
+        datePicker!!.setDisplayType(builder!!.displayTypes)
         //回到当前时间展示
-        if (displayTypes != null) {
+        if (builder!!.displayTypes != null) {
             var year_month_day_hour = 0
-            for (i in displayTypes!!) {
+            for (i in builder!!.displayTypes!!) {
                 if (i == DateTimePicker.YEAR && year_month_day_hour <= 0) {
                     year_month_day_hour = 0
                     tv_go_back!!.text = "回到今年"
@@ -159,24 +166,24 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
             }
 
         }
-        linear_now!!.visibility = if (backNow) View.VISIBLE else View.GONE
-        tv_choose_date!!.visibility = if (focusDateInfo) View.VISIBLE else View.GONE
+        linear_now!!.visibility = if (builder!!.backNow) View.VISIBLE else View.GONE
+        tv_choose_date!!.visibility = if (builder!!.focusDateInfo) View.VISIBLE else View.GONE
 
         //设置最小时间
-        datePicker!!.setMinMillisecond(minTime)
+        datePicker!!.setMinMillisecond(builder!!.minTime)
         //设置最大时间
-        datePicker!!.setMaxMillisecond(maxTime)
+        datePicker!!.setMaxMillisecond(builder!!.maxTime)
 
-        datePicker!!.setDefaultMillisecond(defaultMillisecond)
+        datePicker!!.setDefaultMillisecond(builder!!.defaultMillisecond)
 
 
         datePicker!!.setTextSize(15)
-        if (themeColor != 0) {
-            datePicker!!.setThemeColor(themeColor)
-            tv_submit!!.setTextColor(themeColor)
+        if (builder!!.themeColor != 0) {
+            datePicker!!.setThemeColor(builder!!.themeColor)
+            tv_submit!!.setTextColor(builder!!.themeColor)
 
             val gd = GradientDrawable()
-            gd.setColor(themeColor)
+            gd.setColor(builder!!.themeColor)
             gd.cornerRadius = dip2px(60f).toFloat()
             btn_today!!.background = gd
         }
@@ -211,88 +218,112 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         this.dismiss()
     }
 
-    /**
-     * 设置标题
-     */
-    public fun setTitle(value: String): CardDatePickerDialog {
-        this.titleValue = value
-        return this;
-    }
 
-    /**
-     * 设置默认时间
-     */
-    public fun setDefaultTime(millisecond: Long): CardDatePickerDialog {
-        this.defaultMillisecond = millisecond
-        return this
-    }
+    class Builder(var context: Context) {
+        public var backNow: Boolean = true
+        public var focusDateInfo: Boolean = true
+        public var dateLabel: Boolean = true
+        public var titleValue: String? = null
+        public var defaultMillisecond: Long = 0
+        public var minTime: Long = 0
+        public var maxTime: Long = 0
+        public var displayTypes: IntArray? = null
+        public var model: Int = CARD
+        public var themeColor: Int = 0
 
-    /**
-     * 设置范围最小值
-     */
-    public fun setMinTime(millisecond: Long): CardDatePickerDialog {
-        this.minTime = millisecond
-        return this
-    }
+        /**
+         * 设置标题
+         */
+        public fun setTitle(value: String): Builder {
+            this.titleValue = value
+            return this
+        }
 
-    public fun setMaxTime(millisecond: Long): CardDatePickerDialog {
-        this.maxTime = millisecond
-        return this
-    }
+        /**
+         * 设置显示值
+         */
+        public fun setDisplayType(vararg types: Int): Builder {
+            this.displayTypes = types
+            return this
+        }
+
+        /**
+         * 设置显示值
+         */
+        public fun setDisplayType(types: MutableList<Int>): Builder {
+            this.displayTypes = types.toIntArray()
+            return this
+        }
+
+        /**
+         * 设置默认时间
+         */
+        public fun setDefaultTime(millisecond: Long): Builder {
+            this.defaultMillisecond = millisecond
+            return this
+        }
+
+        /**
+         * 设置范围最小值
+         */
+        public fun setMinTime(millisecond: Long): Builder {
+            this.minTime = millisecond
+            return this
+        }
+
+        /**
+         * 设置范围最大值
+         */
+        public fun setMaxTime(millisecond: Long): Builder {
+            this.maxTime = millisecond
+            return this
+        }
 
 
-    /**
-     * 是否显示回到当前
-     */
-    public fun showBackNow(b: Boolean): CardDatePickerDialog {
-        this.backNow = b
-        return this
-    }
+        /**
+         * 是否显示回到当前
+         */
+        public fun showBackNow(b: Boolean): Builder {
+            this.backNow = b
+            return this
+        }
 
-    /**
-     * 是否显示单位标签
-     */
-    public fun showFocusDateInfo(b: Boolean): CardDatePickerDialog {
-        this.focusDateInfo = b
-        return this
-    }
+        /**
+         * 是否显示选中日期信息
+         */
+        public fun showFocusDateInfo(b: Boolean): Builder {
+            this.focusDateInfo = b
+            return this
+        }
 
+        /**
+         * 是否显示单位标签
+         */
+        public fun showDateLabel(b: Boolean): Builder {
+            this.dateLabel = b
+            return this
+        }
 
-    /**
-     * 是否显示选中日期信息
-     */
-    public fun showDateLabel(b: Boolean): CardDatePickerDialog {
-        this.dateLabel = b
-        return this
-    }
+        /**
+         * 显示模式
+         */
+        public fun setBackGroundModel(model: Int): Builder {
+            this.model = model
+            return this
+        }
 
-    /**
-     * 设置显示值
-     */
-    public fun setDisplayType(vararg types: Int): CardDatePickerDialog {
-        this.displayTypes = types
-        return this
-    }
+        /**
+         * 设置主题颜色
+         */
+        public fun setThemeColor(@ColorInt themeColor: Int): Builder {
+            this.themeColor = themeColor
+            return this
+        }
 
-    /**
-     * 设置显示值
-     */
-    public fun setDisplayType(types: MutableList<Int>): CardDatePickerDialog {
-        this.displayTypes = types.toIntArray()
-        return this
-    }
-
-    /**
-     * 显示模式
-     */
-    public fun setBackGroundModel(model: Int): CardDatePickerDialog {
-        this.model = model
-        return this
-    }
-
-    public fun setThemeColor(@ColorInt themeColor: Int): CardDatePickerDialog {
-        this.themeColor = themeColor
-        return this
+        public fun build(): CardDatePickerDialog {
+            var dialog = CardDatePickerDialog(context, this)
+            return dialog
+        }
     }
 
     /**
