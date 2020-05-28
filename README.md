@@ -41,7 +41,7 @@ dependencies {
 <br/>
 &ensp;&ensp;[DateTimePicker 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/DATETIMEPICKER_USE.md)
 <br/>
-底部卡片弹窗
+卡片弹窗
 <br/>
 &ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
 <br/>
