@@ -3,7 +3,7 @@
 [![](https://jitpack.io/v/loperSeven/DateTimePicker.svg)](https://jitpack.io/#loperSeven/DateTimePicker)&ensp;[![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)&ensp;[![](https://img.shields.io/badge/platform-android-green)](https://github.com/loperSeven)&ensp;[![](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/licenses/MIT)
 <br/>
 <br/>
-DateTimePicker 一个简约、漂亮的日期时间选择器，支持大面积自定义UI，内置日期时间选择弹窗，可直接使用。
+DateTimePicker 一个简约、漂亮的日期时间选择器，支持大面积自定义UI，内置日期时间选择弹窗，基于 Google BottomSheetDialog，可直接使用。
 <br/>
 ## 预览
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/card.gif)
@@ -37,8 +37,18 @@ dependencies {
 
 ```
 ## 如何使用
-更新中...
+日期时间选择控件
 <br/>
+&ensp;&ensp;[DateTimePicker 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/DATETIMEPICKER_USE.md)
+<br/>
+卡片弹窗
+<br/>
+&ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
+<br/>
+## 更新计划
+* 增强UI可拓展性
+* 新增弹窗类型[center]
+* 支持选择单位到秒
 ## 混淆
 ```
 -dontwarn com.loper7.layout.**
