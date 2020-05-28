@@ -33,6 +33,8 @@ dependencies {
     ...
     implementation 'com.github.loperSeven:DateTimePicker:$version'
 }
+
+仅支持androidx
 ```
 ## 如何使用
 更新中...
