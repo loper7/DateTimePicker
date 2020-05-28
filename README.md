@@ -37,10 +37,18 @@ dependencies {
 
 ```
 ## 如何使用
+日期时间选择控件
+<br/>
 &ensp;&ensp;[DateTimePicker 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/DATETIMEPICKER_USE.md)
+<br/>
+底部卡片弹窗
 <br/>
 &ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
 <br/>
+## 更新计划
+* 增强UI可拓展性
+* 新增弹窗类型[center]
+* issues 收集处理
 ## 混淆
 ```
 -dontwarn com.loper7.layout.**
