@@ -1,2 +1,3 @@
-* text=auto
-* .js linguist-language=kotlin
+
+*.java linguist-language=kotlin
+*.xml linguist-language=kotlin
