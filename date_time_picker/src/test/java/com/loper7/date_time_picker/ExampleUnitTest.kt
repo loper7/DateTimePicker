@@ -1,4 +1,4 @@
-package com.loper7.layout
+package com.loper7.date_time_picker
 
 import org.junit.Test
 

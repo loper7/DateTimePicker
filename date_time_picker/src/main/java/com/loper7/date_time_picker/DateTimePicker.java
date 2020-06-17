@@ -1,9 +1,7 @@
-package com.loper7.layout;
+package com.loper7.date_time_picker;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -14,7 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.loper7.layout.number_picker.NumberPicker;
+import com.loper7.date_time_picker.number_picker.NumberPicker;
+import com.loper7.layout.R;
 
 import java.util.Calendar;
 import java.util.Date;

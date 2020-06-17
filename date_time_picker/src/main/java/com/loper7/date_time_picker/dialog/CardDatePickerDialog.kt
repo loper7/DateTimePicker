@@ -1,6 +1,5 @@
-package com.loper7.layout.dialog
+package com.loper7.date_time_picker.dialog
 
-import android.R.attr.fillColor
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -13,9 +12,9 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.loper7.layout.DateTimePicker
+import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.layout.R
-import com.loper7.layout.StringUtils
+import com.loper7.date_time_picker.StringUtils
 import java.util.*
 
 
@@ -37,7 +36,10 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         private var builder: Builder? = null
         fun builder(context: Context): Builder {
-            builder = Builder(context)
+            builder =
+                Builder(
+                    context
+                )
             return builder!!
         }
     }
@@ -61,7 +63,10 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
     init {
         if (builder == null) {
-            builder = Builder(context)
+            builder =
+                Builder(
+                    context
+                )
         }
     }
 
@@ -228,7 +233,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         public var minTime: Long = 0
         public var maxTime: Long = 0
         public var displayTypes: IntArray? = null
-        public var model: Int = CARD
+        public var model: Int =
+            CARD
         public var themeColor: Int = 0
 
         /**
@@ -321,7 +327,10 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         }
 
         public fun build(): CardDatePickerDialog {
-            var dialog = CardDatePickerDialog(context, this)
+            var dialog = CardDatePickerDialog(
+                context,
+                this
+            )
             return dialog
         }
     }

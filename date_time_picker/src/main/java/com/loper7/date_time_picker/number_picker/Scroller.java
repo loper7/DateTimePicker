@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.loper7.layout.number_picker;
+package com.loper7.date_time_picker.number_picker;
 
 import android.content.Context;
 import android.hardware.SensorManager;

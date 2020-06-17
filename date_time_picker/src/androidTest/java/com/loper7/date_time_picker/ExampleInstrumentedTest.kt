@@ -1,4 +1,4 @@
-package com.loper7.layout
+package com.loper7.date_time_picker
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

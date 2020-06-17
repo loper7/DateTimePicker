@@ -12,7 +12,7 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <com.loper7.layout.number_picker.NumberPicker
+        <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             app:virtualButtonPressedDrawable="#00000000" />
 
 
-        <com.loper7.layout.number_picker.NumberPicker
+        <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             app:virtualButtonPressedDrawable="#00000000" />
 
 
-        <com.loper7.layout.number_picker.NumberPicker
+        <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             app:solidColor="#00000000"
             app:virtualButtonPressedDrawable="#00000000" />
 
-        <com.loper7.layout.number_picker.NumberPicker
+        <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             app:virtualButtonPressedDrawable="#00000000" />
 
 
-        <com.loper7.layout.number_picker.NumberPicker
+        <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_minute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

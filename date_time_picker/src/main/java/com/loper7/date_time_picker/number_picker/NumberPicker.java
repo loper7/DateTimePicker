@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.loper7.layout.number_picker;
+package com.loper7.date_time_picker.number_picker;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -54,7 +54,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
-import androidx.core.content.ContextCompat;
 
 import com.loper7.layout.R;
 

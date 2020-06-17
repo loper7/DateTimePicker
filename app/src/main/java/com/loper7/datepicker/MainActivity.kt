@@ -1,19 +1,14 @@
 package com.loper7.datepicker
 
 import android.annotation.SuppressLint
-import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.loper7.layout.DateTimePicker
-import com.loper7.layout.StringUtils
-import com.loper7.layout.dialog.CardDatePickerDialog
+import com.loper7.date_time_picker.DateTimePicker
+import com.loper7.date_time_picker.StringUtils
+import com.loper7.date_time_picker.dialog.CardDatePickerDialog
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.math.max
 
 class MainActivity : AppCompatActivity() {
 

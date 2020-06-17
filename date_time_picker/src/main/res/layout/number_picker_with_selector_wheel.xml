@@ -21,7 +21,7 @@
 
     <view
         android:id="@+id/np__numberpicker_input"
-        class="com.loper7.layout.number_picker.NumberPicker$CustomEditText"
+        class="com.loper7.date_time_picker.number_picker.NumberPicker$CustomEditText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@null"
