@@ -1,7 +1,7 @@
 # DateTimePicker 使用
 ##### xml中
 ``` xml
-        <com.loper7.layout.DateTimePicker
+        <com.loper7.date_time_picker.DateTimePicker
             android:id="@+id/dateTimePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

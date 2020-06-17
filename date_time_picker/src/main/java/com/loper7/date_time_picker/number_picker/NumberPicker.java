@@ -55,7 +55,7 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 
-import com.loper7.layout.R;
+import com.loper7.date_time_picker.R;
 
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;

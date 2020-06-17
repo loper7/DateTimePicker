@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.loper7.layout.test", appContext.packageName)
+        assertEquals("com.loper7.date_time_picker.test", appContext.packageName)
     }
 }

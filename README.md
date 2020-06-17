@@ -53,8 +53,8 @@ dependencies {
 * 支持选择单位到秒
 ## 混淆
 ```
--dontwarn com.loper7.layout.**
--keep class com.loper7.layout.**{*;}
+-dontwarn com.loper7.date_time_picker.**
+-keep class com.loper7.date_time_picker.**{*;}
 ```
 ## 感谢
 [Number Picker](https://github.com/ShawnLin013/NumberPicker)

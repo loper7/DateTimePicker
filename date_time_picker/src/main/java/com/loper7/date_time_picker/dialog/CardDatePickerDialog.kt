@@ -13,7 +13,7 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.loper7.date_time_picker.DateTimePicker
-import com.loper7.layout.R
+import com.loper7.date_time_picker.R
 import com.loper7.date_time_picker.StringUtils
 import java.util.*
 
@@ -21,7 +21,7 @@ import java.util.*
 /**
  *
  * @ProjectName:    DatePicker
- * @Package:        com.loper7.layout.dialog
+ * @Package:        com.loper7.date_time_picker.dialog
  * @ClassName:      DateDateDateTimePickerDialog
  * @CreateDate:     2020/3/3 0003 11:38
  * @Description:    java类作用描述
