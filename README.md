@@ -51,7 +51,8 @@ dependencies {
 ## 更新计划
 * 增强UI可拓展性
 * 新增弹窗类型[center]
-* 支持选择单位到秒
+* 支持选择单位到秒[待定]
+* 如果你有独特的需求或建议，请在issues里说明
 ## 混淆
 ```
 -dontwarn com.loper7.date_time_picker.**
