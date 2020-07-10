@@ -6,7 +6,7 @@
 DateTimePicker 一个简约、漂亮的日期时间选择器，支持大面积自定义UI，内置日期时间选择弹窗，基于 Google BottomSheetDialog，可直接使用。
 <br/>
 ## 预览
-加载不出图片可以去 [简书](https://www.jianshu.com/p/5610db432512) 或 [掘金](https://juejin.im/post/5ecf7699e51d4578644e9320) 查看
+加载不出图片可以前往 [简书](https://www.jianshu.com/p/5610db432512) 或 [掘金](https://juejin.im/post/5ecf7699e51d4578644e9320) 查看
 <br/>
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/card.gif)
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/cube.gif)
@@ -33,6 +33,7 @@ Step 2. 添加 Gradle依赖
 ```
 dependencies {
     ...
+    implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
     implementation 'com.github.loperSeven:DateTimePicker:$version'//具体版本请看顶部jitpack标识，仅支持androidx
 }
 
@@ -50,7 +51,8 @@ dependencies {
 ## 更新计划
 * 增强UI可拓展性
 * 新增弹窗类型[center]
-* 支持选择单位到秒
+* 支持选择单位到秒[待定]
+* 如果你有独特的需求或建议，请在issues里说明
 ## 混淆
 ```
 -dontwarn com.loper7.date_time_picker.**
