@@ -6,11 +6,13 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.ViewParent
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.R
@@ -57,6 +59,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     private var tv_go_back: TextView? = null
     private var linear_now: LinearLayout? = null
     private var linear_bg: LinearLayout? = null
+    private var mBehavior: BottomSheetBehavior<FrameLayout>? = null
 
     private var millisecond: Long = 0
 
@@ -91,6 +94,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         tv_go_back = findViewById(R.id.tv_go_back)
         linear_now = findViewById(R.id.linear_now)
         linear_bg = findViewById(R.id.linear_bg)
+
+        mBehavior = BottomSheetBehavior.from(bottomSheet)
 
 
         //背景模式
@@ -204,6 +209,11 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
                     millisecond
                 ))
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     override fun onClick(v: View) {
