@@ -1,10 +1,13 @@
 # CardDatePickerDialog 使用
 ##### 最简单的使用方式
 ``` kotlin
-   CardDatePickerDialog(context).setOnChooseListener(object :CardDatePickerDialog.OnChooseListener {
-                override fun onChoose(millisecond: Long) {
-                }
-            })
+     CardDatePickerDialog.builder(this)
+                .setTitle("SET MAX DATE")
+                .setOnChoose(listener = object :CardDatePickerDialog.OnChooseListener{
+                    override fun onChoose(millisecond: Long) {
+                     
+                    }
+                }).build().show()
 ```
 ##### 所有可配置属性
 ``` kotlin
@@ -19,11 +22,17 @@
                 .setThemeColor(color)
                 .showDateLabel(true)
                 .showFocusDateInfo(true)
-                .build().setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
+                .setLabelText("年","月","日","时","分")
+                .setOnChoose("选择",object :CardDatePickerDialog.OnChooseListener{
                     override fun onChoose(millisecond: Long) {
-       
+                     
                     }
-                }).show()
+                })
+                .setOnCancel("关闭",object :CardDatePickerDialog.OnCancelListener{
+                    override fun onCancel() {
+
+                    }
+                }).build().show()
 ```
 ##### 可配置属性说明
 * 设置标题
@@ -71,4 +80,46 @@ fun setMaxTime(millisecond: Long)
 * 是否显示单位标签
 ``` kotlin
 fun showDateLabel(b: Boolean)
+```
+* 设置标签文字
+``` kotlin
+/**
+*示例
+*setLabelText("年","月","日","时","分")
+*setLabelText("年","月","日","时")
+*setLabelText(month="月",hour="时")
+*/
+fun setLabelText(year:String=yearLabel,month:String=monthLabel,day:String=dayLabel,hour:String=hourLabel,min:String=minLabel)
+```
+* 绑定选择监听
+``` kotlin
+/**
+*示例
+*setOnChoose("确定")
+*setOnChoose(listener = object :CardDatePickerDialog.OnChooseListener{
+                    override fun onChoose(millisecond: Long) {
+                    }
+                })
+*setOnChoose("确定",object :CardDatePickerDialog.OnChooseListener{
+                    override fun onChoose(millisecond: Long) {
+                    }
+                })
+*/
+fun setOnChoose(text: String = "确定", listener: OnChooseListener?=null)
+```
+* 绑定取消监听
+``` kotlin
+/**
+*示例
+*setOnCancel("取消")
+*setOnCancel(listener = object :CardDatePickerDialog.OnCancelListener{
+                  override fun onCancel() {
+                    }
+                })
+*setOnCancel("取消",object :CardDatePickerDialog.OnCancelListener{
+                    override fun onCancel() {
+                    }
+                })
+*/
+fun setOnCancel(text: String = "取消", listener: OnCancelListener?=null)
 ```
