@@ -29,14 +29,12 @@ class MainActivity : AppCompatActivity() {
         tvMaxDate.setOnClickListener {
             CardDatePickerDialog.builder(this)
                 .setTitle("SET MAX DATE")
-                .build()
-                .setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
-                    @SuppressLint("SetTextI18n")
+                .setOnChoose(listener = object :CardDatePickerDialog.OnChooseListener{
                     override fun onChoose(millisecond: Long) {
                         maxDate = millisecond
                         tvMaxDate.text = StringUtils.conversionTime(millisecond, "yyyy-MM-dd HH:mm")
                     }
-                }).show()
+                }).build().show()
 
         }
 
@@ -48,14 +46,12 @@ class MainActivity : AppCompatActivity() {
         tvMinDate.setOnClickListener {
             CardDatePickerDialog.builder(this)
                 .setTitle("SET MIN DATE")
-                .build()
-                .setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
-                    @SuppressLint("SetTextI18n")
+                .setOnChoose(listener = object :CardDatePickerDialog.OnChooseListener{
                     override fun onChoose(millisecond: Long) {
                         minDate = millisecond
                         tvMinDate.text = StringUtils.conversionTime(millisecond, "yyyy-MM-dd HH:mm")
                     }
-                }).show()
+                }).build().show()
         }
 
         btnClearMin.setOnClickListener {
@@ -66,15 +62,12 @@ class MainActivity : AppCompatActivity() {
         tvDefaultDate.setOnClickListener {
             CardDatePickerDialog.builder(this)
                 .setTitle("SET DEFAULT DATE")
-                .build()
-                .setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
-                    @SuppressLint("SetTextI18n")
+                .setOnChoose(listener = object :CardDatePickerDialog.OnChooseListener{
                     override fun onChoose(millisecond: Long) {
                         defaultDate = millisecond
-                        tvDefaultDate.text =
-                            StringUtils.conversionTime(millisecond, "yyyy-MM-dd HH:mm")
+                        tvDefaultDate.text = StringUtils.conversionTime(millisecond, "yyyy-MM-dd HH:mm")
                     }
-                }).show()
+                }).build().show()
         }
 
         btnClearDefault.setOnClickListener {
@@ -118,26 +111,24 @@ class MainActivity : AppCompatActivity() {
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)
                 .showFocusDateInfo(checkDateInfo.isChecked)
-                .build().setOnChooseListener(object : CardDatePickerDialog.OnChooseListener {
-                    @SuppressLint("SetTextI18n")
+                .setOnChoose(listener = object :CardDatePickerDialog.OnChooseListener{
                     override fun onChoose(millisecond: Long) {
-                        tvChooseDate.text = "◉  ${StringUtils.conversionTime(
-                            millisecond,
-                            "yyyy-MM-dd HH:mm"
-                        )}    ${StringUtils.getWeek(millisecond)}"
+                        tvChooseDate.text = "◉  ${StringUtils.conversionTime(millisecond, "yyyy-MM-dd HH:mm")}    ${StringUtils.getWeek(millisecond)}"
                     }
-                }).show()
+                })
+                .setOnCancel("关闭")
+                .build().show()
         }
 
-        dateTimePicker.setOnDateTimeChangedListener { view, millisecond, year, month, day, hour, minute ->
-            tvDateTimePickerValue.text =
-                "${StringUtils.conversionTime(
-                    millisecond,
-                    "yyyy年MM月dd日 HH时mm分"
-                )}  ${StringUtils.getWeek(
-                    millisecond
-                )}"
-        }
+
+        //dateTimePicker使用示例
+        dateTimePicker.setLabelText(" Y"," M"," D"," Hr"," Min")
+        dateTimePicker.setOnDateTimeChangedListener(object :DateTimePicker.OnDateTimeChangedListener{
+            override fun onDateTimeChanged(view: DateTimePicker?, millisecond: Long) {
+                tvDateTimePickerValue.text = "${StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 HH时mm分")}  ${StringUtils.getWeek(millisecond)}"
+            }
+
+        })
 
     }
 }

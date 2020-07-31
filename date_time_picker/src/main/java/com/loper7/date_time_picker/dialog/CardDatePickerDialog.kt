@@ -48,8 +48,6 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
     private var builder: Builder? = null
 
-    private var listener: OnChooseListener? = null
-
     private var tv_cancel: TextView? = null
     private var tv_submit: TextView? = null
     private var tv_title: TextView? = null
@@ -66,10 +64,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
     init {
         if (builder == null) {
-            builder =
-                Builder(
-                    context
-                )
+            builder = Builder(context)
         }
     }
 
@@ -134,8 +129,14 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         if (!TextUtils.isEmpty(builder!!.titleValue))
             tv_title!!.text = builder!!.titleValue
 
+        //按钮
+        tv_cancel?.text = builder!!.cancelText
+        tv_submit?.text = builder!!.chooseText
+
         //显示标签
         datePicker!!.showLabel(builder!!.dateLabel)
+        //设置标签文字
+        datePicker!!.setLabelText(builder!!.yearLabel,builder!!.monthLabel,builder!!.dayLabel,builder!!.hourLabel,builder!!.minLabel)
 
         //显示模式
         if (builder!!.displayTypes == null) {
@@ -202,13 +203,17 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         tv_submit!!.setOnClickListener(this)
         btn_today!!.setOnClickListener(this)
 
-        datePicker!!.setOnDateTimeChangedListener { _, millisecond, _, _, _, _, minute ->
-            this.millisecond = millisecond
-            tv_choose_date!!.text =
-                (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
-                    millisecond
-                ))
-        }
+        datePicker!!.setOnDateTimeChangedListener(object :
+            DateTimePicker.OnDateTimeChangedListener {
+            override fun onDateTimeChanged(view: DateTimePicker?, mill: Long) {
+                millisecond = mill
+                tv_choose_date!!.text =
+                    (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
+                        millisecond
+                    ))
+            }
+
+        })
     }
 
     override fun onStart() {
@@ -218,39 +223,48 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
     override fun onClick(v: View) {
         this.dismiss()
-        if (listener == null)
-            return
         when (v.id) {
 
             R.id.btn_today -> {
-                listener?.onChoose(Calendar.getInstance().timeInMillis)
+                builder?.onChooseListener?.onChoose(Calendar.getInstance().timeInMillis)
             }
             R.id.dialog_submit -> {
-                listener?.onChoose(millisecond)
+                builder?.onChooseListener?.onChoose(millisecond)
+            }
+            R.id.dialog_cancel -> {
+                builder?.onCancelListener?.onCancel()
             }
         }
-
         this.dismiss()
     }
 
 
     class Builder(var context: Context) {
-        public var backNow: Boolean = true
-        public var focusDateInfo: Boolean = true
-        public var dateLabel: Boolean = true
-        public var titleValue: String? = null
-        public var defaultMillisecond: Long = 0
-        public var minTime: Long = 0
-        public var maxTime: Long = 0
-        public var displayTypes: IntArray? = null
-        public var model: Int =
-            CARD
-        public var themeColor: Int = 0
+        var backNow: Boolean = true
+        var focusDateInfo: Boolean = true
+        var dateLabel: Boolean = true
+        var cancelText: String = "取消"
+        var chooseText: String = "确定"
+        var titleValue: String? = null
+        var defaultMillisecond: Long = 0
+        var minTime: Long = 0
+        var maxTime: Long = 0
+        var displayTypes: IntArray? = null
+        var model: Int = CARD
+        var themeColor: Int = 0
+        var onChooseListener: OnChooseListener? = null
+        var onCancelListener: OnCancelListener? = null
+
+        var yearLabel = "年"
+        var monthLabel = "月"
+        var dayLabel = "日"
+        var hourLabel = "时"
+        var minLabel = "分"
 
         /**
          * 设置标题
          */
-        public fun setTitle(value: String): Builder {
+        fun setTitle(value: String): Builder {
             this.titleValue = value
             return this
         }
@@ -258,7 +272,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 设置显示值
          */
-        public fun setDisplayType(vararg types: Int): Builder {
+        fun setDisplayType(vararg types: Int): Builder {
             this.displayTypes = types
             return this
         }
@@ -266,7 +280,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 设置显示值
          */
-        public fun setDisplayType(types: MutableList<Int>): Builder {
+        fun setDisplayType(types: MutableList<Int>): Builder {
             this.displayTypes = types.toIntArray()
             return this
         }
@@ -274,7 +288,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 设置默认时间
          */
-        public fun setDefaultTime(millisecond: Long): Builder {
+        fun setDefaultTime(millisecond: Long): Builder {
             this.defaultMillisecond = millisecond
             return this
         }
@@ -282,7 +296,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 设置范围最小值
          */
-        public fun setMinTime(millisecond: Long): Builder {
+        fun setMinTime(millisecond: Long): Builder {
             this.minTime = millisecond
             return this
         }
@@ -290,16 +304,15 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 设置范围最大值
          */
-        public fun setMaxTime(millisecond: Long): Builder {
+        fun setMaxTime(millisecond: Long): Builder {
             this.maxTime = millisecond
             return this
         }
 
-
         /**
          * 是否显示回到当前
          */
-        public fun showBackNow(b: Boolean): Builder {
+        fun showBackNow(b: Boolean): Builder {
             this.backNow = b
             return this
         }
@@ -307,7 +320,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 是否显示选中日期信息
          */
-        public fun showFocusDateInfo(b: Boolean): Builder {
+        fun showFocusDateInfo(b: Boolean): Builder {
             this.focusDateInfo = b
             return this
         }
@@ -315,7 +328,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 是否显示单位标签
          */
-        public fun showDateLabel(b: Boolean): Builder {
+        fun showDateLabel(b: Boolean): Builder {
             this.dateLabel = b
             return this
         }
@@ -323,7 +336,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 显示模式
          */
-        public fun setBackGroundModel(model: Int): Builder {
+        fun setBackGroundModel(model: Int): Builder {
             this.model = model
             return this
         }
@@ -331,30 +344,59 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 设置主题颜色
          */
-        public fun setThemeColor(@ColorInt themeColor: Int): Builder {
+        fun setThemeColor(@ColorInt themeColor: Int): Builder {
             this.themeColor = themeColor
             return this
         }
 
-        public fun build(): CardDatePickerDialog {
-            var dialog = CardDatePickerDialog(
-                context,
-                this
-            )
+        /**
+         * 设置标签文字
+         * @param year 年标签
+         * @param month 月标签
+         * @param day 日标签
+         * @param hour 时标签
+         * @param min 分份标签
+         */
+        fun setLabelText(year:String=yearLabel,month:String=monthLabel,day:String=dayLabel,hour:String=hourLabel,min:String=minLabel): Builder{
+            this.yearLabel = year
+            this.monthLabel = month
+            this.dayLabel = day
+            this.hourLabel = hour
+            this.minLabel = min
+            return this
+        }
+
+        /**
+         * 绑定选择监听
+         */
+        fun setOnChoose(text: String = "确定", listener: OnChooseListener?=null): Builder {
+            this.onChooseListener = listener
+            this.chooseText = chooseText
+            return this
+        }
+
+        /**
+         * 绑定取消监听
+         */
+        fun setOnCancel(text: String = "取消", listener: OnCancelListener?=null): Builder {
+            this.onCancelListener = listener
+            this.cancelText = text
+            return this
+        }
+
+        fun build(): CardDatePickerDialog {
+            var dialog = CardDatePickerDialog(context, this)
             return dialog
         }
     }
 
-    /**
-     * 绑定监听
-     */
-    public fun setOnChooseListener(listener: OnChooseListener): CardDatePickerDialog {
-        this.listener = listener
-        return this
-    }
 
     interface OnChooseListener {
         fun onChoose(millisecond: Long)
+    }
+
+    interface OnCancelListener {
+        fun onCancel()
     }
 
 
