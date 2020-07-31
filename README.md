@@ -49,12 +49,12 @@ dependencies {
 &ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
 <br/>
 ## 更新日志
-* 1.DateTimePicker类变更为kotlin编写
-* 2.新增单位标签可在代码内配置
-* 3.移除DateTimePicker回调监听非必要字段
-* 4.新增CardDatePickerDialog取消、确定按钮文字配置
-* 5.新增CardDatePickerDialog取消按钮回调监听
-* 6.变更CardDatePickerDialog监听绑定至builder内
+* DateTimePicker类变更为kotlin编写
+* 新增单位标签可在代码内配置
+* 移除DateTimePicker回调监听非必要字段
+* 新增CardDatePickerDialog取消、确定按钮文字配置
+* 新增CardDatePickerDialog取消按钮回调监听
+* 变更CardDatePickerDialog监听绑定至builder内
 <br/>
 eg:此次更新对原有方法及配置有一定改动，详情查看 [如何使用]
 ## 混淆
