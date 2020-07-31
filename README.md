@@ -55,8 +55,8 @@ dependencies {
 * 新增CardDatePickerDialog取消、确定按钮文字配置
 * 新增CardDatePickerDialog取消按钮回调监听
 * 变更CardDatePickerDialog监听绑定至builder内
-<br/>
 eg:此次更新对原有方法及配置有一定改动，详情查看 [如何使用]
+
 ## 混淆
 ```
 -dontwarn com.loper7.date_time_picker.**
