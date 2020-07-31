@@ -110,14 +110,18 @@ class MainActivity : AppCompatActivity() {
                 .setMinTime(minDate)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)
+                .setLabelText("年","月","日","时","分")
                 .showFocusDateInfo(checkDateInfo.isChecked)
-                .setOnChoose(listener = object :CardDatePickerDialog.OnChooseListener{
+                .setOnChoose("选择",object :CardDatePickerDialog.OnChooseListener{
                     override fun onChoose(millisecond: Long) {
                         tvChooseDate.text = "◉  ${StringUtils.conversionTime(millisecond, "yyyy-MM-dd HH:mm")}    ${StringUtils.getWeek(millisecond)}"
                     }
                 })
-                .setOnCancel("关闭")
-                .build().show()
+                .setOnCancel("关闭",object :CardDatePickerDialog.OnCancelListener{
+                    override fun onCancel() {
+
+                    }
+                }).build().show()
         }
 
 
