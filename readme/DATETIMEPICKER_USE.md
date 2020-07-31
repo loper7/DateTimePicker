@@ -12,9 +12,11 @@
 ##### 代码中
 * 设置监听
 ``` kotlin
-    dateTimePicker.setOnDateTimeChangedListener { view, millisecond, year, month, day, hour, minute ->
-        var chooseTime="${StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 HH时mm分")}"
-    }
+    dateTimePicker.setOnDateTimeChangedListener(object :DateTimePicker.OnDateTimeChangedListener{
+            override fun onDateTimeChanged(view: DateTimePicker?, millisecond: Long) {
+               
+            }
+        })
 ```
 以上为最简单的使用方式
 ##### 更多设置
@@ -52,4 +54,11 @@
 >设置的字体大小为选中栏的字体大小，预览字体会根据字体大小等比缩放
 ``` kotlin
   dateTimePicker.setTextSize(15)//单位为sp
+```
+*  设置标签文字
+``` kotlin
+  //全部
+  dateTimePicker.setLabelText(" Y"," M"," D"," Hr"," Min")
+  //指定
+  dateTimePicker.setLabelText(min = "M")
 ```
