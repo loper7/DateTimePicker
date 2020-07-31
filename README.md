@@ -57,7 +57,7 @@ dependencies {
 * 新增CardDatePickerDialog取消按钮回调监听
 * 变更CardDatePickerDialog监听绑定至builder内
 
-<br/>eg:此次更新对原有方法及配置有一定改动，详情查看 [如何使用]
+<br/>eg:此次更新对原有方法及配置有一定改动，详情查看 <strong>[ 如何使用 ]</strong>
 
 ## 混淆
 ```
