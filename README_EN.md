@@ -6,7 +6,7 @@
 [中文](https://github.com/loperSeven/DateTimePicker) | English
 <br/>
 <br/>
-DateTimePicker A simple and beautiful date and time picker, supports a large area of custom UI, built-in date and time selection pop-up window, based on Google BottomSheetDialog, can be used directly.
+A simple and beautiful date and time picker, supports a large area of custom UI, built-in date and time selection pop-up window, based on Google BottomSheetDialog, can be used directly.
 <br/>
 ## Preview
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/card.gif)
