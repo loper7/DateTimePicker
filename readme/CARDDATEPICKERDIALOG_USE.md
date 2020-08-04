@@ -57,7 +57,6 @@ fun setBackGroundModel(model: Int)
 ``` kotlin
 fun setThemeColor(@ColorInt themeColor: Int)
 ```
->以下方法参考[DateTimePicker 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/DATETIMEPICKER_USE.md)
 * 设置显示值
 ``` kotlin
 fun setDisplayType(vararg types: Int)
