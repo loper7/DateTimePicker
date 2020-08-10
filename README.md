@@ -71,7 +71,7 @@ dependencies {
 [Number Picker](https://github.com/loperSeven/DateTimePicker/issues)
 <br/>
 ## 联系我
-[Issues](https://github.com/ShawnLin013/NumberPicker)
+Issues：[Issues](https://github.com/ShawnLin013/NumberPicker)
 <br/>
 邮箱：loper7@163.com
 <br/>
