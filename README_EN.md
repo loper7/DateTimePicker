@@ -68,6 +68,11 @@ Pop-ups
 ## Thanks
 [Number Picker](https://github.com/ShawnLin013/NumberPicker)
 <br/>
+## Contacts
+Issues：[Issues](https://github.com/loperSeven/DateTimePicker/issues)
+<br/>
+Email：loper7@163.com
+<br/>
 ## Licenses
 ```
 Copyright 2020 loperSeven
