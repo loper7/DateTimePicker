@@ -68,10 +68,10 @@ dependencies {
 -keep class com.loper7.date_time_picker.**{*;}
 ```
 ## 感谢
-[Number Picker](https://github.com/loperSeven/DateTimePicker/issues)
+[Number Picker](https://github.com/ShawnLin013/NumberPicker)
 <br/>
 ## 联系我
-Issues：[Issues](https://github.com/ShawnLin013/NumberPicker)
+Issues：[Issues](https://github.com/loperSeven/DateTimePicker/issues)
 <br/>
 邮箱：loper7@163.com
 <br/>
