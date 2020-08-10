@@ -72,6 +72,7 @@ dependencies {
 <br/>
 ## 联系我
 [Issues](https://github.com/ShawnLin013/NumberPicker)
+<br/>
 邮箱：loper7@163.com
 <br/>
 ## Licenses
