@@ -8,6 +8,8 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
 import com.loper7.date_time_picker.number_picker.NumberPicker
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 class DateTimePicker : FrameLayout {
@@ -34,7 +36,7 @@ class DateTimePicker : FrameLayout {
     private var maxHour = 0
     private var maxMinute = 0
 
-    private var millisecond: Long = 0
+    private var millisecond: Long? = null
     private var mOnDateTimeChangedListener: OnDateTimeChangedListener? = null
     private var displayType = intArrayOf(YEAR, MONTH, DAY, HOUR, MIN)
 
@@ -55,8 +57,16 @@ class DateTimePicker : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val attributesArray = context.obtainStyledAttributes(attrs, R.styleable.DateTimePicker)
         showLabel = attributesArray.getBoolean(R.styleable.DateTimePicker_showLabel, true)
-        themeColor = attributesArray.getColor(R.styleable.DateTimePicker_themeColor, ContextCompat.getColor(context, R.color.colorAccent))
-        textSize = px2dip(attributesArray.getDimensionPixelSize(R.styleable.DateTimePicker_textSize, dip2px(15f).toInt()).toFloat()).toInt()
+        themeColor = attributesArray.getColor(
+            R.styleable.DateTimePicker_themeColor,
+            ContextCompat.getColor(context, R.color.colorAccent)
+        )
+        textSize = px2dip(
+            attributesArray.getDimensionPixelSize(
+                R.styleable.DateTimePicker_textSize,
+                dip2px(15f).toInt()
+            ).toFloat()
+        ).toInt()
         attributesArray.recycle()
         init(context)
     }
@@ -81,7 +91,8 @@ class DateTimePicker : FrameLayout {
         mYearSpinner!!.value = mYear
         mYearSpinner!!.isFocusable = true
         mYearSpinner!!.isFocusableInTouchMode = true
-        mYearSpinner!!.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
+        mYearSpinner!!.descendantFocusability =
+            NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
         mYearSpinner!!.setOnValueChangedListener(mOnYearChangedListener) //注册NumberPicker值变化时的监听事件
         mMonthSpinner = findViewById<View>(R.id.np_datetime_month) as NumberPicker
 
@@ -201,9 +212,20 @@ class DateTimePicker : FrameLayout {
      * 日期发生变化
      */
     private fun onDateTimeChanged() {
-        millisecond = StringUtils.conversionTime("$mYear-$mMonth-$mDay $mHour:$mMinute:00", "yyyy-MM-dd HH:mm:ss")
-        if (mOnDateTimeChangedListener != null) {
-            mOnDateTimeChangedListener!!.onDateTimeChanged(this, millisecond)
+        millisecond =
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                LocalDateTime.of(mYear, mMonth, mDay, mHour, mMinute)
+                    .toInstant(ZoneOffset.ofHours(8))
+                    .toEpochMilli()
+            } else {
+                val mCalendar = Calendar.getInstance()
+                mCalendar.set(mYear, mMonth, mDay, mHour, mMinute)
+                mCalendar.timeInMillis
+            }
+
+
+        if (mOnDateTimeChangedListener != null && millisecond != null) {
+            mOnDateTimeChangedListener!!.onDateTimeChanged(this, millisecond!!)
         }
     }
 
@@ -462,7 +484,13 @@ class DateTimePicker : FrameLayout {
      * @param hour 时标签
      * @param min 分份标签
      */
-    fun setLabelText(year:String=yearLabel,month:String=monthLabel,day:String=dayLabel,hour:String=hourLabel,min:String=minLabel){
+    fun setLabelText(
+        year: String = yearLabel,
+        month: String = monthLabel,
+        day: String = dayLabel,
+        hour: String = hourLabel,
+        min: String = minLabel
+    ) {
         this.yearLabel = year
         this.monthLabel = month
         this.dayLabel = day
@@ -477,14 +505,15 @@ class DateTimePicker : FrameLayout {
         var DAY = 2
         var HOUR = 3
         var MIN = 4
+
         //数字格式化，<10的数字前自动加0
         private val formatter =
             NumberPicker.Formatter { value: Int ->
-                var Str = value.toString()
+                var str = value.toString()
                 if (value < 10) {
-                    Str = "0$Str"
+                    str = "0$str"
                 }
-                Str
+                str
             }
     }
 }

@@ -6,7 +6,6 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.view.ViewParent
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -136,7 +135,13 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         //显示标签
         datePicker!!.showLabel(builder!!.dateLabel)
         //设置标签文字
-        datePicker!!.setLabelText(builder!!.yearLabel,builder!!.monthLabel,builder!!.dayLabel,builder!!.hourLabel,builder!!.minLabel)
+        datePicker!!.setLabelText(
+            builder!!.yearLabel,
+            builder!!.monthLabel,
+            builder!!.dayLabel,
+            builder!!.hourLabel,
+            builder!!.minLabel
+        )
 
         //显示模式
         if (builder!!.displayTypes == null) {
@@ -205,8 +210,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         datePicker!!.setOnDateTimeChangedListener(object :
             DateTimePicker.OnDateTimeChangedListener {
-            override fun onDateTimeChanged(view: DateTimePicker?, mill: Long) {
-                millisecond = mill
+            override fun onDateTimeChanged(view: DateTimePicker?, millisecond: Long) {
+                this@CardDatePickerDialog.millisecond = millisecond
                 tv_choose_date!!.text =
                     (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
                         millisecond
@@ -226,13 +231,13 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         when (v.id) {
 
             R.id.btn_today -> {
-                builder?.onChooseListener?.onChoose(Calendar.getInstance().timeInMillis)
+                builder?.onChooseListener?.invoke(Calendar.getInstance().timeInMillis)
             }
             R.id.dialog_submit -> {
-                builder?.onChooseListener?.onChoose(millisecond)
+                builder?.onChooseListener?.invoke(millisecond)
             }
             R.id.dialog_cancel -> {
-                builder?.onCancelListener?.onCancel()
+                builder?.onCancelListener?.invoke()
             }
         }
         this.dismiss()
@@ -252,8 +257,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         var displayTypes: IntArray? = null
         var model: Int = CARD
         var themeColor: Int = 0
-        var onChooseListener: OnChooseListener? = null
-        var onCancelListener: OnCancelListener? = null
+        var onChooseListener: ((Long) -> Unit)? = null
+        var onCancelListener: (() -> Unit)? = null
 
         var yearLabel = "年"
         var monthLabel = "月"
@@ -357,7 +362,13 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
          * @param hour 时标签
          * @param min 分份标签
          */
-        fun setLabelText(year:String=yearLabel,month:String=monthLabel,day:String=dayLabel,hour:String=hourLabel,min:String=minLabel): Builder{
+        fun setLabelText(
+            year: String = yearLabel,
+            month: String = monthLabel,
+            day: String = dayLabel,
+            hour: String = hourLabel,
+            min: String = minLabel
+        ): Builder {
             this.yearLabel = year
             this.monthLabel = month
             this.dayLabel = day
@@ -369,7 +380,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 绑定选择监听
          */
-        fun setOnChoose(text: String = "确定", listener: OnChooseListener?=null): Builder {
+        fun setOnChoose(text: String = "确定", listener: ((Long) -> Unit)? = null): Builder {
             this.onChooseListener = listener
             this.chooseText = chooseText
             return this
@@ -378,25 +389,15 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 绑定取消监听
          */
-        fun setOnCancel(text: String = "取消", listener: OnCancelListener?=null): Builder {
+        fun setOnCancel(text: String = "取消", listener: (() -> Unit)? = null): Builder {
             this.onCancelListener = listener
             this.cancelText = text
             return this
         }
 
         fun build(): CardDatePickerDialog {
-            var dialog = CardDatePickerDialog(context, this)
-            return dialog
+            return CardDatePickerDialog(context, this)
         }
-    }
-
-
-    interface OnChooseListener {
-        fun onChoose(millisecond: Long)
-    }
-
-    interface OnCancelListener {
-        fun onCancel()
     }
 
 

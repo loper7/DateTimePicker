@@ -1,8 +1,12 @@
 package com.loper7.date_time_picker
 
-import android.text.TextUtils
+import android.content.Context
+import android.text.format.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.*
+import java.time.format.DateTimeFormatter
+import java.time.temporal.TemporalField
 import java.util.*
 
 /**
@@ -10,27 +14,32 @@ import java.util.*
  *
  */
 object StringUtils {
-    fun conversionTime(time: String?, format: String?): Long {
-        var format = format
-        if (TextUtils.isEmpty(format)) format = "yyyy-MM-dd HH:mm:ss"
-        val sdf = SimpleDateFormat(format)
-        try {
-            return sdf.parse(time).time
-        } catch (e: ParseException) {
-            e.printStackTrace()
+    fun conversionTime(
+        time: String,
+        format: String = "yyyy-MM-dd HH:mm:ss"
+    ): Long? {
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val ofPattern = DateTimeFormatter.ofPattern(format)
+            return LocalDateTime.parse(time, ofPattern).toInstant(ZoneOffset.ofHours(8))
+                .toEpochMilli()
+        } else {
+            val sdf = SimpleDateFormat(format, Locale.getDefault())
+            try {
+                return sdf.parse(time)?.time
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return 0
         }
-        return 0
     }
 
     /**
      * @param time
      * @return yy-MM-dd HH:mm格式时间
      */
-    fun conversionTime(time: Long, format: String?): String {
-        var format = format
-        if (TextUtils.isEmpty(format)) format = "yyyy-MM-dd HH:mm:ss"
-        val sdf = SimpleDateFormat(format)
-        return sdf.format(Date(time))
+    fun conversionTime(time: Long, format: String = "yyyy-MM-dd HH:mm:ss"): String {
+        return DateFormat.format(format, time).toString()
     }
 
     /**
@@ -40,31 +49,17 @@ object StringUtils {
      * @return
      */
     fun getWeek(time: Long): String {
-        var Week = ""
         val c = Calendar.getInstance()
-        c.time = Date(time)
-        val wek = c[Calendar.DAY_OF_WEEK]
-        if (wek == 1) {
-            Week += "周日"
+        c.timeInMillis = time
+        return when (c[Calendar.DAY_OF_WEEK]) {
+            1 -> "周日"
+            2 -> "周一"
+            3 -> "周二"
+            4 -> "周三"
+            5 -> "周四"
+            6 -> "周五"
+            7 -> "周六"
+            else -> ""
         }
-        if (wek == 2) {
-            Week += "周一"
-        }
-        if (wek == 3) {
-            Week += "周二"
-        }
-        if (wek == 4) {
-            Week += "周三"
-        }
-        if (wek == 5) {
-            Week += "周四"
-        }
-        if (wek == 6) {
-            Week += "周五"
-        }
-        if (wek == 7) {
-            Week += "周六"
-        }
-        return Week
     }
 }
