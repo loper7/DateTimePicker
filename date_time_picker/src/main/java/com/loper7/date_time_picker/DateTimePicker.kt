@@ -2,6 +2,7 @@ package com.loper7.date_time_picker
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
@@ -10,16 +11,16 @@ import androidx.core.content.ContextCompat
 import com.loper7.date_time_picker.number_picker.NumberPicker
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.util.*
+import java.util.Calendar
 
 class DateTimePicker : FrameLayout {
-    private var mYearSpinner: NumberPicker? = null
-    private var mMonthSpinner: NumberPicker? = null
-    private var mDaySpinner: NumberPicker? = null
-    private var mHourSpinner: NumberPicker? = null
-    private var mMinuteSpinner: NumberPicker? = null
+    private lateinit var mYearSpinner: NumberPicker
+    private lateinit var mMonthSpinner: NumberPicker
+    private lateinit var mDaySpinner: NumberPicker
+    private lateinit var mHourSpinner: NumberPicker
+    private lateinit var mMinuteSpinner: NumberPicker
 
-    private var mDate: Calendar? = null
+    private lateinit var mDate: Calendar
     private var mYear = 0
     private var mMonth = 0
     private var mDay = 0
@@ -31,10 +32,10 @@ class DateTimePicker : FrameLayout {
     private var minHour = 0
     private var minMinute = 0
 
-    private var maxMonth = 0
-    private var maxDay = 0
-    private var maxHour = 0
-    private var maxMinute = 0
+    private var maxMonth = 12
+    private var maxDay = 31
+    private var maxHour = 23
+    private var maxMinute = 59
 
     private var millisecond: Long? = null
     private var mOnDateTimeChangedListener: ((DateTimePicker?, Long) -> Unit)? = null
@@ -78,126 +79,130 @@ class DateTimePicker : FrameLayout {
 
     private fun init(context: Context) {
         mDate = Calendar.getInstance()
-        mYear = mDate!!.get(Calendar.YEAR)
-        mMonth = mDate!!.get(Calendar.MONTH) + 1
-        mHour = mDate!!.get(Calendar.HOUR_OF_DAY)
-        mMinute = mDate!!.get(Calendar.MINUTE)
-        millisecond = mDate!!.timeInMillis
+        mYear = mDate.get(Calendar.YEAR)
+        mMonth = mDate.get(Calendar.MONTH) + 1
+        mHour = mDate.get(Calendar.HOUR_OF_DAY)
+        mMinute = mDate.get(Calendar.MINUTE)
+        millisecond = mDate.timeInMillis
         View.inflate(context, R.layout.view_date_picker, this)
-        mYearSpinner = findViewById<View>(R.id.np_datetime_year) as NumberPicker
 
-        mYearSpinner!!.maxValue = 2100
-        mYearSpinner!!.minValue = 1900
-        mYearSpinner!!.label = yearLabel
-        mYearSpinner!!.value = mYear
-        mYearSpinner!!.isFocusable = true
-        mYearSpinner!!.isFocusableInTouchMode = true
-        mYearSpinner!!.descendantFocusability =
+        mYearSpinner = findViewById(R.id.np_datetime_year)
+        mYearSpinner.maxValue = mYear + 100
+        mYearSpinner.minValue = 1800
+        mYearSpinner.label = yearLabel
+        mYearSpinner.value = mYear
+        mYearSpinner.isFocusable = true
+        mYearSpinner.isFocusableInTouchMode = true
+        mYearSpinner.descendantFocusability =
             NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
-        mYearSpinner!!.setOnValueChangedListener(mOnYearChangedListener) //注册NumberPicker值变化时的监听事件
-        mMonthSpinner = findViewById<View>(R.id.np_datetime_month) as NumberPicker
+        mYearSpinner.setOnValueChangedListener(mOnYearChangedListener) //注册NumberPicker值变化时的监听事件
 
-        mMonthSpinner!!.maxValue = 12
-        mMonthSpinner!!.minValue = 1
-        mMonthSpinner!!.label = monthLabel
-        mMonthSpinner!!.value = mMonth
-        mMonthSpinner!!.isFocusable = true
-        mMonthSpinner!!.isFocusableInTouchMode = true
-        mMonthSpinner!!.setFormatter(formatter) //格式化显示数字，个位数前添加0
-        mMonthSpinner!!.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-        mMonthSpinner!!.setOnValueChangedListener(mOnMonthChangedListener)
-        mDaySpinner = findViewById<View>(R.id.np_datetime_day) as NumberPicker
+        mMonthSpinner = findViewById(R.id.np_datetime_month)
+        mMonthSpinner.maxValue = 12
+        mMonthSpinner.minValue = 1
+        mMonthSpinner.label = monthLabel
+        mMonthSpinner.value = mMonth
+        mMonthSpinner.isFocusable = true
+        mMonthSpinner.isFocusableInTouchMode = true
+        mMonthSpinner.setFormatter(formatter) //格式化显示数字，个位数前添加0
+        mMonthSpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+        mMonthSpinner.setOnValueChangedListener(mOnMonthChangedListener)
 
+        mDaySpinner = findViewById(R.id.np_datetime_day)
         leapMonth() //判断是否闰年，从而设置2月份的天数
-        mDay = mDate!!.get(Calendar.DAY_OF_MONTH)
-        mDaySpinner!!.setFormatter(formatter)
-        mDaySpinner!!.label = dayLabel
-        mDaySpinner!!.isFocusable = true
-        mDaySpinner!!.isFocusableInTouchMode = true
-        mDaySpinner!!.value = mDay
-        mDaySpinner!!.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-        mDaySpinner!!.setOnValueChangedListener(mOnDayChangedListener)
-        mHourSpinner = findViewById<View>(R.id.np_datetime_hour) as NumberPicker
+        mDay = mDate.get(Calendar.DAY_OF_MONTH)
+        mDaySpinner.setFormatter(formatter)
+        mDaySpinner.label = dayLabel
+        mDaySpinner.isFocusable = true
+        mDaySpinner.isFocusableInTouchMode = true
+        mDaySpinner.value = mDay
+        mDaySpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+        mDaySpinner.setOnValueChangedListener(mOnDayChangedListener)
 
-        mHourSpinner!!.maxValue = 23
-        mHourSpinner!!.minValue = 0
-        mYearSpinner!!.isFocusable = true
-        mHourSpinner!!.isFocusableInTouchMode = true
-        mHourSpinner!!.label = hourLabel
-        mHourSpinner!!.value = mHour
-        mHourSpinner!!.setFormatter(formatter)
-        mHourSpinner!!.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-        mHourSpinner!!.setOnValueChangedListener(mOnHourChangedListener)
-        mMinuteSpinner = findViewById<View>(R.id.np_datetime_minute) as NumberPicker
+        mHourSpinner = findViewById(R.id.np_datetime_hour)
+        mHourSpinner.maxValue = 23
+        mHourSpinner.minValue = 0
+        mYearSpinner.isFocusable = true
+        mHourSpinner.isFocusableInTouchMode = true
+        mHourSpinner.label = hourLabel
+        mHourSpinner.value = mHour
+        mHourSpinner.setFormatter(formatter)
+        mHourSpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+        mHourSpinner.setOnValueChangedListener(mOnHourChangedListener)
 
-        mMinuteSpinner!!.maxValue = 59
-        mMinuteSpinner!!.minValue = 0
-        mMinuteSpinner!!.isFocusable = true
-        mMinuteSpinner!!.label = minLabel
-        mMinuteSpinner!!.isFocusableInTouchMode = true
-        mMinuteSpinner!!.value = mMinute
-        mMinuteSpinner!!.setFormatter(formatter)
-        mMinuteSpinner!!.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-        mMinuteSpinner!!.setOnValueChangedListener(mOnMinuteChangedListener)
+        mMinuteSpinner = findViewById(R.id.np_datetime_minute)
+        mMinuteSpinner.maxValue = 59
+        mMinuteSpinner.minValue = 0
+        mMinuteSpinner.isFocusable = true
+        mMinuteSpinner.label = minLabel
+        mMinuteSpinner.isFocusableInTouchMode = true
+        mMinuteSpinner.value = mMinute
+        mMinuteSpinner.setFormatter(formatter)
+        mMinuteSpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+        mMinuteSpinner.setOnValueChangedListener(mOnMinuteChangedListener)
 
         refreshUI()
     }
 
     private fun refreshUI() {
         if (showLabel) {
-            mYearSpinner!!.label = yearLabel
-            mMonthSpinner!!.label = monthLabel
-            mDaySpinner!!.label = dayLabel
-            mHourSpinner!!.label = hourLabel
-            mMinuteSpinner!!.label = minLabel
+            mYearSpinner.label = yearLabel
+            mMonthSpinner.label = monthLabel
+            mDaySpinner.label = dayLabel
+            mHourSpinner.label = hourLabel
+            mMinuteSpinner.label = minLabel
         } else {
-            mYearSpinner!!.label = ""
-            mMonthSpinner!!.label = ""
-            mDaySpinner!!.label = ""
-            mHourSpinner!!.label = ""
-            mMinuteSpinner!!.label = ""
+            mYearSpinner.label = ""
+            mMonthSpinner.label = ""
+            mDaySpinner.label = ""
+            mHourSpinner.label = ""
+            mMinuteSpinner.label = ""
         }
-        mYearSpinner!!.setTextColor(themeColor)
-        mYearSpinner!!.setTextSize(textSize)
-        mMonthSpinner!!.setTextColor(themeColor)
-        mMonthSpinner!!.setTextSize(textSize)
-        mDaySpinner!!.setTextColor(themeColor)
-        mDaySpinner!!.setTextSize(textSize)
-        mHourSpinner!!.setTextColor(themeColor)
-        mHourSpinner!!.setTextSize(textSize)
-        mMinuteSpinner!!.setTextColor(themeColor)
-        mMinuteSpinner!!.setTextSize(textSize)
+        mYearSpinner.setTextColor(themeColor)
+        mYearSpinner.setTextSize(textSize)
+        mMonthSpinner.setTextColor(themeColor)
+        mMonthSpinner.setTextSize(textSize)
+        mDaySpinner.setTextColor(themeColor)
+        mDaySpinner.setTextSize(textSize)
+        mHourSpinner.setTextColor(themeColor)
+        mHourSpinner.setTextSize(textSize)
+        mMinuteSpinner.setTextColor(themeColor)
+        mMinuteSpinner.setTextSize(textSize)
     }
 
     private val mOnYearChangedListener =
-        NumberPicker.OnValueChangeListener { picker, oldVal, newVal, editText ->
-            mYear = mYearSpinner!!.value
+        NumberPicker.OnValueChangeListener { _, _, _, _ ->
+            mYear = mYearSpinner.value
             leapMonth()
             limitMaxMin()
             onDateTimeChanged()
         }
+
     private val mOnMonthChangedListener =
-        NumberPicker.OnValueChangeListener { picker, oldVal, newVal, editText ->
-            mMonth = mMonthSpinner!!.value
+        NumberPicker.OnValueChangeListener { _, _, _, _ ->
+            mMonth = mMonthSpinner.value
             leapMonth()
             limitMaxMin()
             onDateTimeChanged()
         }
+
     private val mOnDayChangedListener =
-        NumberPicker.OnValueChangeListener { picker, oldVal, newVal, editText ->
-            mDay = mDaySpinner!!.value
+        NumberPicker.OnValueChangeListener { _, _, _, _ ->
+            mDay = mDaySpinner.value
             limitMaxMin()
             onDateTimeChanged()
         }
+
     private val mOnHourChangedListener =
-        NumberPicker.OnValueChangeListener { picker, oldVal, newVal, editText ->
-            mHour = mHourSpinner!!.value
+        NumberPicker.OnValueChangeListener { _, _, _, _ ->
+            mHour = mHourSpinner.value
             limitMaxMin()
             onDateTimeChanged()
         }
+
     private val mOnMinuteChangedListener =
-        NumberPicker.OnValueChangeListener { picker, oldVal, newVal, editText ->
-            mMinute = mMinuteSpinner!!.value
+        NumberPicker.OnValueChangeListener { _, _, _, _ ->
+            mMinute = mMinuteSpinner.value
             //            limitMaxMin();
             onDateTimeChanged()
         }
@@ -238,36 +243,36 @@ class DateTimePicker : FrameLayout {
     private fun leapMonth() {
         if (mMonth == 2) {
             if (isLeapYear(mYear)) {
-                if (mDaySpinner!!.maxValue != 29) {
-                    mDaySpinner!!.displayedValues = null
-                    mDaySpinner!!.minValue = 1
-                    mDaySpinner!!.maxValue = 29
+                if (mDaySpinner.maxValue != 29) {
+                    mDaySpinner.displayedValues = null
+                    mDaySpinner.minValue = 1
+                    mDaySpinner.maxValue = 29
                 }
             } else {
-                if (mDaySpinner!!.maxValue != 28) {
-                    mDaySpinner!!.displayedValues = null
-                    mDaySpinner!!.minValue = 1
-                    mDaySpinner!!.maxValue = 28
+                if (mDaySpinner.maxValue != 28) {
+                    mDaySpinner.displayedValues = null
+                    mDaySpinner.minValue = 1
+                    mDaySpinner.maxValue = 28
                 }
             }
         } else {
             when (mMonth) {
-                4, 6, 9, 11 -> if (mDaySpinner!!.maxValue != 30) {
-                    mDaySpinner!!.displayedValues = null
-                    mDaySpinner!!.minValue = 1
-                    mDaySpinner!!.maxValue = 30
+                4, 6, 9, 11 -> if (mDaySpinner.maxValue != 30) {
+                    mDaySpinner.displayedValues = null
+                    mDaySpinner.minValue = 1
+                    mDaySpinner.maxValue = 30
                 }
-                else -> if (mDaySpinner!!.maxValue != 31) {
-                    mDaySpinner!!.displayedValues = null
-                    mDaySpinner!!.minValue = 1
-                    mDaySpinner!!.maxValue = 31
+                else -> if (mDaySpinner.maxValue != 31) {
+                    mDaySpinner.displayedValues = null
+                    mDaySpinner.minValue = 1
+                    mDaySpinner.maxValue = 31
                 }
             }
         }
-        if (mYear == mYearSpinner!!.minValue && mMonth == mMonthSpinner!!.minValue) {
-            mDaySpinner!!.minValue = minDay
+        if (mYear == mYearSpinner.minValue && mMonth == mMonthSpinner.minValue) {
+            mDaySpinner.minValue = minDay
         }
-        mDay = mDaySpinner!!.value
+        mDay = mDaySpinner.value
     }
 
     /**
@@ -290,34 +295,72 @@ class DateTimePicker : FrameLayout {
         }
     }
 
-    private fun limitMaxMin() { //设置月份最小值
-        if (mYear == mYearSpinner!!.minValue) mMonthSpinner!!.minValue =
-            minMonth else mMonthSpinner!!.minValue = 1
+    private val TAG = "DateTimePicker"
+
+    private fun limitMaxMin() {
+        //设置月份最小值
+        mMonthSpinner.minValue =
+            if (mYear == mYearSpinner.minValue)
+                minMonth
+            else
+                1
+
         //设置月份最大值
-        if (mYear == mYearSpinner!!.maxValue) mMonthSpinner!!.maxValue =
-            maxMonth else mMonthSpinner!!.maxValue = 12
-        mMonth = mMonthSpinner!!.value
+        mMonthSpinner.maxValue =
+            if (mYear == mYearSpinner.maxValue)
+                maxMonth
+            else
+                12
+
+        if (mMonthSpinner.value != 0) {
+            mMonth = mMonthSpinner.value
+        }
+
         /** */ //设置天最小值
-        if (mYear == mYearSpinner!!.minValue && mMonth == mMonthSpinner!!.minValue) mDaySpinner!!.minValue =
-            minDay else mDaySpinner!!.minValue = 1
+        mDaySpinner.minValue =
+            if (mYear == mYearSpinner.minValue && mMonth == mMonthSpinner.minValue)
+                minDay
+            else
+                1
+
         //设置天最大值
-        if (mYear == mYearSpinner!!.maxValue && mMonth == mMonthSpinner!!.maxValue) mDaySpinner!!.maxValue =
-            maxDay else mDaySpinner!!.maxValue = leapMonth2days(mYear)
-        mDay = mDaySpinner!!.value
+        mDaySpinner.maxValue =
+            if (mYear == mYearSpinner.maxValue && mMonth == mMonthSpinner.maxValue)
+                maxDay
+            else
+                leapMonth2days(mYear)
+
+        mDay = mDaySpinner.value
+
         /** */ //设置小时最小值
-        if (mYear == mYearSpinner!!.minValue && mMonth == mMonthSpinner!!.minValue && mDay == mDaySpinner!!.minValue) mHourSpinner!!.minValue =
-            minHour else mHourSpinner!!.minValue = 0
+        mHourSpinner.minValue =
+            if (mYear == mYearSpinner.minValue && mMonth == mMonthSpinner.minValue && mDay == mDaySpinner.minValue)
+                minHour
+            else
+                0
+
         //设置小时最大值
-        if (mYear == mYearSpinner!!.maxValue && mMonth == mMonthSpinner!!.maxValue && mDay == mDaySpinner!!.maxValue) mHourSpinner!!.maxValue =
-            maxHour else mHourSpinner!!.maxValue = 23
-        mHour = mHourSpinner!!.value
+        mHourSpinner.maxValue =
+            if (mYear == mYearSpinner.maxValue && mMonth == mMonthSpinner.maxValue && mDay == mDaySpinner.maxValue)
+                maxHour
+            else
+                23
+        mHour = mHourSpinner.value
+
         /** */ //设置分钟最小值
-        if (mYear == mYearSpinner!!.minValue && mMonth == mMonthSpinner!!.minValue && mDay == mDaySpinner!!.minValue && mHour == mHourSpinner!!.minValue
-        ) mMinuteSpinner!!.minValue = minMinute else mMinuteSpinner!!.minValue = 0
+        mMinuteSpinner.minValue =
+            if (mYear == mYearSpinner.minValue && mMonth == mMonthSpinner.minValue && mDay == mDaySpinner.minValue && mHour == mHourSpinner.minValue)
+                minMinute
+            else
+                0
+
         //设置分钟最大值
-        if (mYear == mYearSpinner!!.maxValue && mMonth == mMonthSpinner!!.maxValue && mDay == mDaySpinner!!.maxValue && mHour == mHourSpinner!!.maxValue
-        ) mMinuteSpinner!!.maxValue = maxMinute else mMinuteSpinner!!.maxValue = 59
-        mMinute = mMinuteSpinner!!.value
+        mMinuteSpinner.maxValue =
+            if (mYear == mYearSpinner.maxValue && mMonth == mMonthSpinner.maxValue && mDay == mDaySpinner.maxValue && mHour == mHourSpinner.maxValue)
+                maxMinute
+            else
+                59
+        mMinute = mMinuteSpinner.value
     }
 
     /**
@@ -346,7 +389,7 @@ class DateTimePicker : FrameLayout {
         val c = Calendar.getInstance()
         c[year, 2] = 1
         c.add(Calendar.DAY_OF_MONTH, -1)
-        return c[Calendar.DAY_OF_MONTH] == 28
+        return c[Calendar.DAY_OF_MONTH] == 29
     }
 
     /************************************************************************/
@@ -368,23 +411,23 @@ class DateTimePicker : FrameLayout {
         displayType = types
 
         if (!displayType.contains(YEAR)) {
-            mYearSpinner?.visibility = View.GONE
+            mYearSpinner.visibility = View.GONE
         }
 
         if (!displayType.contains(MONTH)) {
-            mMonthSpinner?.visibility = View.GONE
+            mMonthSpinner.visibility = View.GONE
         }
 
         if (!displayType.contains(DAY)) {
-            mDaySpinner?.visibility = View.GONE
+            mDaySpinner.visibility = View.GONE
         }
 
         if (!displayType.contains(HOUR)) {
-            mHourSpinner?.visibility = View.GONE
+            mHourSpinner.visibility = View.GONE
         }
 
         if (!displayType.contains(MIN)) {
-            mMinuteSpinner?.visibility = View.GONE
+            mMinuteSpinner.visibility = View.GONE
         }
     }
 
@@ -393,19 +436,25 @@ class DateTimePicker : FrameLayout {
      *
      * @param time
      */
-    fun setDefaultMillisecond(time: Long) {
-        if (time != 0L) mDate!!.time = Date(time)
-        mYear = mDate!![Calendar.YEAR]
-        mMonth = mDate!![Calendar.MONTH] + 1
-        mDay = mDate!![Calendar.DAY_OF_MONTH]
-        mHour = mDate!![Calendar.HOUR_OF_DAY]
-        mMinute = mDate!![Calendar.MINUTE]
-        millisecond = mDate!!.timeInMillis
-        mYearSpinner!!.value = mYear
-        mMonthSpinner!!.value = mMonth
-        mDaySpinner!!.value = mDay
-        mHourSpinner!!.value = mHour
-        mMinuteSpinner!!.value = mMinute
+    fun setDefaultMillisecond(time: Long?) {
+        val mCalendar = Calendar.getInstance()
+        time?.let {
+            mCalendar.timeInMillis = it
+        }
+
+        mYear = mCalendar.get(Calendar.YEAR)
+        mMonth = mCalendar.get(Calendar.MONTH) + 1
+
+        mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+        mHour = mCalendar.get(Calendar.HOUR_OF_DAY)
+        mMinute = mCalendar.get(Calendar.MINUTE)
+
+        millisecond = time
+        mYearSpinner.value = mYear
+        mMonthSpinner.value = mMonth
+        mDaySpinner.value = mDay
+        mHourSpinner.value = mHour
+        mMinuteSpinner.value = mMinute
         limitMaxMin()
         onDateTimeChanged()
     }
@@ -415,22 +464,21 @@ class DateTimePicker : FrameLayout {
      *
      * @param time
      */
-    fun setMinMillisecond(time: Long) {
-        if (time == 0L) return
-        val mDate = Calendar.getInstance()
-        mDate.time = Date(time)
-        val mYear = mDate[Calendar.YEAR]
-        minMonth = mDate[Calendar.MONTH] + 1
-        minDay = mDate[Calendar.DAY_OF_MONTH]
-        minHour = mDate[Calendar.HOUR_OF_DAY]
-        minMinute = mDate[Calendar.MINUTE]
-        mYearSpinner!!.minValue = mYear
-        mMonthSpinner!!.minValue = mMonth
-        mDaySpinner!!.minValue = minDay
-        mHourSpinner!!.minValue = minDay
-        mMinuteSpinner!!.minValue = minDay
+    fun setMinMillisecond(time: Long?) {
+        if (time == null) return
+        val mCalendar = Calendar.getInstance()
+        mCalendar.timeInMillis = time
+        minMonth = mCalendar.get(Calendar.MONTH) + 1
+        minDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+        minHour = mCalendar.get(Calendar.HOUR_OF_DAY)
+        minMinute = mCalendar.get(Calendar.MINUTE)
+        mYearSpinner.minValue = mCalendar.get(Calendar.YEAR)
+        mMonthSpinner.minValue = mMonth
+        mDaySpinner.minValue = minDay
+        mHourSpinner.minValue = minDay
+        mMinuteSpinner.minValue = minDay
         limitMaxMin()
-        if (this.mDate!!.timeInMillis < mDate.timeInMillis) setDefaultMillisecond(time)
+        if (this.mDate.timeInMillis < mDate.timeInMillis) setDefaultMillisecond(time)
     }
 
     /**
@@ -438,22 +486,21 @@ class DateTimePicker : FrameLayout {
      *
      * @param time
      */
-    fun setMaxMillisecond(time: Long) {
-        if (time == 0L) return
-        val mDate = Calendar.getInstance()
-        mDate.time = Date(time)
-        val mYear = mDate[Calendar.YEAR]
-        maxMonth = mDate[Calendar.MONTH] + 1
-        maxDay = mDate[Calendar.DAY_OF_MONTH]
-        maxHour = mDate[Calendar.HOUR_OF_DAY]
-        maxMinute = mDate[Calendar.MINUTE]
-        mYearSpinner!!.maxValue = mYear
-        mMonthSpinner!!.maxValue = maxMonth
-        mDaySpinner!!.maxValue = maxDay
-        mHourSpinner!!.maxValue = maxHour
-        mMinuteSpinner!!.maxValue = maxMinute
+    fun setMaxMillisecond(time: Long?) {
+        if (time == null) return
+        val mCalendar = Calendar.getInstance()
+        mCalendar.timeInMillis = time
+        maxMonth = mCalendar.get(Calendar.MONTH) + 1
+        maxDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+        maxHour = mCalendar.get(Calendar.HOUR_OF_DAY)
+        maxMinute = mCalendar.get(Calendar.MINUTE)
+        mYearSpinner.maxValue = mCalendar.get(Calendar.YEAR)
+        mMonthSpinner.maxValue = maxMonth
+        mDaySpinner.maxValue = maxDay
+        mHourSpinner.maxValue = maxHour
+        mMinuteSpinner.maxValue = maxMinute
         limitMaxMin()
-        if (this.mDate!!.timeInMillis > mDate.timeInMillis) setDefaultMillisecond(time)
+        if (this.mDate.timeInMillis > mDate.timeInMillis) setDefaultMillisecond(time)
     }
 
     /**

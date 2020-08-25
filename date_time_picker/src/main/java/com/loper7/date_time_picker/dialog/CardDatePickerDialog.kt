@@ -31,9 +31,9 @@ import java.util.*
  */
 class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
     companion object {
-        val CARD = 0//卡片
-        val CUBE = 1//方形
-        val STACK = 2//顶部圆角
+        const val CARD = 0//卡片
+        const val CUBE = 1//方形
+        const val STACK = 2//顶部圆角
 
         private var builder: Builder? = null
         fun builder(context: Context): Builder {
@@ -94,7 +94,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         //背景模式
         if (builder!!.model != 0) {
-            var parmas = LinearLayout.LayoutParams(linear_bg!!.layoutParams)
+            val parmas = LinearLayout.LayoutParams(linear_bg!!.layoutParams)
             when (builder!!.model) {
                 CARD -> {
                     parmas.setMargins(dip2px(12f), dip2px(12f), dip2px(12f), dip2px(12f))
