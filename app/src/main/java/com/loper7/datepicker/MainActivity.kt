@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.StringUtils
 import com.loper7.date_time_picker.dialog.CardDatePickerDialog
@@ -107,7 +108,8 @@ class MainActivity : AppCompatActivity() {
                 .showDateLabel(checkUnitLabel.isChecked)
                 .setLabelText("年", "月", "日", "时", "分")
                 .showFocusDateInfo(checkDateInfo.isChecked)
-                .setOnChoose("选择"
+                .setOnChoose(
+                    "选择"
                 ) {
                     tvChooseDate.text = "◉  ${
                         StringUtils.conversionTime(
@@ -115,6 +117,8 @@ class MainActivity : AppCompatActivity() {
                             "yyyy-MM-dd HH:mm"
                         )
                     }    ${StringUtils.getWeek(it)}"
+
+                    Log.i("TAG", "onCreate: $it")
                 }
                 .setOnCancel("关闭") {
                 }.build().show()
@@ -123,18 +127,15 @@ class MainActivity : AppCompatActivity() {
 
         //dateTimePicker使用示例
         dateTimePicker.setLabelText(" Y", " M", " D", " Hr", " Min")
-        dateTimePicker.setOnDateTimeChangedListener(object :
-            DateTimePicker.OnDateTimeChangedListener {
-            override fun onDateTimeChanged(view: DateTimePicker?, millisecond: Long) {
-                tvDateTimePickerValue.text = "${
-                    StringUtils.conversionTime(
-                        millisecond,
-                        "yyyy年MM月dd日 HH时mm分"
-                    )
-                }  ${StringUtils.getWeek(millisecond)}"
-            }
+        dateTimePicker.setOnDateTimeChangedListener { _, millisecond ->
+            tvDateTimePickerValue.text = "${
+                StringUtils.conversionTime(
+                    millisecond,
+                    "yyyy年MM月dd日 HH时mm分"
+                )
+            }  ${StringUtils.getWeek(millisecond)}"
+        }
 
-        })
 
     }
 }

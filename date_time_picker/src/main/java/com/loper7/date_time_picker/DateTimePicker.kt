@@ -37,7 +37,8 @@ class DateTimePicker : FrameLayout {
     private var maxMinute = 0
 
     private var millisecond: Long? = null
-    private var mOnDateTimeChangedListener: OnDateTimeChangedListener? = null
+    private var mOnDateTimeChangedListener: ((DateTimePicker?, Long) -> Unit)? = null
+
     private var displayType = intArrayOf(YEAR, MONTH, DAY, HOUR, MIN)
 
     private var showLabel = true
@@ -201,17 +202,19 @@ class DateTimePicker : FrameLayout {
             onDateTimeChanged()
         }
 
-    /*
-     *接口回调 参数是当前的View 年月日时分秒
-     */
-    interface OnDateTimeChangedListener {
-        fun onDateTimeChanged(view: DateTimePicker?, millisecond: Long)
-    }
-
     /**
      * 日期发生变化
      */
     private fun onDateTimeChanged() {
+
+        if (!displayType.contains(HOUR)) {
+            mHour = 0
+        }
+
+        if (!displayType.contains(MIN)) {
+            mMinute = 0
+        }
+
         millisecond =
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 LocalDateTime.of(mYear, mMonth, mDay, mHour, mMinute)
@@ -225,7 +228,7 @@ class DateTimePicker : FrameLayout {
 
 
         if (mOnDateTimeChangedListener != null && millisecond != null) {
-            mOnDateTimeChangedListener!!.onDateTimeChanged(this, millisecond!!)
+            mOnDateTimeChangedListener?.invoke(this, millisecond!!)
         }
     }
 
@@ -350,7 +353,7 @@ class DateTimePicker : FrameLayout {
     /*
      *对外的公开方法
      */
-    fun setOnDateTimeChangedListener(callback: OnDateTimeChangedListener?) {
+    fun setOnDateTimeChangedListener(callback: ((DateTimePicker?, Long) -> Unit)? = null) {
         mOnDateTimeChangedListener = callback
         onDateTimeChanged()
     }
@@ -361,19 +364,27 @@ class DateTimePicker : FrameLayout {
      * @param types
      */
     fun setDisplayType(types: IntArray?) {
-        if (types == null || types.size <= 0) return
+        if (types == null || types.isEmpty()) return
         displayType = types
-        mYearSpinner!!.visibility = View.GONE
-        mMonthSpinner!!.visibility = View.GONE
-        mDaySpinner!!.visibility = View.GONE
-        mHourSpinner!!.visibility = View.GONE
-        mMinuteSpinner!!.visibility = View.GONE
-        for (i in types.indices) {
-            if (displayType[i] == YEAR) mYearSpinner!!.visibility = View.VISIBLE
-            if (displayType[i] == MONTH) mMonthSpinner!!.visibility = View.VISIBLE
-            if (displayType[i] == DAY) mDaySpinner!!.visibility = View.VISIBLE
-            if (displayType[i] == HOUR) mHourSpinner!!.visibility = View.VISIBLE
-            if (displayType[i] == MIN) mMinuteSpinner!!.visibility = View.VISIBLE
+
+        if (!displayType.contains(YEAR)) {
+            mYearSpinner?.visibility = View.GONE
+        }
+
+        if (!displayType.contains(MONTH)) {
+            mMonthSpinner?.visibility = View.GONE
+        }
+
+        if (!displayType.contains(DAY)) {
+            mDaySpinner?.visibility = View.GONE
+        }
+
+        if (!displayType.contains(HOUR)) {
+            mHourSpinner?.visibility = View.GONE
+        }
+
+        if (!displayType.contains(MIN)) {
+            mMinuteSpinner?.visibility = View.GONE
         }
     }
 

@@ -208,17 +208,13 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         tv_submit!!.setOnClickListener(this)
         btn_today!!.setOnClickListener(this)
 
-        datePicker!!.setOnDateTimeChangedListener(object :
-            DateTimePicker.OnDateTimeChangedListener {
-            override fun onDateTimeChanged(view: DateTimePicker?, millisecond: Long) {
-                this@CardDatePickerDialog.millisecond = millisecond
-                tv_choose_date!!.text =
-                    (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
-                        millisecond
-                    ))
-            }
-
-        })
+        datePicker!!.setOnDateTimeChangedListener { _, millisecond ->
+            this@CardDatePickerDialog.millisecond = millisecond
+            tv_choose_date!!.text =
+                (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
+                    millisecond
+                ))
+        }
     }
 
     override fun onStart() {
@@ -244,7 +240,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     }
 
 
-    class Builder(var context: Context) {
+    class Builder(private var context: Context) {
         var backNow: Boolean = true
         var focusDateInfo: Boolean = true
         var dateLabel: Boolean = true
