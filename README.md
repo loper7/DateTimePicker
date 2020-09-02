@@ -45,11 +45,11 @@ dependencies {
 ## 如何使用
 日期时间选择控件
 <br/>
-&ensp;&ensp;[DateTimePicker 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/DATETIMEPICKER_USE.md)
+&ensp;&ensp;[DateTimePicker 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
 卡片弹窗
 <br/>
-&ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
+&ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardDatePickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
 ## 更新日志
 ### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
