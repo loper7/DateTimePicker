@@ -52,6 +52,11 @@ dependencies {
 &ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
 <br/>
 ## 更新日志
+### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
+* 修复设置最大年份后，当选择到最大年份时，月份为0的问题
+* 修复范围最大值，范围最小值，选中默认值之间冲突时约束异常问题（规则为：最大范围值与最小范围值存在冲突时，后设置的值不会生效；选中默认值与范围最大值/范围最小值存在冲突时，不会生效）
+* 优化监听回调代码，使用kotlin特性，使回调更加简洁
+<br/>eg:感谢 [yaolv7](https://github.com/yaolv7) 提供的Pull requests
 ### [v0.0.7](https://github.com/loperSeven/DateTimePicker/releases/tag/0.0.7) -> [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0)
 * DateTimePicker类变更为kotlin编写
 * 新增单位标签可在代码内配置
@@ -59,7 +64,6 @@ dependencies {
 * 新增CardDatePickerDialog取消、确定按钮文字配置
 * 新增CardDatePickerDialog取消按钮回调监听
 * 变更CardDatePickerDialog监听绑定至builder内
-
 <br/>eg:此次更新对原有方法及配置有一定改动，详情查看 <strong>[ 如何使用 ]</strong>
 
 ## 混淆
