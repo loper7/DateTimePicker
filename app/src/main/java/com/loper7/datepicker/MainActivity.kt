@@ -114,8 +114,6 @@ class MainActivity : AppCompatActivity() {
                             "yyyy-MM-dd HH:mm"
                         )
                     }    ${StringUtils.getWeek(it)}"
-
-                    Log.i("TAG", "onCreate: $it")
                 }
                 .setOnCancel("关闭") {
                 }.build().show()

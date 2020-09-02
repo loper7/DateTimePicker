@@ -20,18 +20,19 @@ class DateTimePicker : FrameLayout {
     private lateinit var mHourSpinner: NumberPicker
     private lateinit var mMinuteSpinner: NumberPicker
 
-    private lateinit var mDate: Calendar
     private var mYear = 0
     private var mMonth = 0
     private var mDay = 0
     private var mHour = 0
     private var mMinute = 0
 
+    private var minMillisecond = 0L
     private var minMonth = 1
     private var minDay = 1
     private var minHour = 0
     private var minMinute = 0
 
+    private var maxMillisecond = 0L
     private var maxMonth = 12
     private var maxDay = 31
     private var maxHour = 23
@@ -76,28 +77,31 @@ class DateTimePicker : FrameLayout {
     }
 
     private fun init(context: Context) {
-        mDate = Calendar.getInstance()
+
+        val mDate = Calendar.getInstance()
         mYear = mDate.get(Calendar.YEAR)
         mMonth = mDate.get(Calendar.MONTH) + 1
+        mDay = mDate.get(Calendar.DAY_OF_MONTH)
         mHour = mDate.get(Calendar.HOUR_OF_DAY)
         mMinute = mDate.get(Calendar.MINUTE)
         millisecond = mDate.timeInMillis
         View.inflate(context, R.layout.view_date_picker, this)
 
         mYearSpinner = findViewById(R.id.np_datetime_year)
+        mYearSpinner.label = yearLabel
         mYearSpinner.maxValue = mYear + 100
         mYearSpinner.minValue = 1800
-        mYearSpinner.label = yearLabel
         mYearSpinner.value = mYear
         mYearSpinner.isFocusable = true
         mYearSpinner.isFocusableInTouchMode = true
-        mYearSpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
+        mYearSpinner.descendantFocusability =
+            NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
         mYearSpinner.setOnValueChangedListener(mOnYearChangedListener) //注册NumberPicker值变化时的监听事件
 
         mMonthSpinner = findViewById(R.id.np_datetime_month)
+        mMonthSpinner.label = monthLabel
         mMonthSpinner.maxValue = 12
         mMonthSpinner.minValue = 1
-        mMonthSpinner.label = monthLabel
         mMonthSpinner.value = mMonth
         mMonthSpinner.isFocusable = true
         mMonthSpinner.isFocusableInTouchMode = true
@@ -106,38 +110,36 @@ class DateTimePicker : FrameLayout {
         mMonthSpinner.setOnValueChangedListener(mOnMonthChangedListener)
 
         mDaySpinner = findViewById(R.id.np_datetime_day)
+        mDaySpinner.label = dayLabel
         leapMonth() //判断是否闰年，从而设置2月份的天数
         mDaySpinner.isFocusable = true
         mDaySpinner.isFocusableInTouchMode = true
-        mDaySpinner.label = dayLabel
         mDaySpinner.value = mDay
         mDaySpinner.setFormatter(formatter)
         mDaySpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         mDaySpinner.setOnValueChangedListener(mOnDayChangedListener)
 
         mHourSpinner = findViewById(R.id.np_datetime_hour)
+        mHourSpinner.label = hourLabel
         mHourSpinner.maxValue = 23
         mHourSpinner.minValue = 0
         mHourSpinner.isFocusable = true
         mHourSpinner.isFocusableInTouchMode = true
-        mHourSpinner.label = hourLabel
         mHourSpinner.value = mHour
         mHourSpinner.setFormatter(formatter)
         mHourSpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         mHourSpinner.setOnValueChangedListener(mOnHourChangedListener)
 
         mMinuteSpinner = findViewById(R.id.np_datetime_minute)
+        mMinuteSpinner.label = minLabel
         mMinuteSpinner.maxValue = 59
         mMinuteSpinner.minValue = 0
         mMinuteSpinner.isFocusable = true
-        mMinuteSpinner.label = minLabel
         mMinuteSpinner.isFocusableInTouchMode = true
         mMinuteSpinner.value = mMinute
         mMinuteSpinner.setFormatter(formatter)
         mMinuteSpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         mMinuteSpinner.setOnValueChangedListener(mOnMinuteChangedListener)
-
-        refreshUI()
     }
 
     private fun refreshUI() {
@@ -170,7 +172,7 @@ class DateTimePicker : FrameLayout {
         NumberPicker.OnValueChangeListener { _, _, _, _ ->
             mYear = mYearSpinner.value
             leapMonth()
-            limitMaxMin()
+            limitMaxAndMin()
             onDateTimeChanged()
         }
 
@@ -178,21 +180,21 @@ class DateTimePicker : FrameLayout {
         NumberPicker.OnValueChangeListener { _, _, _, _ ->
             mMonth = mMonthSpinner.value
             leapMonth()
-            limitMaxMin()
+            limitMaxAndMin()
             onDateTimeChanged()
         }
 
     private val mOnDayChangedListener =
         NumberPicker.OnValueChangeListener { _, _, _, _ ->
             mDay = mDaySpinner.value
-            limitMaxMin()
+            limitMaxAndMin()
             onDateTimeChanged()
         }
 
     private val mOnHourChangedListener =
         NumberPicker.OnValueChangeListener { _, _, _, _ ->
             mHour = mHourSpinner.value
-            limitMaxMin()
+            limitMaxAndMin()
             onDateTimeChanged()
         }
 
@@ -267,7 +269,6 @@ class DateTimePicker : FrameLayout {
         if (mYear == mYearSpinner.minValue && mMonth == mMonthSpinner.minValue) {
             mDaySpinner.minValue = minDay
         }
-        mDay = mDaySpinner.value
     }
 
     /**
@@ -292,7 +293,10 @@ class DateTimePicker : FrameLayout {
 
     private val TAG = "DateTimePicker"
 
-    private fun limitMaxMin() {
+    /**
+     * 设置允许选择的区间
+     */
+    private fun limitMaxAndMin() {
         //设置月份最小值
         mMonthSpinner.minValue =
             if (mYear == mYearSpinner.minValue)
@@ -433,10 +437,10 @@ class DateTimePicker : FrameLayout {
      */
     fun setDefaultMillisecond(time: Long) {
         if (time <= 0) return
+        if (time < minMillisecond) return
+        if (maxMillisecond in 1 until time) return
         val mCalendar = Calendar.getInstance()
-        time?.let {
-            mCalendar.timeInMillis = it
-        }
+        time.let { mCalendar.timeInMillis = it }
 
         mYear = mCalendar.get(Calendar.YEAR)
         mMonth = mCalendar.get(Calendar.MONTH) + 1
@@ -451,7 +455,7 @@ class DateTimePicker : FrameLayout {
         mDaySpinner.value = mDay
         mHourSpinner.value = mHour
         mMinuteSpinner.value = mMinute
-        limitMaxMin()
+        limitMaxAndMin()
         onDateTimeChanged()
     }
 
@@ -462,6 +466,8 @@ class DateTimePicker : FrameLayout {
      */
     fun setMinMillisecond(time: Long) {
         if (time <= 0) return
+        if (maxMillisecond in 1 until time) return
+        minMillisecond = time
         val mCalendar = Calendar.getInstance()
         mCalendar.timeInMillis = time
         minMonth = mCalendar.get(Calendar.MONTH) + 1
@@ -473,8 +479,8 @@ class DateTimePicker : FrameLayout {
         mDaySpinner.minValue = minDay
         mHourSpinner.minValue = minDay
         mMinuteSpinner.minValue = minDay
-        limitMaxMin()
-        if (this.mDate.timeInMillis < mDate.timeInMillis) setDefaultMillisecond(time)
+        limitMaxAndMin()
+        if (this.millisecond < time) setDefaultMillisecond(time)
     }
 
     /**
@@ -484,6 +490,8 @@ class DateTimePicker : FrameLayout {
      */
     fun setMaxMillisecond(time: Long) {
         if (time <= 0) return
+        if (minMillisecond > 0L && time < minMillisecond) return
+        maxMillisecond = time
         val mCalendar = Calendar.getInstance()
         mCalendar.timeInMillis = time
         maxMonth = mCalendar.get(Calendar.MONTH) + 1
@@ -495,8 +503,8 @@ class DateTimePicker : FrameLayout {
         mDaySpinner.maxValue = maxDay
         mHourSpinner.maxValue = maxHour
         mMinuteSpinner.maxValue = maxMinute
-        limitMaxMin()
-        if (this.mDate.timeInMillis > mDate.timeInMillis) setDefaultMillisecond(time)
+        limitMaxAndMin()
+        if (this.millisecond > time) setDefaultMillisecond(time)
     }
 
     /**

@@ -378,7 +378,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
          */
         fun setOnChoose(text: String = "确定", listener: ((Long) -> Unit)? = null): Builder {
             this.onChooseListener = listener
-            this.chooseText = chooseText
+            this.chooseText = text
             return this
         }
 
