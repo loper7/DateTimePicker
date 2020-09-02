@@ -106,11 +106,8 @@ class MainActivity : AppCompatActivity() {
                 .setMinTime(minDate)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)
-                .setLabelText("年", "月", "日", "时", "分")
                 .showFocusDateInfo(checkDateInfo.isChecked)
-                .setOnChoose(
-                    "选择"
-                ) {
+                .setOnChoose("选择") {
                     tvChooseDate.text = "◉  ${
                         StringUtils.conversionTime(
                             it,
@@ -126,7 +123,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //dateTimePicker使用示例
-        dateTimePicker.setLabelText(" Y", " M", " D", " Hr", " Min")
+        dateTimePicker.setLabelText("年", "月", "日", "时", "分")
         dateTimePicker.setOnDateTimeChangedListener { _, millisecond ->
             tvDateTimePickerValue.text = "${
                 StringUtils.conversionTime(

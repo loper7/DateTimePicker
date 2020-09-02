@@ -37,7 +37,7 @@ class DateTimePicker : FrameLayout {
     private var maxHour = 23
     private var maxMinute = 59
 
-    private var millisecond: Long? = null
+    private var millisecond: Long = 0
     private var mOnDateTimeChangedListener: ((DateTimePicker?, Long) -> Unit)? = null
 
     private var displayType = intArrayOf(YEAR, MONTH, DAY, HOUR, MIN)
@@ -52,9 +52,7 @@ class DateTimePicker : FrameLayout {
     private var hourLabel = "时"
     private var minLabel = "分"
 
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs) {
-        init(context)
-    }
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : this(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val attributesArray = context.obtainStyledAttributes(attrs, R.styleable.DateTimePicker)
@@ -93,8 +91,7 @@ class DateTimePicker : FrameLayout {
         mYearSpinner.value = mYear
         mYearSpinner.isFocusable = true
         mYearSpinner.isFocusableInTouchMode = true
-        mYearSpinner.descendantFocusability =
-            NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
+        mYearSpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
         mYearSpinner.setOnValueChangedListener(mOnYearChangedListener) //注册NumberPicker值变化时的监听事件
 
         mMonthSpinner = findViewById(R.id.np_datetime_month)
@@ -110,19 +107,18 @@ class DateTimePicker : FrameLayout {
 
         mDaySpinner = findViewById(R.id.np_datetime_day)
         leapMonth() //判断是否闰年，从而设置2月份的天数
-        mDay = mDate.get(Calendar.DAY_OF_MONTH)
-        mDaySpinner.setFormatter(formatter)
-        mDaySpinner.label = dayLabel
         mDaySpinner.isFocusable = true
         mDaySpinner.isFocusableInTouchMode = true
+        mDaySpinner.label = dayLabel
         mDaySpinner.value = mDay
+        mDaySpinner.setFormatter(formatter)
         mDaySpinner.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         mDaySpinner.setOnValueChangedListener(mOnDayChangedListener)
 
         mHourSpinner = findViewById(R.id.np_datetime_hour)
         mHourSpinner.maxValue = 23
         mHourSpinner.minValue = 0
-        mYearSpinner.isFocusable = true
+        mHourSpinner.isFocusable = true
         mHourSpinner.isFocusableInTouchMode = true
         mHourSpinner.label = hourLabel
         mHourSpinner.value = mHour
@@ -203,7 +199,6 @@ class DateTimePicker : FrameLayout {
     private val mOnMinuteChangedListener =
         NumberPicker.OnValueChangeListener { _, _, _, _ ->
             mMinute = mMinuteSpinner.value
-            //            limitMaxMin();
             onDateTimeChanged()
         }
 
@@ -232,8 +227,8 @@ class DateTimePicker : FrameLayout {
             }
 
 
-        if (mOnDateTimeChangedListener != null && millisecond != null) {
-            mOnDateTimeChangedListener?.invoke(this, millisecond!!)
+        if (mOnDateTimeChangedListener != null) {
+            mOnDateTimeChangedListener?.invoke(this, millisecond)
         }
     }
 
@@ -436,7 +431,8 @@ class DateTimePicker : FrameLayout {
      *
      * @param time
      */
-    fun setDefaultMillisecond(time: Long?) {
+    fun setDefaultMillisecond(time: Long) {
+        if (time <= 0) return
         val mCalendar = Calendar.getInstance()
         time?.let {
             mCalendar.timeInMillis = it
@@ -464,8 +460,8 @@ class DateTimePicker : FrameLayout {
      *
      * @param time
      */
-    fun setMinMillisecond(time: Long?) {
-        if (time == null) return
+    fun setMinMillisecond(time: Long) {
+        if (time <= 0) return
         val mCalendar = Calendar.getInstance()
         mCalendar.timeInMillis = time
         minMonth = mCalendar.get(Calendar.MONTH) + 1
@@ -486,8 +482,8 @@ class DateTimePicker : FrameLayout {
      *
      * @param time
      */
-    fun setMaxMillisecond(time: Long?) {
-        if (time == null) return
+    fun setMaxMillisecond(time: Long) {
+        if (time <= 0) return
         val mCalendar = Calendar.getInstance()
         mCalendar.timeInMillis = time
         maxMonth = mCalendar.get(Calendar.MONTH) + 1

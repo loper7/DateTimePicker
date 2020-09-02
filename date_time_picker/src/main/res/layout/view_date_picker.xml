@@ -8,8 +8,7 @@
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_year"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:internalLayout="@layout/number_picker_with_selector_wheel"
             app:internalMaxHeight="184dp"
@@ -22,8 +21,7 @@
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_month"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:internalLayout="@layout/number_picker_with_selector_wheel"
             app:internalMaxHeight="184dp"
@@ -36,8 +34,7 @@
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_day"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:internalLayout="@layout/number_picker_with_selector_wheel"
             app:internalMaxHeight="184dp"
@@ -49,8 +46,7 @@
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_hour"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:internalLayout="@layout/number_picker_with_selector_wheel"
             app:internalMaxHeight="184dp"
@@ -63,8 +59,7 @@
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_minute"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:internalLayout="@layout/number_picker_with_selector_wheel"
             app:internalMaxHeight="184dp"
