@@ -50,6 +50,11 @@ Pop-ups
 &ensp;&ensp;[How to use CardDatePickerDialog](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
 <br/>
 ## Update Log
+### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
+* Fixed the problem that the month is 0 when the maximum year is selected after setting the maximum year.
+* Fixed Repair range maximum value, range minimum value, and constraint exception problem when the conflict between the default value is selected (the rule is: when the maximum range value conflicts with the minimum range value, the later set value will not take effect; the default value and the maximum range value/ When there is a conflict in the minimum range, it will not take effect).
+* Optimize the monitoring callback code and use Kotlin features to make the callback more concise
+<br/><br/>eg:thanks [yaolv7](https://github.com/yaolv7) provide Pull requests
 ### [v0.0.7](https://github.com/loperSeven/DateTimePicker/releases/tag/0.0.7) -> [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0)
 * DateTimePicker class is changed to Kotlin
 * The new unit label can be configured in the code
