@@ -43,11 +43,11 @@ dependencies {
 ## Use
 DateTimePicker
 <br/>
-&ensp;&ensp;[How to use DateTimePicker](https://github.com/loperSeven/DateTimePicker/blob/master/readme/DATETIMEPICKER_USE.md)
+&ensp;&ensp;[How to use DateTimePicker](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
 Pop-ups
 <br/>
-&ensp;&ensp;[How to use CardDatePickerDialog](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
+&ensp;&ensp;[How to use CardDatePickerDialog](https://github.com/loperSeven/DateTimePicker/wiki/CardDatePickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
 ## Update Log
 ### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
