@@ -43,13 +43,18 @@ dependencies {
 ## Use
 DateTimePicker
 <br/>
-&ensp;&ensp;[How to use DateTimePicker](https://github.com/loperSeven/DateTimePicker/blob/master/readme/DATETIMEPICKER_USE.md)
+&ensp;&ensp;[How to use DateTimePicker](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
 Pop-ups
 <br/>
-&ensp;&ensp;[How to use CardDatePickerDialog](https://github.com/loperSeven/DateTimePicker/blob/master/readme/CARDDATEPICKERDIALOG_USE.md)
+&ensp;&ensp;[How to use CardDatePickerDialog](https://github.com/loperSeven/DateTimePicker/wiki/CardDatePickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
 ## Update Log
+### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
+* Fix the problem that the month is 0 when the maximum year is selected after setting the maximum year.
+* Fix defaultDate/minDate/maxDate Interval conflict problem
+* Optimize the monitoring callback code and use Kotlin features to make the callback more concise
+<br/><br/>eg:thanks [yaolv7](https://github.com/yaolv7) provide Pull requests
 ### [v0.0.7](https://github.com/loperSeven/DateTimePicker/releases/tag/0.0.7) -> [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0)
 * DateTimePicker class is changed to Kotlin
 * The new unit label can be configured in the code
