@@ -13,6 +13,7 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.R
 import com.loper7.date_time_picker.StringUtils
@@ -140,17 +141,19 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
             builder!!.monthLabel,
             builder!!.dayLabel,
             builder!!.hourLabel,
-            builder!!.minLabel
+            builder!!.minLabel,
+            builder!!.secondLabel
         )
 
         //显示模式
         if (builder!!.displayTypes == null) {
             builder!!.displayTypes = intArrayOf(
-                DateTimePicker.YEAR,
-                DateTimePicker.MONTH,
-                DateTimePicker.DAY,
-                DateTimePicker.HOUR,
-                DateTimePicker.MIN
+                DateTimeConfig.YEAR,
+                DateTimeConfig.MONTH,
+                DateTimeConfig.DAY,
+                DateTimeConfig.HOUR,
+                DateTimeConfig.MIN,
+                DateTimeConfig.SECOND
             )
         }
 
@@ -159,22 +162,22 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         if (builder!!.displayTypes != null) {
             var year_month_day_hour = 0
             for (i in builder!!.displayTypes!!) {
-                if (i == DateTimePicker.YEAR && year_month_day_hour <= 0) {
+                if (i == DateTimeConfig.YEAR && year_month_day_hour <= 0) {
                     year_month_day_hour = 0
                     tv_go_back!!.text = "回到今年"
                     btn_today!!.text = "今"
                 }
-                if (i == DateTimePicker.MONTH && year_month_day_hour <= 1) {
+                if (i == DateTimeConfig.MONTH && year_month_day_hour <= 1) {
                     year_month_day_hour = 1
                     tv_go_back!!.text = "回到本月"
                     btn_today!!.text = "本"
                 }
-                if (i == DateTimePicker.DAY && year_month_day_hour <= 2) {
+                if (i == DateTimeConfig.DAY && year_month_day_hour <= 2) {
                     year_month_day_hour = 2
                     tv_go_back!!.text = "回到今日"
                     btn_today!!.text = "今"
                 }
-                if ((i == DateTimePicker.HOUR || i == DateTimePicker.MIN) && year_month_day_hour <= 3) {
+                if ((i == DateTimeConfig.HOUR || i == DateTimeConfig.MIN) && year_month_day_hour <= 3) {
                     year_month_day_hour = 3
                     tv_go_back!!.text = "回到此刻"
                     btn_today!!.text = "此"
@@ -208,7 +211,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         tv_submit!!.setOnClickListener(this)
         btn_today!!.setOnClickListener(this)
 
-        datePicker!!.setOnDateTimeChangedListener { _, millisecond ->
+        datePicker!!.setOnDateTimeChangedListener {millisecond ->
             this@CardDatePickerDialog.millisecond = millisecond
             tv_choose_date!!.text =
                 (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
@@ -261,6 +264,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         var dayLabel = "日"
         var hourLabel = "时"
         var minLabel = "分"
+        var secondLabel = "秒"
 
         /**
          * 设置标题
@@ -356,20 +360,23 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
          * @param month 月标签
          * @param day 日标签
          * @param hour 时标签
-         * @param min 分份标签
+         * @param min 分标签
+         * @param second 秒标签
          */
         fun setLabelText(
             year: String = yearLabel,
             month: String = monthLabel,
             day: String = dayLabel,
             hour: String = hourLabel,
-            min: String = minLabel
+            min: String = minLabel,
+            second: String = secondLabel
         ): Builder {
             this.yearLabel = year
             this.monthLabel = month
             this.dayLabel = day
             this.hourLabel = hour
             this.minLabel = min
+            this.secondLabel = second
             return this
         }
 
@@ -409,7 +416,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
      * 根据手机的分辨率px(像素) 转成dp
      */
     private fun px2dip(pxValue: Float): Int {
-        val scale = getContext().resources.displayMetrics.density
+        val scale = context.resources.displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
     }
 

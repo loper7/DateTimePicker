@@ -6,7 +6,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.loper7.date_time_picker.DateTimePicker
+import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.StringUtils
 import com.loper7.date_time_picker.dialog.CardDatePickerDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 .setTitle("SET MAX DATE")
                 .setOnChoose {
                     maxDate = it
-                    tvMaxDate.text = StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm")
+                    tvMaxDate.text = StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm:ss")
                 }.build().show()
 
         }
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 .setTitle("SET MIN DATE")
                 .setOnChoose {
                     minDate = it
-                    tvMinDate.text = StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm")
+                    tvMinDate.text = StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm:ss")
                 }.build().show()
         }
 
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 .setOnChoose {
                     defaultDate = it
                     tvDefaultDate.text =
-                        StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm")
+                        StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm:ss")
                 }.build().show()
         }
 
@@ -76,15 +76,18 @@ class MainActivity : AppCompatActivity() {
 
             val displayList = mutableListOf<Int>()
             if (checkYear.isChecked)
-                displayList.add(DateTimePicker.YEAR)
+                displayList.add(DateTimeConfig.YEAR)
             if (checkMonth.isChecked)
-                displayList.add(DateTimePicker.MONTH)
+                displayList.add(DateTimeConfig.MONTH)
             if (checkDay.isChecked)
-                displayList.add(DateTimePicker.DAY)
+                displayList.add(DateTimeConfig.DAY)
             if (checkHour.isChecked)
-                displayList.add(DateTimePicker.HOUR)
+                displayList.add(DateTimeConfig.HOUR)
             if (checkMin.isChecked)
-                displayList.add(DateTimePicker.MIN)
+                displayList.add(DateTimeConfig.MIN)
+            if (checkSecond.isChecked)
+                displayList.add(DateTimeConfig.SECOND)
+
 
             var model = CardDatePickerDialog.CARD
             if (radioModelCard.isChecked)
@@ -108,12 +111,7 @@ class MainActivity : AppCompatActivity() {
                 .showDateLabel(checkUnitLabel.isChecked)
                 .showFocusDateInfo(checkDateInfo.isChecked)
                 .setOnChoose("选择") {
-                    tvChooseDate.text = "◉  ${
-                        StringUtils.conversionTime(
-                            it,
-                            "yyyy-MM-dd HH:mm"
-                        )
-                    }    ${StringUtils.getWeek(it)}"
+                    tvChooseDate.text = "◉  ${StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm:ss")}    ${StringUtils.getWeek(it)}"
                 }
                 .setOnCancel("关闭") {
                 }.build().show()
@@ -121,16 +119,9 @@ class MainActivity : AppCompatActivity() {
 
 
         //dateTimePicker使用示例
-        dateTimePicker.setLabelText("年", "月", "日", "时", "分")
-        dateTimePicker.setOnDateTimeChangedListener { _, millisecond ->
-            tvDateTimePickerValue.text = "${
-                StringUtils.conversionTime(
-                    millisecond,
-                    "yyyy年MM月dd日 HH时mm分"
-                )
-            }  ${StringUtils.getWeek(millisecond)}"
+        dateTimePicker.setLabelText("年", "月", "日", "时", "分","秒")
+        dateTimePicker.setOnDateTimeChangedListener {
+            tvDateTimePickerValue.text = "${StringUtils.conversionTime(it, "yyyy年MM月dd日 HH时mm分ss秒")}  ${StringUtils.getWeek(it)}"
         }
-
-
     }
 }

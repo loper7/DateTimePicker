@@ -92,6 +92,16 @@
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
+            <CheckBox
+                android:id="@+id/checkSecond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:checked="true"
+                android:text="秒"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
         </LinearLayout>
 
         <TextView
@@ -376,6 +386,7 @@
             android:text=""
             android:textColor="#AAFFFFFF"
             android:textSize="15sp" />
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
