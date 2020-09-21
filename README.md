@@ -58,7 +58,7 @@ dependencies {
 * 抽离常量至DateTimeConfig
 * 抽离像素单位转换至ContextExt拓展
 * fixed [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder内变量添加@JvmField以支持Java调用
-<br/><br/>eg:感谢 [yaolv7](https://github.com/yaolv7) 提供的Pull requests
+<br/>
 ### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
 * 修复设置最大年份后，当选择到最大年份时，月份为0的问题
 * 修复范围最大值，范围最小值，选中默认值之间冲突时约束异常问题（规则为：最大范围值与最小范围值存在冲突时，后设置的值不会生效；选中默认值与范围最大值/范围最小值存在冲突时，不会生效）
