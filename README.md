@@ -57,7 +57,7 @@ dependencies {
 * 重构DateTimePicker，抽离逻辑至DateTimeController,自身仅控制UI
 * 抽离常量至DateTimeConfig
 * 抽离像素单位转换至ContextExt拓展
-* fixed [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder内变量添加@JvmField以支持Java调用
+* fixd [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder内变量添加@JvmField以支持Java调用
 
 ### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
 * 修复设置最大年份后，当选择到最大年份时，月份为0的问题
