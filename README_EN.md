@@ -55,7 +55,7 @@ Pop-ups
 * recode DateTimePicker，Control only UI
 * add DateTimeConfig
 * add ContextExt
-* fixed [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder all vars add @JvmField 
+* fixd [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder all vars add @JvmField 
 
 ### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
 * Fix the problem that the month is 0 when the maximum year is selected after setting the maximum year.
