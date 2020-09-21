@@ -244,19 +244,33 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
 
     class Builder(private var context: Context) {
+        @JvmField
         var backNow: Boolean = true
+        @JvmField
         var focusDateInfo: Boolean = true
+        @JvmField
         var dateLabel: Boolean = true
+        @JvmField
         var cancelText: String = "取消"
+        @JvmField
         var chooseText: String = "确定"
+        @JvmField
         var titleValue: String? = null
+        @JvmField
         var defaultMillisecond: Long = 0
+        @JvmField
         var minTime: Long = 0
+        @JvmField
         var maxTime: Long = 0
+        @JvmField
         var displayTypes: IntArray? = null
+        @JvmField
         var model: Int = CARD
+        @JvmField
         var themeColor: Int = 0
+        @JvmField
         var onChooseListener: ((Long) -> Unit)? = null
+        @JvmField
         var onCancelListener: (() -> Unit)? = null
 
         var yearLabel = "年"

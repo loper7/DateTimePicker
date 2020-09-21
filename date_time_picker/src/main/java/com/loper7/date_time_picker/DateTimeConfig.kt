@@ -10,12 +10,12 @@ import com.loper7.date_time_picker.number_picker.NumberPicker
  * @Email:          loper7@163.com
  */
 object DateTimeConfig {
-    var YEAR = 0
-    var MONTH = 1
-    var DAY = 2
-    var HOUR = 3
-    var MIN = 4
-    var SECOND = 5
+    const val YEAR = 0
+    const val MONTH = 1
+    const val DAY = 2
+    const val HOUR = 3
+    const val MIN = 4
+    const val SECOND = 5
 
     //数字格式化，<10的数字前自动加0
     val formatter =

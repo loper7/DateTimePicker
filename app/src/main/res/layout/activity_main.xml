@@ -6,7 +6,7 @@
     android:descendantFocusability="blocksDescendants"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".MainActivity">
+    tools:context=".JMainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
