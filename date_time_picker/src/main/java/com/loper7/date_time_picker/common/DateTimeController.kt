@@ -51,6 +51,9 @@ class DateTimeController : DateTimeInterface {
     private var millisecond: Long = 0
     private var mOnDateTimeChangedListener: ((Long) -> Unit)? = null
 
+    private var wrapSelectorWheel = true
+    private var wrapSelectorWheelTypes: MutableList<Int>? = null
+
 
     companion object {
         fun create(): DateTimeController {
@@ -149,7 +152,6 @@ class DateTimeController : DateTimeInterface {
     }
 
 
-
     private val mOnYearChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
         mYear = mYearSpinner!!.value
         leapMonth()
@@ -218,33 +220,43 @@ class DateTimeController : DateTimeInterface {
         if (mMonth == 2) {
             if (isLeapYear(mYear)) {
                 if (mDaySpinner?.maxValue != 29) {
-                    mDaySpinner?.displayedValues = null
-                    mDaySpinner?.minValue = 1
-                    mDaySpinner?.maxValue = 29
+                    mDaySpinner?.run {
+                        displayedValues = null
+                        minValue = 1
+                        maxValue = 29
+                    }
                 }
             } else {
                 if (mDaySpinner?.maxValue != 28) {
-                    mDaySpinner?.displayedValues = null
-                    mDaySpinner?.minValue = 1
-                    mDaySpinner?.maxValue = 28
+                    mDaySpinner?.run {
+                        displayedValues = null
+                        minValue = 1
+                        maxValue = 28
+                    }
                 }
             }
         } else {
             when (mMonth) {
                 4, 6, 9, 11 -> if (mDaySpinner?.maxValue != 30) {
-                    mDaySpinner?.displayedValues = null
-                    mDaySpinner?.minValue = 1
-                    mDaySpinner?.maxValue = 30
+                    mDaySpinner?.run {
+                        displayedValues = null
+                        minValue = 1
+                        maxValue = 30
+                    }
                 }
                 else -> if (mDaySpinner?.maxValue != 31) {
-                    mDaySpinner?.displayedValues = null
-                    mDaySpinner?.minValue = 1
-                    mDaySpinner?.maxValue = 31
+                    mDaySpinner?.run {
+                        displayedValues = null
+                        minValue = 1
+                        maxValue = 31
+                    }
                 }
             }
         }
         if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue) {
-            mDaySpinner?.minValue = minDay
+            mDaySpinner?.run {
+                minValue = minDay
+            }
         }
     }
 
@@ -273,55 +285,79 @@ class DateTimeController : DateTimeInterface {
      */
     private fun limitMaxAndMin() {
         //设置月份最小值
-        mMonthSpinner?.minValue = if (mYear == mYearSpinner?.minValue) minMonth
-        else 1
+        mMonthSpinner?.run { minValue = if (mYear == mYearSpinner?.minValue) minMonth else 1 }
 
         //设置月份最大值
-        mMonthSpinner?.maxValue = if (mYear == mYearSpinner?.maxValue) maxMonth
-        else 12
+        mMonthSpinner?.run { maxValue = if (mYear == mYearSpinner?.maxValue) maxMonth else 12 }
 
 
         /** */ //设置天最小值
-        mDaySpinner?.minValue =
-            if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue) minDay
-            else 1
+        mDaySpinner?.run {
+            minValue =
+                if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue) minDay
+                else 1
+        }
+
 
         //设置天最大值
-        mDaySpinner?.maxValue =
-            if (mYear == mYearSpinner?.maxValue && mMonth == mMonthSpinner?.maxValue) maxDay
-            else leapMonth2days(mYear)
+        mDaySpinner?.run {
+            maxValue =
+                if (mYear == mYearSpinner?.maxValue && mMonth == mMonthSpinner?.maxValue) maxDay
+                else leapMonth2days(mYear)
+        }
+
 
         mDay = mDaySpinner!!.value
 
         /** */ //设置小时最小值
-        mHourSpinner?.minValue =
-            if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue && mDay == mDaySpinner?.minValue) minHour
-            else 0
+        mHourSpinner?.run {
+            minValue =
+                if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue && mDay == mDaySpinner?.minValue) minHour
+                else 0
+        }
+
 
         //设置小时最大值
-        mHourSpinner?.maxValue =
-            if (mYear == mYearSpinner?.maxValue && mMonth == mMonthSpinner?.maxValue && mDay == mDaySpinner?.maxValue) maxHour
-            else 23
+        mHourSpinner?.run {
+            maxValue =
+                if (mYear == mYearSpinner?.maxValue && mMonth == mMonthSpinner?.maxValue && mDay == mDaySpinner?.maxValue) maxHour
+                else 23
+        }
+
 
         /** */ //设置分钟最小值
-        mMinuteSpinner?.minValue =
-            if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue && mDay == mDaySpinner?.minValue && mHour == mHourSpinner?.minValue) minMinute
-            else 0
+        mMinuteSpinner?.run {
+            minValue =
+                if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue && mDay == mDaySpinner?.minValue && mHour == mHourSpinner?.minValue) minMinute
+                else 0
+        }
+
 
         //设置分钟最大值
-        mMinuteSpinner?.maxValue =
-            if (mYear == mYearSpinner?.maxValue && mMonth == mMonthSpinner?.maxValue && mDay == mDaySpinner?.maxValue && mHour == mHourSpinner?.maxValue) maxMinute
-            else 59
+        mMinuteSpinner?.run {
+            maxValue =
+                if (mYear == mYearSpinner?.maxValue && mMonth == mMonthSpinner?.maxValue && mDay == mDaySpinner?.maxValue && mHour == mHourSpinner?.maxValue) maxMinute
+                else 59
+        }
+
 
         /** */ //设置秒最小值
-        mSecondSpinner?.minValue =
-            if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue && mDay == mDaySpinner?.minValue && mHour == mHourSpinner?.minValue && mMinute == mMinuteSpinner?.minValue) minSecond
-            else 0
+        mSecondSpinner?.run {
+            minValue =
+                if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue && mDay == mDaySpinner?.minValue && mHour == mHourSpinner?.minValue && mMinute == mMinuteSpinner?.minValue) minSecond
+                else 0
+        }
+
 
         //设置秒最大值
-        mSecondSpinner?.maxValue =
-            if (mYear == mYearSpinner?.maxValue && mMonth == mMonthSpinner?.maxValue && mDay == mDaySpinner?.maxValue && mHour == mHourSpinner?.maxValue && mMinute == mMinuteSpinner?.maxValue) maxSecond
-            else 59
+        mSecondSpinner?.run {
+            maxValue =
+                if (mYear == mYearSpinner?.maxValue && mMonth == mMonthSpinner?.maxValue && mDay == mDaySpinner?.maxValue && mHour == mHourSpinner?.maxValue && mMinute == mMinuteSpinner?.maxValue) maxSecond
+                else 59
+        }
+
+        setWrapSelectorWheel(wrapSelectorWheelTypes,wrapSelectorWheel)
+
     }
 
     /**
@@ -381,6 +417,7 @@ class DateTimeController : DateTimeInterface {
         mMinuteSpinner?.minValue = minMinute
         mSecondSpinner?.minValue = minSecond
         limitMaxAndMin()
+        setWrapSelectorWheel(wrapSelectorWheelTypes,wrapSelectorWheel)
         if (this.millisecond < time) setDefaultMillisecond(time)
     }
 
@@ -403,8 +440,38 @@ class DateTimeController : DateTimeInterface {
         mMinuteSpinner?.maxValue = maxMinute
         mSecondSpinner?.maxValue = maxSecond
         limitMaxAndMin()
+        setWrapSelectorWheel(wrapSelectorWheelTypes,wrapSelectorWheel)
         if (this.millisecond > time) setDefaultMillisecond(time)
     }
+
+
+    override fun setWrapSelectorWheel(types: MutableList<Int>?, wrapSelector: Boolean) {
+        this.wrapSelectorWheelTypes = types
+        this.wrapSelectorWheel = wrapSelector
+        if (wrapSelectorWheelTypes == null || wrapSelectorWheelTypes!!.isEmpty()) {
+            wrapSelectorWheelTypes = mutableListOf()
+            wrapSelectorWheelTypes!!.add(YEAR)
+            wrapSelectorWheelTypes!!.add(MONTH)
+            wrapSelectorWheelTypes!!.add(DAY)
+            wrapSelectorWheelTypes!!.add(HOUR)
+            wrapSelectorWheelTypes!!.add(MIN)
+            wrapSelectorWheelTypes!!.add(SECOND)
+        }
+
+        wrapSelectorWheelTypes!!.apply {
+            for (type in this) {
+                when (type) {
+                    YEAR -> mYearSpinner?.run { wrapSelectorWheel = wrapSelector }
+                    MONTH -> mMonthSpinner?.run { wrapSelectorWheel = wrapSelector }
+                    DAY -> mDaySpinner?.run { wrapSelectorWheel = wrapSelector }
+                    HOUR -> mHourSpinner?.run { wrapSelectorWheel = wrapSelector }
+                    MIN -> mMinuteSpinner?.run { wrapSelectorWheel = wrapSelector }
+                    SECOND -> mSecondSpinner?.run { wrapSelectorWheel = wrapSelector }
+                }
+            }
+        }
+    }
+
 
     override fun setOnDateTimeChangedListener(callback: ((Long) -> Unit)?) {
         mOnDateTimeChangedListener = callback

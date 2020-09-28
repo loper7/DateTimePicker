@@ -107,6 +107,7 @@ class MainActivity : AppCompatActivity() {
                 .setDefaultTime(defaultDate)
                 .setMaxTime(maxDate)
                 .setMinTime(minDate)
+                .setWrapSelectorWheel(false)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)
                 .showFocusDateInfo(checkDateInfo.isChecked)
@@ -120,6 +121,7 @@ class MainActivity : AppCompatActivity() {
 
         //dateTimePicker使用示例
         dateTimePicker.setLabelText("年", "月", "日", "时", "分","秒")
+        dateTimePicker.setWrapSelectorWheel(DateTimeConfig.MONTH,DateTimeConfig.DAY,wrapSelector = false)
         dateTimePicker.setOnDateTimeChangedListener {
             tvDateTimePickerValue.text = "${StringUtils.conversionTime(it, "yyyy年MM月dd日 HH时mm分ss秒")}  ${StringUtils.getWeek(it)}"
         }

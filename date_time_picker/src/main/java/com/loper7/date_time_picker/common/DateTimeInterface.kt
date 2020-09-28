@@ -1,5 +1,7 @@
 package com.loper7.date_time_picker.common
 
+import com.loper7.date_time_picker.DateTimeConfig
+
 /**
  *
  * @CreateDate:     2020/9/11 16:55
@@ -29,6 +31,11 @@ interface DateTimeInterface {
      * @param time
      */
     fun setMaxMillisecond(time: Long)
+
+    /**
+     * 针对某一个picker设置是否循环滚动
+     */
+    fun setWrapSelectorWheel(types: MutableList<Int>?=null, wrapSelector: Boolean = true)
 
     fun setOnDateTimeChangedListener(callback: ((Long) -> Unit)? = null)
 }

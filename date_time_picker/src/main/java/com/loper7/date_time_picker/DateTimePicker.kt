@@ -168,6 +168,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         mHourSpinner.setTextSize(textSize)
         mMinuteSpinner.setTextSize(textSize)
         mSecondSpinner.setTextSize(textSize)
+
     }
 
     /**
@@ -192,6 +193,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         showLabel(showLabel)
     }
 
+
     override fun setDefaultMillisecond(time: Long) {
         controller.setDefaultMillisecond(time)
     }
@@ -204,8 +206,20 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         controller.setMaxMillisecond(time)
     }
 
+    override fun setWrapSelectorWheel(types: MutableList<Int>?, wrapSelector: Boolean) {
+        controller.setWrapSelectorWheel(types, wrapSelector)
+    }
+
     override fun setOnDateTimeChangedListener(callback: ((Long) -> Unit)?) {
         controller.setOnDateTimeChangedListener(callback)
+    }
+
+    fun setWrapSelectorWheel(vararg types: Int, wrapSelector: Boolean) {
+        setWrapSelectorWheel(types.toMutableList(),wrapSelector)
+    }
+
+    fun setWrapSelectorWheel(wrapSelector: Boolean) {
+        setWrapSelectorWheel(null,wrapSelector)
     }
 
 

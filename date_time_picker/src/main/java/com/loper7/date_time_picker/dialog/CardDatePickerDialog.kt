@@ -32,16 +32,13 @@ import java.util.*
  */
 class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
     companion object {
-        const val CARD = 0//卡片
-        const val CUBE = 1//方形
-        const val STACK = 2//顶部圆角
+        const val CARD = 0 //卡片
+        const val CUBE = 1 //方形
+        const val STACK = 2 //顶部圆角
 
         private var builder: Builder? = null
         fun builder(context: Context): Builder {
-            builder =
-                Builder(
-                    context
-                )
+            builder = Builder(context)
             return builder!!
         }
     }
@@ -105,12 +102,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
                 CUBE -> {
                     parmas.setMargins(0, 0, 0, 0)
                     linear_bg!!.layoutParams = parmas
-                    linear_bg!!.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.colorTextWhite
-                        )
-                    )
+                    linear_bg!!.setBackgroundColor(ContextCompat.getColor(context,
+                        R.color.colorTextWhite))
                 }
                 STACK -> {
                     parmas.setMargins(0, 0, 0, 0)
@@ -126,8 +119,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         }
 
         //标题
-        if (!TextUtils.isEmpty(builder!!.titleValue))
-            tv_title!!.text = builder!!.titleValue
+        if (!TextUtils.isEmpty(builder!!.titleValue)) tv_title!!.text = builder!!.titleValue
 
         //按钮
         tv_cancel?.text = builder!!.cancelText
@@ -136,25 +128,21 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         //显示标签
         datePicker!!.showLabel(builder!!.dateLabel)
         //设置标签文字
-        datePicker!!.setLabelText(
-            builder!!.yearLabel,
+        datePicker!!.setLabelText(builder!!.yearLabel,
             builder!!.monthLabel,
             builder!!.dayLabel,
             builder!!.hourLabel,
             builder!!.minLabel,
-            builder!!.secondLabel
-        )
+            builder!!.secondLabel)
 
         //显示模式
         if (builder!!.displayTypes == null) {
-            builder!!.displayTypes = intArrayOf(
-                DateTimeConfig.YEAR,
+            builder!!.displayTypes = intArrayOf(DateTimeConfig.YEAR,
                 DateTimeConfig.MONTH,
                 DateTimeConfig.DAY,
                 DateTimeConfig.HOUR,
                 DateTimeConfig.MIN,
-                DateTimeConfig.SECOND
-            )
+                DateTimeConfig.SECOND)
         }
 
         datePicker!!.setDisplayType(builder!!.displayTypes)
@@ -192,9 +180,11 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         datePicker!!.setMinMillisecond(builder!!.minTime)
         //设置最大时间
         datePicker!!.setMaxMillisecond(builder!!.maxTime)
-
+        //设置默认时间
         datePicker!!.setDefaultMillisecond(builder!!.defaultMillisecond)
-
+        //设置是否循环滚动
+        datePicker!!.setWrapSelectorWheel(builder!!.wrapSelectorWheelTypes,
+            builder!!.wrapSelectorWheel)
 
         datePicker!!.setTextSize(15)
         if (builder!!.themeColor != 0) {
@@ -211,12 +201,11 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         tv_submit!!.setOnClickListener(this)
         btn_today!!.setOnClickListener(this)
 
-        datePicker!!.setOnDateTimeChangedListener {millisecond ->
+        datePicker!!.setOnDateTimeChangedListener { millisecond ->
             this@CardDatePickerDialog.millisecond = millisecond
             tv_choose_date!!.text =
                 (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
-                    millisecond
-                ))
+                    millisecond))
         }
     }
 
@@ -246,30 +235,49 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     class Builder(private var context: Context) {
         @JvmField
         var backNow: Boolean = true
+
         @JvmField
         var focusDateInfo: Boolean = true
+
         @JvmField
         var dateLabel: Boolean = true
+
         @JvmField
         var cancelText: String = "取消"
+
         @JvmField
         var chooseText: String = "确定"
+
         @JvmField
         var titleValue: String? = null
+
         @JvmField
         var defaultMillisecond: Long = 0
+
         @JvmField
         var minTime: Long = 0
+
         @JvmField
         var maxTime: Long = 0
+
         @JvmField
         var displayTypes: IntArray? = null
+
         @JvmField
         var model: Int = CARD
+
         @JvmField
         var themeColor: Int = 0
+
+        @JvmField
+        var wrapSelectorWheel: Boolean = true
+
+        @JvmField
+        var wrapSelectorWheelTypes: MutableList<Int>? = mutableListOf()
+
         @JvmField
         var onChooseListener: ((Long) -> Unit)? = null
+
         @JvmField
         var onCancelListener: (() -> Unit)? = null
 
@@ -377,14 +385,12 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
          * @param min 分标签
          * @param second 秒标签
          */
-        fun setLabelText(
-            year: String = yearLabel,
-            month: String = monthLabel,
-            day: String = dayLabel,
-            hour: String = hourLabel,
-            min: String = minLabel,
-            second: String = secondLabel
-        ): Builder {
+        fun setLabelText(year: String = yearLabel,
+                         month: String = monthLabel,
+                         day: String = dayLabel,
+                         hour: String = hourLabel,
+                         min: String = minLabel,
+                         second: String = secondLabel): Builder {
             this.yearLabel = year
             this.monthLabel = month
             this.dayLabel = day
@@ -393,6 +399,30 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
             this.secondLabel = second
             return this
         }
+
+        /**
+         * 设置是否循环滚动
+         */
+        fun setWrapSelectorWheel(vararg types: Int, wrapSelector: Boolean): Builder {
+            return setWrapSelectorWheel(types.toMutableList(), wrapSelector)
+        }
+
+        /**
+         * 设置是否循环滚动
+         */
+        fun setWrapSelectorWheel(wrapSelector: Boolean): Builder {
+            return setWrapSelectorWheel(null, wrapSelector)
+        }
+
+        /**
+         * 设置是否循环滚动
+         */
+        fun setWrapSelectorWheel(types: MutableList<Int>?, wrapSelector: Boolean): Builder {
+            this.wrapSelectorWheelTypes = types
+            this.wrapSelectorWheel = wrapSelector
+            return this
+        }
+
 
         /**
          * 绑定选择监听
