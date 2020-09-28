@@ -52,6 +52,13 @@ dependencies {
 &ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardDatePickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
 ## 更新日志
+### [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1) -> [v0.2.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.0)
+* 新增DateTimeController逻辑控制器，以支持UI 100% 自定义
+* 重构DateTimePicker，抽离逻辑至DateTimeController,自身仅控制UI
+* 抽离常量至DateTimeConfig
+* 抽离像素单位转换至ContextExt拓展
+* fixd [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder内变量添加@JvmField以支持Java调用
+
 ### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
 * 修复设置最大年份后，当选择到最大年份时，月份为0的问题
 * 修复范围最大值，范围最小值，选中默认值之间冲突时约束异常问题（规则为：最大范围值与最小范围值存在冲突时，后设置的值不会生效；选中默认值与范围最大值/范围最小值存在冲突时，不会生效）
