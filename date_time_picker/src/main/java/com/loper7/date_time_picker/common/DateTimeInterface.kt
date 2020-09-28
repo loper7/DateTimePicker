@@ -33,7 +33,9 @@ interface DateTimeInterface {
     fun setMaxMillisecond(time: Long)
 
     /**
-     * 针对某一个picker设置是否循环滚动
+     * 设置是否Picker循环滚动
+     * @param types 需要设置的Picker类型（DateTimeConfig-> YEAR,MONTH,DAY,HOUR,MIN,SECOND）
+     * @param wrapSelector 是否循环滚动
      */
     fun setWrapSelectorWheel(types: MutableList<Int>?=null, wrapSelector: Boolean = true)
 

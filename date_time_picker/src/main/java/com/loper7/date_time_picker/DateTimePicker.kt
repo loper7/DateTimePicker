@@ -194,6 +194,24 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     }
 
 
+    /**
+     * 设置是否Picker循环滚动
+     * @param types 需要设置的Picker类型（DateTimeConfig-> YEAR,MONTH,DAY,HOUR,MIN,SECOND）
+     * @param wrapSelector 是否循环滚动
+     */
+    fun setWrapSelectorWheel(vararg types: Int, wrapSelector: Boolean) {
+        setWrapSelectorWheel(types.toMutableList(), wrapSelector)
+    }
+
+    /**
+     * 设置是否Picker循环滚动
+     * @param wrapSelector 是否循环滚动
+     */
+    fun setWrapSelectorWheel(wrapSelector: Boolean) {
+        setWrapSelectorWheel(null, wrapSelector)
+    }
+
+
     override fun setDefaultMillisecond(time: Long) {
         controller.setDefaultMillisecond(time)
     }
@@ -212,14 +230,6 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
     override fun setOnDateTimeChangedListener(callback: ((Long) -> Unit)?) {
         controller.setOnDateTimeChangedListener(callback)
-    }
-
-    fun setWrapSelectorWheel(vararg types: Int, wrapSelector: Boolean) {
-        setWrapSelectorWheel(types.toMutableList(),wrapSelector)
-    }
-
-    fun setWrapSelectorWheel(wrapSelector: Boolean) {
-        setWrapSelectorWheel(null,wrapSelector)
     }
 
 
