@@ -203,10 +203,9 @@ class DateTimeController : DateTimeInterface {
                 .toInstant(ZoneOffset.ofHours(8)).toEpochMilli()
         } else {
             val mCalendar = Calendar.getInstance()
-            mCalendar.set(mYear, mMonth, mDay, mHour, mMinute, mSecond)
+            mCalendar.set(mYear, mMonth-1, mDay, mHour, mMinute, mSecond)
             mCalendar.timeInMillis
         }
-
 
         if (mOnDateTimeChangedListener != null) {
             mOnDateTimeChangedListener?.invoke(millisecond)
