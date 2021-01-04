@@ -177,7 +177,8 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
      * @param month 月标签
      * @param day 日标签
      * @param hour 时标签
-     * @param min 分份标签
+     * @param min 分标签
+     *  @param min 秒标签
      */
     fun setLabelText(year: String = yearLabel,
                      month: String = monthLabel,
@@ -189,6 +190,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         this.monthLabel = month
         this.dayLabel = day
         this.hourLabel = hour
+        this.minLabel = min
         this.secondLabel = second
         showLabel(showLabel)
     }

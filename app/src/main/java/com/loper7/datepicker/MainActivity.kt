@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //dateTimePicker使用示例
-        dateTimePicker.setLabelText("年", "月", "日", "时", "分","秒")
+        dateTimePicker.setLabelText("年", "月", "日", "时", "min","秒")
         dateTimePicker.setWrapSelectorWheel(DateTimeConfig.MONTH,DateTimeConfig.DAY,wrapSelector = false)
         dateTimePicker.setOnDateTimeChangedListener {
             tvDateTimePickerValue.text = "${StringUtils.conversionTime(it, "yyyy年MM月dd日 HH时mm分ss秒")}  ${StringUtils.getWeek(it)}"
