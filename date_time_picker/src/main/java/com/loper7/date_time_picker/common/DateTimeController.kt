@@ -108,9 +108,9 @@ class DateTimeController : DateTimeInterface {
 
         mDaySpinner?.run {
             leapMonth() //判断是否闰年，从而设置2月份的天数
+            value = mDay
             isFocusable = true
             isFocusableInTouchMode = true
-            value = mDay
             setFormatter(DateTimeConfig.formatter)
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(mOnDayChangedListener)
@@ -153,50 +153,52 @@ class DateTimeController : DateTimeInterface {
 
 
     private val mOnYearChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
-        mYear = mYearSpinner!!.value
         leapMonth()
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
     private val mOnMonthChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
-        mMonth = mMonthSpinner!!.value
         leapMonth()
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
     private val mOnDayChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
-        mDay = mDaySpinner!!.value
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
     private val mOnHourChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
-        mHour = mHourSpinner!!.value
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
     private val mOnMinuteChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
-        mMinute = mMinuteSpinner!!.value
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
     private val mOnSecondChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
-        mSecond = mSecondSpinner!!.value
         onDateTimeChanged()
     }
 
     /**
+     * 同步数据
+     */
+    private fun syncDateData(){
+        mYearSpinner?.apply { mYear = value }
+        mMonthSpinner?.apply { mMonth = value }
+        mDaySpinner?.apply { mDay = value }
+        mHourSpinner?.apply { mHour = value }
+        mMinuteSpinner?.apply { mMinute = value }
+        mSecondSpinner?.apply { mSecond = value }
+    }
+    /**
      * 日期发生变化
      */
     private fun onDateTimeChanged() {
-
-        if (mHourSpinner == null) mHour = 0
-        if (mMinuteSpinner == null) mMinute = 0
-        if (mSecondSpinner == null) mSecond = 0
+        syncDateData()
 
         millisecond = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalDateTime.of(mYear, mMonth, mDay, mHour, mMinute, mSecond)
@@ -216,6 +218,8 @@ class DateTimeController : DateTimeInterface {
      * 判定闰月
      */
     private fun leapMonth() {
+        mYearSpinner?.apply { mYear = value }
+        mMonthSpinner?.apply { mMonth = value }
         if (mMonth == 2) {
             if (isLeapYear(mYear)) {
                 if (mDaySpinner?.maxValue != 29) {
@@ -265,6 +269,7 @@ class DateTimeController : DateTimeInterface {
      * @return
      */
     private fun leapMonth2days(year: Int): Int {
+        syncDateData()
         return if (mMonth == 2) {
             if (isLeapYear(year)) {
                 29
@@ -283,6 +288,7 @@ class DateTimeController : DateTimeInterface {
      * 设置允许选择的区间
      */
     private fun limitMaxAndMin() {
+        syncDateData()
         //设置月份最小值
         mMonthSpinner?.run { minValue = if (mYear == mYearSpinner?.minValue) minMonth else 1 }
 
