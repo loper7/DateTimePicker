@@ -50,18 +50,21 @@ Pop-ups
 &ensp;&ensp;[How to use CardDatePickerDialog](https://github.com/loperSeven/DateTimePicker/wiki/CardDatePickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
 ## Update Log
+### [v0.2.2](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.2) -> [v0.2.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.3)
+* fix [issues 11](https://github.com/loperSeven/DateTimePicker/issues/11)
+
 ### [v0.2.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.1) -> [v0.2.2](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.2)
-* fixd [issues 10](https://github.com/loperSeven/DateTimePicker/issues/10)
+* fix [issues 10](https://github.com/loperSeven/DateTimePicker/issues/10)
 
 ### [v0.2.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.0) -> [v0.2.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.1)
-* fixd [issues 7](https://github.com/loperSeven/DateTimePicker/issues/7)
+* fix [issues 7](https://github.com/loperSeven/DateTimePicker/issues/7)
 
 ### [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1) -> [v0.2.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.0)
 * add DateTimeController，Support UI 100% customization
 * recode DateTimePicker，Control only UI
 * add DateTimeConfig
 * add ContextExt
-* fixd [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder all vars add @JvmField 
+* fix [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder all vars add @JvmField 
 
 ### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
 * Fix the problem that the month is 0 when the maximum year is selected after setting the maximum year.
