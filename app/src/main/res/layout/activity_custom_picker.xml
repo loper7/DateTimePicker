@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:descendantFocusability="blocksDescendants"
+    tools:context=".JMainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Layout Examples - Default"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.loper7.date_time_picker.DateTimePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_bg_round_white_5"
+            app:showLabel="true"
+            app:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Layout Examples - Segmentation"
+            android:layout_marginTop="20dp"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <com.loper7.date_time_picker.DateTimePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_bg_round_white_5"
+            app:layout="@layout/layout_date_picker_segmentation"
+            app:showLabel="true"
+            app:textSize="16sp" />
+        <com.loper7.date_time_picker.DateTimePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_bg_round_white_5"
+            app:layout="@layout/layout_date_picker_segmentation"
+            app:showLabel="false"
+            app:textSize="16sp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Layout Examples - Grid"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.loper7.date_time_picker.DateTimePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout="@layout/layout_date_picker_grid"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_bg_round_white_5"
+            app:showLabel="true"
+            app:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Layout Examples - Pyramid"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.loper7.date_time_picker.DateTimePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout="@layout/layout_date_picker_pyramid"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_bg_round_white_5"
+            app:showLabel="true"
+            app:textSize="16sp" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

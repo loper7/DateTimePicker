@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
+import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import com.loper7.date_time_picker.DateTimeConfig.DAY
 import com.loper7.date_time_picker.DateTimeConfig.HOUR
@@ -18,15 +19,17 @@ import com.loper7.date_time_picker.common.DateTimeInterface
 import com.loper7.date_time_picker.number_picker.NumberPicker
 import com.loper7.tab_expand.ext.dip2px
 import com.loper7.tab_expand.ext.px2dip
+import org.jetbrains.annotations.NotNull
+import java.lang.Exception
 
 class DateTimePicker : FrameLayout, DateTimeInterface {
 
-    private lateinit var mYearSpinner: NumberPicker
-    private lateinit var mMonthSpinner: NumberPicker
-    private lateinit var mDaySpinner: NumberPicker
-    private lateinit var mHourSpinner: NumberPicker
-    private lateinit var mMinuteSpinner: NumberPicker
-    private lateinit var mSecondSpinner: NumberPicker
+    private var mYearSpinner: NumberPicker? = null
+    private var mMonthSpinner: NumberPicker? = null
+    private var mDaySpinner: NumberPicker? = null
+    private var mHourSpinner: NumberPicker? = null
+    private var mMinuteSpinner: NumberPicker? = null
+    private var mSecondSpinner: NumberPicker? = null
 
     private var displayType = intArrayOf(YEAR, MONTH, DAY, HOUR, MIN, SECOND)
 
@@ -41,42 +44,82 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     private var minLabel = "分"
     private var secondLabel = "秒"
 
-    private val controller by lazy {
-        DateTimeController.create().bindPicker(YEAR, mYearSpinner).bindPicker(MONTH, mMonthSpinner)
-            .bindPicker(DAY, mDaySpinner).bindPicker(HOUR, mHourSpinner)
-            .bindPicker(MIN, mMinuteSpinner).bindPicker(SECOND, mSecondSpinner).build()
-    }
+    private var layoutResId = R.layout.layout_date_picker
+
+    private lateinit var controller: DateTimeController
+
 
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : this(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val attributesArray = context.obtainStyledAttributes(attrs, R.styleable.DateTimePicker)
         showLabel = attributesArray.getBoolean(R.styleable.DateTimePicker_showLabel, true)
-        themeColor = attributesArray.getColor(R.styleable.DateTimePicker_themeColor,
-            ContextCompat.getColor(context, R.color.colorAccent))
+        themeColor = attributesArray.getColor(
+            R.styleable.DateTimePicker_themeColor,
+            ContextCompat.getColor(context, R.color.colorAccent)
+        )
         textSize =
-            context.px2dip(attributesArray.getDimensionPixelSize(R.styleable.DateTimePicker_textSize,
-                context.dip2px(15f)).toFloat())
+            context.px2dip(
+                attributesArray.getDimensionPixelSize(
+                    R.styleable.DateTimePicker_textSize,
+                    context.dip2px(15f)
+                ).toFloat()
+            )
+        layoutResId = attributesArray.getResourceId(
+            R.styleable.DateTimePicker_layout,
+            R.layout.layout_date_picker
+        )
         attributesArray.recycle()
-        init(context)
+        init()
     }
 
     constructor(context: Context) : super(context) {
-        init(context)
+        init()
     }
 
-    private fun init(context: Context) {
-        View.inflate(context, R.layout.view_date_picker, this)
+    private fun init() {
+        removeAllViews()
+        try {
+            View.inflate(context, layoutResId, this)
+        }catch (e:Exception){
+            throw Exception("layoutResId is it right or not?")
+        }
+
         mYearSpinner = findViewById(R.id.np_datetime_year)
+        if (mYearSpinner == null)
+            mYearSpinner = findViewWithTag("np_datetime_year")
         mMonthSpinner = findViewById(R.id.np_datetime_month)
+        if (mMonthSpinner == null)
+            mMonthSpinner = findViewWithTag("np_datetime_month")
         mDaySpinner = findViewById(R.id.np_datetime_day)
+        if (mDaySpinner == null)
+            mDaySpinner = findViewWithTag("np_datetime_day")
         mHourSpinner = findViewById(R.id.np_datetime_hour)
+        if (mHourSpinner == null)
+            mHourSpinner = findViewWithTag("np_datetime_hour")
         mMinuteSpinner = findViewById(R.id.np_datetime_minute)
+        if (mMinuteSpinner == null)
+            mMinuteSpinner = findViewWithTag("np_datetime_minute")
         mSecondSpinner = findViewById(R.id.np_datetime_second)
+        if (mSecondSpinner == null)
+            mSecondSpinner = findViewWithTag("np_datetime_second")
 
         setThemeColor(themeColor)
         setTextSize(textSize)
         showLabel(showLabel)
+
+        controller = DateTimeController.create().bindPicker(YEAR, mYearSpinner)
+            .bindPicker(MONTH, mMonthSpinner)
+            .bindPicker(DAY, mDaySpinner).bindPicker(HOUR, mHourSpinner)
+            .bindPicker(MIN, mMinuteSpinner).bindPicker(SECOND, mSecondSpinner).build()
+    }
+
+
+    fun setLayout(@NotNull layout: Int) {
+        if (layout == 0)
+            return
+        layoutResId = layout
+        init()
     }
 
     /**
@@ -89,27 +132,27 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         displayType = types
 
         if (!displayType.contains(YEAR)) {
-            mYearSpinner.visibility = View.GONE
+            mYearSpinner?.visibility = View.GONE
         }
 
         if (!displayType.contains(MONTH)) {
-            mMonthSpinner.visibility = View.GONE
+            mMonthSpinner?.visibility = View.GONE
         }
 
         if (!displayType.contains(DAY)) {
-            mDaySpinner.visibility = View.GONE
+            mDaySpinner?.visibility = View.GONE
         }
 
         if (!displayType.contains(HOUR)) {
-            mHourSpinner.visibility = View.GONE
+            mHourSpinner?.visibility = View.GONE
         }
 
         if (!displayType.contains(MIN)) {
-            mMinuteSpinner.visibility = View.GONE
+            mMinuteSpinner?.visibility = View.GONE
         }
 
         if (!displayType.contains(SECOND)) {
-            mSecondSpinner.visibility = View.GONE
+            mSecondSpinner?.visibility = View.GONE
         }
     }
 
@@ -121,19 +164,19 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     fun showLabel(b: Boolean) {
         showLabel = b
         if (b) {
-            mYearSpinner.label = yearLabel
-            mMonthSpinner.label = monthLabel
-            mDaySpinner.label = dayLabel
-            mHourSpinner.label = hourLabel
-            mMinuteSpinner.label = minLabel
-            mSecondSpinner.label = secondLabel
+            mYearSpinner?.label = yearLabel
+            mMonthSpinner?.label = monthLabel
+            mDaySpinner?.label = dayLabel
+            mHourSpinner?.label = hourLabel
+            mMinuteSpinner?.label = minLabel
+            mSecondSpinner?.label = secondLabel
         } else {
-            mYearSpinner.label = ""
-            mMonthSpinner.label = ""
-            mDaySpinner.label = ""
-            mHourSpinner.label = ""
-            mMinuteSpinner.label = ""
-            mSecondSpinner.label = ""
+            mYearSpinner?.label = ""
+            mMonthSpinner?.label = ""
+            mDaySpinner?.label = ""
+            mHourSpinner?.label = ""
+            mMinuteSpinner?.label = ""
+            mSecondSpinner?.label = ""
         }
     }
 
@@ -145,12 +188,12 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     fun setThemeColor(@ColorInt color: Int) {
         if (color == 0) return
         themeColor = color
-        mYearSpinner.setTextColor(themeColor)
-        mMonthSpinner.setTextColor(themeColor)
-        mDaySpinner.setTextColor(themeColor)
-        mHourSpinner.setTextColor(themeColor)
-        mMinuteSpinner.setTextColor(themeColor)
-        mSecondSpinner.setTextColor(themeColor)
+        mYearSpinner?.setTextColor(themeColor)
+        mMonthSpinner?.setTextColor(themeColor)
+        mDaySpinner?.setTextColor(themeColor)
+        mHourSpinner?.setTextColor(themeColor)
+        mMinuteSpinner?.setTextColor(themeColor)
+        mSecondSpinner?.setTextColor(themeColor)
 
     }
 
@@ -162,12 +205,12 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     fun setTextSize(@Dimension sp: Int) {
         if (sp == 0) return
         textSize = sp
-        mYearSpinner.setTextSize(textSize)
-        mMonthSpinner.setTextSize(textSize)
-        mDaySpinner.setTextSize(textSize)
-        mHourSpinner.setTextSize(textSize)
-        mMinuteSpinner.setTextSize(textSize)
-        mSecondSpinner.setTextSize(textSize)
+        mYearSpinner?.setTextSize(textSize)
+        mMonthSpinner?.setTextSize(textSize)
+        mDaySpinner?.setTextSize(textSize)
+        mHourSpinner?.setTextSize(textSize)
+        mMinuteSpinner?.setTextSize(textSize)
+        mSecondSpinner?.setTextSize(textSize)
 
     }
 
@@ -180,12 +223,14 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
      * @param min 分标签
      *  @param min 秒标签
      */
-    fun setLabelText(year: String = yearLabel,
-                     month: String = monthLabel,
-                     day: String = dayLabel,
-                     hour: String = hourLabel,
-                     min: String = minLabel,
-                     second: String = secondLabel) {
+    fun setLabelText(
+        year: String = yearLabel,
+        month: String = monthLabel,
+        day: String = dayLabel,
+        hour: String = hourLabel,
+        min: String = minLabel,
+        second: String = secondLabel
+    ) {
         this.yearLabel = year
         this.monthLabel = month
         this.dayLabel = day

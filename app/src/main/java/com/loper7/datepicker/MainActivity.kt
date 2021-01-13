@@ -2,6 +2,7 @@ package com.loper7.datepicker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -71,22 +72,31 @@ class MainActivity : AppCompatActivity() {
             tvDefaultDate.text = ""
         }
 
+        rgPickerLayout.setOnCheckedChangeListener { group, checkedId ->
+            //自定义布局下防止页面出现不必要显示异常，禁止变更显示选择项
+            checkYear.isEnabled = checkedId == R.id.radioPickerDefault
+            checkMonth.isEnabled = checkedId == R.id.radioPickerDefault
+            checkDay.isEnabled = checkedId == R.id.radioPickerDefault
+            checkHour.isEnabled = checkedId == R.id.radioPickerDefault
+            checkMin.isEnabled = checkedId == R.id.radioPickerDefault
+            checkSecond.isEnabled = checkedId == R.id.radioPickerDefault
+        }
+
 
         btnCardDialogShow.setOnClickListener {
-
-            val displayList = mutableListOf<Int>()
+            var displayList: MutableList<Int>? = mutableListOf()
             if (checkYear.isChecked)
-                displayList.add(DateTimeConfig.YEAR)
+                displayList?.add(DateTimeConfig.YEAR)
             if (checkMonth.isChecked)
-                displayList.add(DateTimeConfig.MONTH)
+                displayList?.add(DateTimeConfig.MONTH)
             if (checkDay.isChecked)
-                displayList.add(DateTimeConfig.DAY)
+                displayList?.add(DateTimeConfig.DAY)
             if (checkHour.isChecked)
-                displayList.add(DateTimeConfig.HOUR)
+                displayList?.add(DateTimeConfig.HOUR)
             if (checkMin.isChecked)
-                displayList.add(DateTimeConfig.MIN)
+                displayList?.add(DateTimeConfig.MIN)
             if (checkSecond.isChecked)
-                displayList.add(DateTimeConfig.SECOND)
+                displayList?.add(DateTimeConfig.SECOND)
 
 
             var model = CardDatePickerDialog.CARD
@@ -99,31 +109,44 @@ class MainActivity : AppCompatActivity() {
             if (radioModelCustom.isChecked)
                 model = R.drawable.shape_bg_dialog_custom
 
+            var pickerLayout = 0
+            if (radioPickerDefault.isChecked)
+                pickerLayout = 0
+            if (radioPickerSegmentation.isChecked) {
+                displayList = null
+                pickerLayout = R.layout.layout_date_picker_segmentation
+            }
+            if (radioPickerGrid.isChecked) {
+                displayList = null
+                pickerLayout = R.layout.layout_date_picker_grid
+            }
+
+
             CardDatePickerDialog.builder(context)
-                .setTitle("CARD DATE PICKER DIALOG")
+                .setTitle("DATE&TIME PICKER")
                 .setDisplayType(displayList)
                 .setBackGroundModel(model)
                 .showBackNow(checkBackNow.isChecked)
                 .setDefaultTime(defaultDate)
                 .setMaxTime(maxDate)
+                .setPickerLayout(pickerLayout)
                 .setMinTime(minDate)
-                .setWrapSelectorWheel(false)
+                .setWrapSelectorWheel(true)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)
                 .showFocusDateInfo(checkDateInfo.isChecked)
                 .setOnChoose("选择") {
-                    tvChooseDate.text = "◉  ${StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm:ss")}    ${StringUtils.getWeek(it)}"
+                    btnCardDialogShow.text = "${StringUtils.conversionTime(
+                        it,
+                        "yyyy-MM-dd HH:mm:ss"
+                    )}    ${StringUtils.getWeek(it)}"
                 }
                 .setOnCancel("关闭") {
                 }.build().show()
         }
 
-
-        //dateTimePicker使用示例
-        dateTimePicker.setLabelText("年", "月", "日", "时", "min","秒")
-        dateTimePicker.setWrapSelectorWheel(DateTimeConfig.MONTH,DateTimeConfig.DAY,wrapSelector = false)
-        dateTimePicker.setOnDateTimeChangedListener {
-            tvDateTimePickerValue.text = "${StringUtils.conversionTime(it, "yyyy年MM月dd日 HH时mm分ss秒")}  ${StringUtils.getWeek(it)}"
+        btnCustomLayout.setOnClickListener {
+            startActivity(Intent(context, CustomLayoutActivity::class.java))
         }
     }
 }

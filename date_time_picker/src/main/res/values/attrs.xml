@@ -32,5 +32,6 @@
         <attr name="showLabel" format="boolean" />
         <attr name="themeColor" format="color" />
         <attr name="textSize" format="dimension" />
+        <attr name="layout" format="reference" />
     </declare-styleable>
 </resources>

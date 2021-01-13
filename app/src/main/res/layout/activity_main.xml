@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:descendantFocusability="blocksDescendants"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:descendantFocusability="blocksDescendants"
     tools:context=".JMainActivity">
 
     <LinearLayout
@@ -32,19 +32,21 @@
             android:textSize="14sp" />
 
 
-        <LinearLayout
+        <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="6dp"
+            app:flexDirection="row"
+            app:flexWrap="wrap">
 
             <CheckBox
                 android:id="@+id/checkYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="年"
+                android:layout_marginRight="16dp"
+                android:text="Year"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
@@ -53,9 +55,9 @@
                 android:id="@+id/checkMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginRight="16dp"
                 android:checked="true"
-                android:text="月"
+                android:text="Month"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
@@ -64,9 +66,9 @@
                 android:id="@+id/checkDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginRight="16dp"
                 android:checked="true"
-                android:text="日"
+                android:text="Day"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
@@ -75,9 +77,9 @@
                 android:id="@+id/checkHour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginRight="16dp"
                 android:checked="true"
-                android:text="时"
+                android:text="Hour"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
@@ -86,23 +88,24 @@
                 android:id="@+id/checkMin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginRight="16dp"
                 android:checked="true"
-                android:text="分"
+                android:text="Minute"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
+
             <CheckBox
                 android:id="@+id/checkSecond"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginRight="16dp"
                 android:checked="true"
-                android:text="秒"
+                android:text="Second"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
-        </LinearLayout>
+        </com.google.android.flexbox.FlexboxLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -125,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="日期信息"
+                android:text="Date Info"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
@@ -136,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:checked="true"
-                android:text="回到当前"
+                android:text="Back Now"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
@@ -147,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:checked="true"
-                android:text="单位标签"
+                android:text="Unit"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15sp"
                 android:theme="@style/CheckBoxWhite" />
@@ -158,15 +161,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:text="Show Model"
+            android:text="Dialog Show Model"
             android:textColor="#FFFFFF"
             android:textSize="14sp" />
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -217,6 +220,55 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:text="Picker Layout"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/rgPickerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioPickerDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Default"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+
+            <RadioButton
+                android:id="@+id/radioPickerSegmentation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Segmentation"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+
+            <RadioButton
+                android:id="@+id/radioPickerGrid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Grid"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="15sp"
+                android:theme="@style/CheckBoxWhite" />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:text="Constraint"
             android:textColor="#FFFFFF"
             android:textSize="14sp" />
@@ -224,8 +276,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="6dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -235,9 +287,9 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:text="范围最大值："
+                    android:text="Max Value："
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
 
@@ -256,7 +308,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="Clear"
+                    android:text="CLEAR"
                     android:textColor="@color/colorTextWhite" />
             </LinearLayout>
 
@@ -268,9 +320,9 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:text="范围最小值："
+                    android:text="Min Value："
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
 
@@ -289,7 +341,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="Clear"
+                    android:text="CLEAR"
                     android:textColor="@color/colorTextWhite" />
             </LinearLayout>
 
@@ -301,9 +353,9 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:text="选中默认值："
+                    android:text="Def Value："
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
 
@@ -322,42 +374,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="Clear"
+                    android:text="CLEAR"
                     android:textColor="@color/colorTextWhite" />
             </LinearLayout>
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/btnCardDialogShow"
-                android:layout_width="100dp"
-                android:layout_height="38dp"
-                android:background="@drawable/shape_button_bg"
-                android:drawableLeft="@drawable/ic_action_smile"
-                android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="10dp"
-                android:text="show"
-                android:textColor="#333333"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvChooseDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text=""
-                android:textColor="#AAFFFFFF"
-                android:textSize="15sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/btnCardDialogShow"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_button_bg"
+            android:drawableLeft="@drawable/ic_action_smile"
+            android:drawablePadding="10dp"
+            android:drawableTint="#333333"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Show Dialog"
+            android:textColor="#333333"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -368,24 +405,22 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <com.loper7.date_time_picker.DateTimePicker
-            android:id="@+id/dateTimePicker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorTextWhite"
-            app:showLabel="true"
-            app:textSize="16sp"
-            app:themeColor="#FF8080" />
-
         <TextView
-            android:id="@+id/tvDateTimePickerValue"
+            android:id="@+id/btnCustomLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text=""
-            android:textColor="#AAFFFFFF"
-            android:textSize="15sp" />
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_button_bg"
+            android:drawableLeft="@drawable/ic_action_set"
+            android:drawablePadding="10dp"
+            android:drawableTint="#333333"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Open Examples"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
 
     </LinearLayout>
 

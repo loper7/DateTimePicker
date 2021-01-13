@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:paddingTop="25dp"
         android:background="@drawable/shape_bg_round_white_5"
         android:orientation="vertical">
 
@@ -18,9 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
+            android:visibility="gone"
             android:layout_marginBottom="25dp"
-            android:text="选择日期及时间"
             android:textStyle="bold"
             android:textColor="@color/colorTextBlack"
             android:textSize="18sp" />
@@ -94,6 +94,7 @@
                 android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
+                android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:padding="16dp"
                 android:text="取消"
@@ -119,6 +120,7 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp"
                 android:text="确定"
+                android:textStyle="bold"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
         </LinearLayout>

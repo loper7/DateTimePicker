@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -17,6 +18,7 @@ import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.R
 import com.loper7.date_time_picker.StringUtils
+import org.jetbrains.annotations.NotNull
 import java.util.*
 
 
@@ -102,8 +104,12 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
                 CUBE -> {
                     parmas.setMargins(0, 0, 0, 0)
                     linear_bg!!.layoutParams = parmas
-                    linear_bg!!.setBackgroundColor(ContextCompat.getColor(context,
-                        R.color.colorTextWhite))
+                    linear_bg!!.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorTextWhite
+                        )
+                    )
                 }
                 STACK -> {
                     parmas.setMargins(0, 0, 0, 0)
@@ -119,30 +125,41 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         }
 
         //标题
-        if (!TextUtils.isEmpty(builder!!.titleValue)) tv_title!!.text = builder!!.titleValue
+        if (builder!!.titleValue.isNullOrEmpty()){
+            tv_title!!.visibility = View.GONE
+        }else{
+            tv_title?.text = builder!!.titleValue
+            tv_title?.visibility = View.VISIBLE
+        }
 
         //按钮
         tv_cancel?.text = builder!!.cancelText
         tv_submit?.text = builder!!.chooseText
 
+        //设置自定义layout
+        datePicker!!.setLayout(builder!!.pickerLayoutResId)
         //显示标签
         datePicker!!.showLabel(builder!!.dateLabel)
         //设置标签文字
-        datePicker!!.setLabelText(builder!!.yearLabel,
+        datePicker!!.setLabelText(
+            builder!!.yearLabel,
             builder!!.monthLabel,
             builder!!.dayLabel,
             builder!!.hourLabel,
             builder!!.minLabel,
-            builder!!.secondLabel)
+            builder!!.secondLabel
+        )
 
         //显示模式
         if (builder!!.displayTypes == null) {
-            builder!!.displayTypes = intArrayOf(DateTimeConfig.YEAR,
+            builder!!.displayTypes = intArrayOf(
+                DateTimeConfig.YEAR,
                 DateTimeConfig.MONTH,
                 DateTimeConfig.DAY,
                 DateTimeConfig.HOUR,
                 DateTimeConfig.MIN,
-                DateTimeConfig.SECOND)
+                DateTimeConfig.SECOND
+            )
         }
 
         datePicker!!.setDisplayType(builder!!.displayTypes)
@@ -183,8 +200,10 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         //设置默认时间
         datePicker!!.setDefaultMillisecond(builder!!.defaultMillisecond)
         //设置是否循环滚动
-        datePicker!!.setWrapSelectorWheel(builder!!.wrapSelectorWheelTypes,
-            builder!!.wrapSelectorWheel)
+        datePicker!!.setWrapSelectorWheel(
+            builder!!.wrapSelectorWheelTypes,
+            builder!!.wrapSelectorWheel
+        )
 
         datePicker!!.setTextSize(15)
         if (builder!!.themeColor != 0) {
@@ -205,7 +224,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
             this@CardDatePickerDialog.millisecond = millisecond
             tv_choose_date!!.text =
                 (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
-                    millisecond))
+                    millisecond
+                ))
         }
     }
 
@@ -270,6 +290,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         var themeColor: Int = 0
 
         @JvmField
+        var pickerLayoutResId: Int = 0
+
+        @JvmField
         var wrapSelectorWheel: Boolean = true
 
         @JvmField
@@ -307,8 +330,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         /**
          * 设置显示值
          */
-        fun setDisplayType(types: MutableList<Int>): Builder {
-            this.displayTypes = types.toIntArray()
+        fun setDisplayType(types: MutableList<Int>?): Builder {
+            this.displayTypes = types?.toIntArray()
             return this
         }
 
@@ -385,12 +408,14 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
          * @param min 分标签
          * @param second 秒标签
          */
-        fun setLabelText(year: String = yearLabel,
-                         month: String = monthLabel,
-                         day: String = dayLabel,
-                         hour: String = hourLabel,
-                         min: String = minLabel,
-                         second: String = secondLabel): Builder {
+        fun setLabelText(
+            year: String = yearLabel,
+            month: String = monthLabel,
+            day: String = dayLabel,
+            hour: String = hourLabel,
+            min: String = minLabel,
+            second: String = secondLabel
+        ): Builder {
             this.yearLabel = year
             this.monthLabel = month
             this.dayLabel = day
@@ -439,6 +464,11 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         fun setOnCancel(text: String = "取消", listener: (() -> Unit)? = null): Builder {
             this.onCancelListener = listener
             this.cancelText = text
+            return this
+        }
+
+        fun setPickerLayout(@NotNull layoutResId: Int): Builder {
+            this.pickerLayoutResId = layoutResId
             return this
         }
 
