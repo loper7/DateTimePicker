@@ -11,15 +11,9 @@ DateTimePicker 一个简约、漂亮的日期时间选择器，支持大面积�
 ## 预览
 加载不出图片可以前往 [简书](https://www.jianshu.com/p/5610db432512) 或 [掘金](https://juejin.im/post/5ecf7699e51d4578644e9320) 查看
 <br/>
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/gif.gif)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_1.jpg)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_2.jpg)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_3.jpg)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_4.jpg)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_5.jpg)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_6.jpg)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_7.jpg)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_8.jpg)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/gif.gif)![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_1.jpg)![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_2.jpg)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_3.jpg)![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_4.jpg)![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_5.jpg)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_6.jpg)![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_7.jpg)![](https://github.com/loperSeven/DateTimePicker/blob/master/images/image_8.jpg)
 <br/>
 ## 快速体验
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/app_qrcode.png)
