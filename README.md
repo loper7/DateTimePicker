@@ -52,18 +52,21 @@ dependencies {
 &ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardDatePickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
 ## 更新日志
+### [v0.2.2](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.2) -> [v0.2.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.3)
+* fix [issues 11](https://github.com/loperSeven/DateTimePicker/issues/11)
+
 ### [v0.2.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.1) -> [v0.2.2](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.2)
-* fixd [issues 10](https://github.com/loperSeven/DateTimePicker/issues/10)
+* fix [issues 10](https://github.com/loperSeven/DateTimePicker/issues/10)
 
 ### [v0.2.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.0) -> [v0.2.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.1)
-* fixd [issues 7](https://github.com/loperSeven/DateTimePicker/issues/7)
+* fix [issues 7](https://github.com/loperSeven/DateTimePicker/issues/7)
 
 ### [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1) -> [v0.2.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.0)
 * 新增DateTimeController逻辑控制器，以支持UI 100% 自定义
 * 重构DateTimePicker，抽离逻辑至DateTimeController,自身仅控制UI
 * 抽离常量至DateTimeConfig
 * 抽离像素单位转换至ContextExt拓展
-* fixd [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder内变量添加@JvmField以支持Java调用
+* fix [issues 4](https://github.com/loperSeven/DateTimePicker/issues/4)-CardDatePickerDialog.Builder内变量添加@JvmField以支持Java调用
 
 ### [v0.1.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.0) -> [v0.1.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.1.1)
 * 修复设置最大年份后，当选择到最大年份时，月份为0的问题
