@@ -2,6 +2,7 @@ package com.loper7.datepicker
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_custom_picker.*
 
 /**
  *
@@ -15,5 +16,7 @@ class CustomLayoutActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_picker)
+        picker.setLayout(R.layout.layout_date_picker_segmentation)
+
     }
 }

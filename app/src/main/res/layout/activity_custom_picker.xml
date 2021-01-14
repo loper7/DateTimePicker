@@ -24,6 +24,7 @@
             android:textStyle="bold" />
 
         <com.loper7.date_time_picker.DateTimePicker
+            android:id="@+id/picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

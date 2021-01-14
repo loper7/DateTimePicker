@@ -426,7 +426,10 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         }
 
         /**
-         * 设置是否循环滚动
+         *设置是否循环滚动
+         *setWrapSelectorWheel()
+         *setLabelText("年","月","日","时")
+         *setLabelText(month="月",hour="时")
          */
         fun setWrapSelectorWheel(vararg types: Int, wrapSelector: Boolean): Builder {
             return setWrapSelectorWheel(types.toMutableList(), wrapSelector)
@@ -467,6 +470,10 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
             return this
         }
 
+        /**
+         * 设置自定义选择器layout
+         *
+         */
         fun setPickerLayout(@NotNull layoutResId: Int): Builder {
             this.pickerLayoutResId = layoutResId
             return this
