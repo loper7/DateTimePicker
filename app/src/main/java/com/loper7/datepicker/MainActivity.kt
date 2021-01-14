@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         tvMaxDate.setOnClickListener {
             CardDatePickerDialog.builder(this)
                 .setTitle("SET MAX DATE")
+                .setDefaultTime(maxDate)
                 .setOnChoose {
                     maxDate = it
                     tvMaxDate.text = StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm:ss")
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         tvMinDate.setOnClickListener {
             CardDatePickerDialog.builder(this)
                 .setTitle("SET MIN DATE")
+                .setDefaultTime(minDate)
                 .setOnChoose {
                     minDate = it
                     tvMinDate.text = StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm:ss")
@@ -60,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         tvDefaultDate.setOnClickListener {
             CardDatePickerDialog.builder(this)
                 .setTitle("SET DEFAULT DATE")
+                .setDefaultTime(defaultDate)
                 .setOnChoose {
                     defaultDate = it
                     tvDefaultDate.text =
@@ -127,11 +130,11 @@ class MainActivity : AppCompatActivity() {
                 .setDisplayType(displayList)
                 .setBackGroundModel(model)
                 .showBackNow(checkBackNow.isChecked)
-                .setDefaultTime(defaultDate)
                 .setMaxTime(maxDate)
                 .setPickerLayout(pickerLayout)
                 .setMinTime(minDate)
-                .setWrapSelectorWheel(true)
+                .setDefaultTime(defaultDate)
+                .setWrapSelectorWheel(false)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)
                 .showFocusDateInfo(checkDateInfo.isChecked)

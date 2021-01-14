@@ -1,5 +1,6 @@
 package com.loper7.date_time_picker.common
 
+import android.util.Log
 import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimeConfig.DAY
 import com.loper7.date_time_picker.DateTimeConfig.HOUR
@@ -53,13 +54,6 @@ class DateTimeController : DateTimeInterface {
 
     private var wrapSelectorWheel = true
     private var wrapSelectorWheelTypes: MutableList<Int>? = null
-
-
-    companion object {
-        fun create(): DateTimeController {
-            return DateTimeController()
-        }
-    }
 
 
     fun bindPicker(type: Int, picker: NumberPicker?): DateTimeController {
@@ -199,6 +193,7 @@ class DateTimeController : DateTimeInterface {
      */
     private fun onDateTimeChanged() {
         syncDateData()
+        Log.d("DateTimePicker","$mYear-$mMonth-$mDay $mHour:$mMinute:$mSecond")
 
         millisecond = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalDateTime.of(mYear, mMonth, mDay, mHour, mMinute, mSecond)
@@ -312,7 +307,6 @@ class DateTimeController : DateTimeInterface {
         }
 
 
-        mDay = mDaySpinner!!.value
 
         /** */ //设置小时最小值
         mHourSpinner?.run {
@@ -378,35 +372,36 @@ class DateTimeController : DateTimeInterface {
         return c[Calendar.DAY_OF_MONTH] == 29
     }
 
-    override fun setDefaultMillisecond(time: Long) {
-        if (time <= 0) return
-        if (time < minMillisecond) return
-        if (maxMillisecond in 1 until time) return
-        val mCalendar = Calendar.getInstance()
-        time.let { mCalendar.timeInMillis = it }
+    override fun setDefaultMillisecond( time: Long) {
+        var vTime = time
+        if (vTime <= 0) vTime = System.currentTimeMillis()
+        if (vTime < minMillisecond) return
+        if (maxMillisecond in 1 until vTime) return
 
+        val mCalendar = Calendar.getInstance()
+        mCalendar.timeInMillis = vTime
         mYear = mCalendar.get(Calendar.YEAR)
         mMonth = mCalendar.get(Calendar.MONTH) + 1
-
         mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
         mHour = mCalendar.get(Calendar.HOUR_OF_DAY)
         mMinute = mCalendar.get(Calendar.MINUTE)
         mSecond = mCalendar.get(Calendar.SECOND)
 
-        millisecond = time
+        millisecond = vTime
         mYearSpinner?.value = mYear
         mMonthSpinner?.value = mMonth
         mDaySpinner?.value = mDay
         mHourSpinner?.value = mHour
         mMinuteSpinner?.value = mMinute
         mSecondSpinner?.value = mSecond
+
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
     override fun setMinMillisecond(time: Long) {
         if (time <= 0) return
-        if (maxMillisecond in 1 until time) return
+        if (maxMillisecond >0 && maxMillisecond<time) return
         minMillisecond = time
         val mCalendar = Calendar.getInstance()
         mCalendar.timeInMillis = time
@@ -416,14 +411,10 @@ class DateTimeController : DateTimeInterface {
         minMinute = mCalendar.get(Calendar.MINUTE)
         minSecond = mCalendar.get(Calendar.SECOND)
         mYearSpinner?.minValue = mCalendar.get(Calendar.YEAR)
-        mMonthSpinner?.minValue = mMonth
-        mDaySpinner?.minValue = minDay
-        mHourSpinner?.minValue = minHour
-        mMinuteSpinner?.minValue = minMinute
-        mSecondSpinner?.minValue = minSecond
+
         limitMaxAndMin()
         setWrapSelectorWheel(wrapSelectorWheelTypes,wrapSelectorWheel)
-        if (this.millisecond < time) setDefaultMillisecond(time)
+        if(this.millisecond < minMillisecond) setDefaultMillisecond(minMillisecond)
     }
 
     override fun setMaxMillisecond(time: Long) {
@@ -439,14 +430,9 @@ class DateTimeController : DateTimeInterface {
         maxSecond = mCalendar.get(Calendar.SECOND)
 
         mYearSpinner?.maxValue = mCalendar.get(Calendar.YEAR)
-        mMonthSpinner?.maxValue = maxMonth
-        mDaySpinner?.maxValue = maxDay
-        mHourSpinner?.maxValue = maxHour
-        mMinuteSpinner?.maxValue = maxMinute
-        mSecondSpinner?.maxValue = maxSecond
         limitMaxAndMin()
         setWrapSelectorWheel(wrapSelectorWheelTypes,wrapSelectorWheel)
-        if (this.millisecond > time) setDefaultMillisecond(time)
+        if(this.millisecond > maxMillisecond) setDefaultMillisecond(maxMillisecond)
     }
 
 

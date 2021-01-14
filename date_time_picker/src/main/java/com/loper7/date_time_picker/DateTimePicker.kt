@@ -108,7 +108,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         setTextSize(textSize)
         showLabel(showLabel)
 
-        controller = DateTimeController.create().bindPicker(YEAR, mYearSpinner)
+        controller = DateTimeController().bindPicker(YEAR, mYearSpinner)
             .bindPicker(MONTH, mMonthSpinner)
             .bindPicker(DAY, mDaySpinner).bindPicker(HOUR, mHourSpinner)
             .bindPicker(MIN, mMinuteSpinner).bindPicker(SECOND, mSecondSpinner).build()
