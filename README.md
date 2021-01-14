@@ -38,7 +38,7 @@ Step 2. 添加 Gradle依赖
 dependencies {
     ...
     implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation 'com.github.loperSeven:DateTimePicker:$version'//具体版本请看顶部jitpack标识，如0.2.2,仅支持androidx
+    implementation 'com.github.loperSeven:DateTimePicker:$version'//具体版本请看顶部jitpack标识，如0.3.0,仅支持androidx
 }
 
 
@@ -52,7 +52,14 @@ dependencies {
 <br/>
 &ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardDatePickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
+自定义选择器
+<br/>
+&ensp;&ensp;[DateTimePicker 自定义](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
 ## 更新日志
+### [v0.2.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.3) -> [v0.3.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.0)
+* 支持自定义选择器布局，详见[wiki](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
+* fix [issues 12](https://github.com/loperSeven/DateTimePicker/issues/12)
+
 ### [v0.2.2](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.2) -> [v0.2.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.3)
 * fix [issues 11](https://github.com/loperSeven/DateTimePicker/issues/11)
 
