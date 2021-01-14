@@ -9,11 +9,12 @@
 A simple and beautiful date&time picker, supports a large area of custom UI, built-in date&time selection dialog, based on Google BottomSheetDialog, can be used directly.
 <br/>
 ## Preview
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/card.gif)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/cube.gif)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/sta.gif)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/custom.gif)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/main.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/display.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/dialog.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/mode.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/layout.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/mode_1.jpg)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/mode_2.jpg)
 <br/>
 ## Download APK
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/app_qrcode.png)
@@ -49,7 +50,14 @@ Pop-ups
 <br/>
 &ensp;&ensp;[How to use CardDatePickerDialog](https://github.com/loperSeven/DateTimePicker/wiki/CardDatePickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
+<br/>
+Custom DateTimePicker UI
+<br/>
+&ensp;&ensp;[DateTimePicker 自定义](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
 ## Update Log
+### [v0.2.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.3) -> [v0.3.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.0)
+* add Custom DateTimePicker UI , see [wiki](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
+* fix [issues 12](https://github.com/loperSeven/DateTimePicker/issues/12)
 ### [v0.2.2](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.2) -> [v0.2.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.3)
 * fix [issues 11](https://github.com/loperSeven/DateTimePicker/issues/11)
 
