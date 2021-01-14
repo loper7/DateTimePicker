@@ -52,6 +52,9 @@ dependencies {
 <br/>
 &ensp;&ensp;[CardDatePickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardDatePickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 <br/>
+自定义选择器
+<br/>
+&ensp;&ensp;[DateTimePicker 自定义](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
 ## 更新日志
 ### [v0.2.2](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.2) -> [v0.2.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.2.3)
 * fix [issues 11](https://github.com/loperSeven/DateTimePicker/issues/11)
