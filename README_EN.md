@@ -9,12 +9,12 @@
 A simple and beautiful date&time picker, supports a large area of custom UI, built-in date&time selection dialog, based on Google BottomSheetDialog, can be used directly.
 <br/>
 ## Preview
-<img src="https://github.com/loperSeven/DateTimePicker/blob/master/images/display.gif" width="300">
-<img src="https://github.com/loperSeven/DateTimePicker/blob/master/images/dialog.gif" width="300">
-<img src="https://github.com/loperSeven/DateTimePicker/blob/master/images/mode.gif" width="300">
-<img src="https://github.com/loperSeven/DateTimePicker/blob/master/images/layout.gif" width="300">
-<img src="https://github.com/loperSeven/DateTimePicker/blob/master/images/mode_1.jpg" width="300">
-<img src="https://github.com/loperSeven/DateTimePicker/blob/master/images/mode_2.jpg" width="300">
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/display.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/dialog.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/mode.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/layout.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/mode_1.jpg)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/mode_2.jpg)
 <br/>
 ## Download APK
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/app_qrcode.png)
