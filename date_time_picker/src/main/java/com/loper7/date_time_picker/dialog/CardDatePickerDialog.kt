@@ -38,10 +38,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         const val CUBE = 1 //方形
         const val STACK = 2 //顶部圆角
 
-        private var builder: Builder? = null
         fun builder(context: Context): Builder {
-            builder = Builder(context)
-            return builder!!
+            return lazy { Builder(context) }.value
         }
     }
 
@@ -61,15 +59,14 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     private var millisecond: Long = 0
 
 
-    init {
-        if (builder == null) {
-            builder = Builder(context)
-        }
-    }
-
-    constructor(context: Context, builder: Builder) : this(context) {
+    constructor(context: Context, builder: Builder):this(context) {
         this.builder = builder
     }
+
+    init {
+        builder = builder(context)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dialog_time_picker)
@@ -125,9 +122,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         }
 
         //标题
-        if (builder!!.titleValue.isNullOrEmpty()){
+        if (builder!!.titleValue.isNullOrEmpty()) {
             tv_title!!.visibility = View.GONE
-        }else{
+        } else {
             tv_title?.text = builder!!.titleValue
             tv_title?.visibility = View.VISIBLE
         }
@@ -480,7 +477,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         }
 
         fun build(): CardDatePickerDialog {
-            return CardDatePickerDialog(context, this)
+            return CardDatePickerDialog(context,this)
         }
     }
 
