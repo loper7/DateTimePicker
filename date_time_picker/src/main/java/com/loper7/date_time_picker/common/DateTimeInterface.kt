@@ -9,7 +9,7 @@ import com.loper7.date_time_picker.DateTimeConfig
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-interface DateTimeInterface {
+internal interface DateTimeInterface {
 
     /**
      * 设置默认时间戳

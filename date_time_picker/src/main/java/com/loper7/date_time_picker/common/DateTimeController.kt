@@ -20,7 +20,7 @@ import java.util.*
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-class DateTimeController : DateTimeInterface {
+internal class DateTimeController : DateTimeInterface {
     private var mYearSpinner: NumberPicker? = null
     private var mMonthSpinner: NumberPicker? = null
     private var mDaySpinner: NumberPicker? = null

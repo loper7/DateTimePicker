@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.util.Log
 import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimePicker
-import com.loper7.date_time_picker.StringUtils
 import com.loper7.date_time_picker.dialog.CardDatePickerDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                 }.build().show()
 
         }
+
 
         btnClearMax.setOnClickListener {
             maxDate = 0L
@@ -85,7 +85,6 @@ class MainActivity : AppCompatActivity() {
             checkMin.isEnabled = checkedId == R.id.radioPickerDefault
             checkSecond.isEnabled = checkedId == R.id.radioPickerDefault
         }
-
 
         btnCardDialogShow.setOnClickListener {
             var displayList: MutableList<Int>? = mutableListOf()

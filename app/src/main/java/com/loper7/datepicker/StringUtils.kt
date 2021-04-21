@@ -1,4 +1,4 @@
-package com.loper7.date_time_picker
+package com.loper7.datepicker
 
 import android.content.Context
 import android.text.format.DateFormat
@@ -13,7 +13,7 @@ import java.util.*
  * 字符串操作工具包
  *
  */
-internal object StringUtils {
+ object StringUtils {
     fun conversionTime(
         time: String,
         format: String = "yyyy-MM-dd HH:mm:ss"
