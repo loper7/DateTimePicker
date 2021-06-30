@@ -1,6 +1,5 @@
 package com.loper7.date_time_picker.common
 
-import android.util.Log
 import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimeConfig.DAY
 import com.loper7.date_time_picker.DateTimeConfig.HOUR
@@ -9,8 +8,7 @@ import com.loper7.date_time_picker.DateTimeConfig.MONTH
 import com.loper7.date_time_picker.DateTimeConfig.SECOND
 import com.loper7.date_time_picker.DateTimeConfig.YEAR
 import com.loper7.date_time_picker.number_picker.NumberPicker
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -20,7 +18,7 @@ import java.util.*
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-internal class DateTimeController : DateTimeInterface {
+class DateTimeController : BaseDateTimeController() {
     private var mYearSpinner: NumberPicker? = null
     private var mMonthSpinner: NumberPicker? = null
     private var mDaySpinner: NumberPicker? = null
@@ -56,7 +54,7 @@ internal class DateTimeController : DateTimeInterface {
     private var wrapSelectorWheelTypes: MutableList<Int>? = null
 
 
-    fun bindPicker(type: Int, picker: NumberPicker?): DateTimeController {
+    override fun bindPicker(type: Int, picker: NumberPicker?): DateTimeController {
         when (type) {
             YEAR -> mYearSpinner = picker
             MONTH -> mMonthSpinner = picker
@@ -68,7 +66,7 @@ internal class DateTimeController : DateTimeInterface {
         return this
     }
 
-    fun build(): DateTimeController {
+    override fun build(): DateTimeController {
         val mDate = Calendar.getInstance()
         mYear = mDate.get(Calendar.YEAR)
         mMonth = mDate.get(Calendar.MONTH) + 1
@@ -180,7 +178,7 @@ internal class DateTimeController : DateTimeInterface {
     /**
      * 同步数据
      */
-    private fun syncDateData(){
+    private fun syncDateData() {
         mYearSpinner?.apply { mYear = value }
         mMonthSpinner?.apply { mMonth = value }
         mDaySpinner?.apply { mDay = value }
@@ -188,21 +186,17 @@ internal class DateTimeController : DateTimeInterface {
         mMinuteSpinner?.apply { mMinute = value }
         mSecondSpinner?.apply { mSecond = value }
     }
+
     /**
      * 日期发生变化
      */
     private fun onDateTimeChanged() {
         syncDateData()
-        Log.d("DateTimePicker","$mYear-$mMonth-$mDay $mHour:$mMinute:$mSecond")
+//        Log.d("DateTimePicker","$mYear-$mMonth-$mDay $mHour:$mMinute:$mSecond")
 
-        millisecond = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            LocalDateTime.of(mYear, mMonth, mDay, mHour, mMinute, mSecond)
-                .toInstant(ZoneOffset.ofHours(8)).toEpochMilli()
-        } else {
-            val mCalendar = Calendar.getInstance()
-            mCalendar.set(mYear, mMonth-1, mDay, mHour, mMinute, mSecond)
-            mCalendar.timeInMillis
-        }
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val date: Date = simpleDateFormat.parse("$mYear-$mMonth-$mDay $mHour:$mMinute:$mSecond")
+        millisecond = date.time
 
         if (mOnDateTimeChangedListener != null) {
             mOnDateTimeChangedListener?.invoke(millisecond)
@@ -307,7 +301,6 @@ internal class DateTimeController : DateTimeInterface {
         }
 
 
-
         /** */ //设置小时最小值
         mHourSpinner?.run {
             minValue =
@@ -355,7 +348,7 @@ internal class DateTimeController : DateTimeInterface {
                 else 59
         }
 
-        setWrapSelectorWheel(wrapSelectorWheelTypes,wrapSelectorWheel)
+        setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
 
     }
 
@@ -372,7 +365,7 @@ internal class DateTimeController : DateTimeInterface {
         return c[Calendar.DAY_OF_MONTH] == 29
     }
 
-    override fun setDefaultMillisecond( time: Long) {
+    override fun setDefaultMillisecond(time: Long) {
         var vTime = time
         if (vTime <= 0) vTime = System.currentTimeMillis()
         if (vTime < minMillisecond) return
@@ -401,7 +394,7 @@ internal class DateTimeController : DateTimeInterface {
 
     override fun setMinMillisecond(time: Long) {
         if (time <= 0) return
-        if (maxMillisecond >0 && maxMillisecond<time) return
+        if (maxMillisecond > 0 && maxMillisecond < time) return
         minMillisecond = time
         val mCalendar = Calendar.getInstance()
         mCalendar.timeInMillis = time
@@ -413,8 +406,8 @@ internal class DateTimeController : DateTimeInterface {
         mYearSpinner?.minValue = mCalendar.get(Calendar.YEAR)
 
         limitMaxAndMin()
-        setWrapSelectorWheel(wrapSelectorWheelTypes,wrapSelectorWheel)
-        if(this.millisecond < minMillisecond) setDefaultMillisecond(minMillisecond)
+        setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
+        if (this.millisecond < minMillisecond) setDefaultMillisecond(minMillisecond)
     }
 
     override fun setMaxMillisecond(time: Long) {
@@ -431,8 +424,8 @@ internal class DateTimeController : DateTimeInterface {
 
         mYearSpinner?.maxValue = mCalendar.get(Calendar.YEAR)
         limitMaxAndMin()
-        setWrapSelectorWheel(wrapSelectorWheelTypes,wrapSelectorWheel)
-        if(this.millisecond > maxMillisecond) setDefaultMillisecond(maxMillisecond)
+        setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
+        if (this.millisecond > maxMillisecond) setDefaultMillisecond(maxMillisecond)
     }
 
 

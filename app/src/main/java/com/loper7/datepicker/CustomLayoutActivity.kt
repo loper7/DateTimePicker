@@ -17,6 +17,7 @@ class CustomLayoutActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_picker)
         picker.setLayout(R.layout.layout_date_picker_segmentation)
+//        picker.bindController(DateTimeCustomController())
 
     }
 }

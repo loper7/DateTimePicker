@@ -14,6 +14,7 @@ import com.loper7.date_time_picker.DateTimeConfig.MIN
 import com.loper7.date_time_picker.DateTimeConfig.MONTH
 import com.loper7.date_time_picker.DateTimeConfig.SECOND
 import com.loper7.date_time_picker.DateTimeConfig.YEAR
+import com.loper7.date_time_picker.common.BaseDateTimeController
 import com.loper7.date_time_picker.common.DateTimeController
 import com.loper7.date_time_picker.common.DateTimeInterface
 import com.loper7.date_time_picker.number_picker.NumberPicker
@@ -46,7 +47,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
     private var layoutResId = R.layout.layout_date_picker
 
-    private lateinit var controller: DateTimeController
+    private var controller: BaseDateTimeController? = null
 
 
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : this(context, attrs)
@@ -81,7 +82,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         removeAllViews()
         try {
             View.inflate(context, layoutResId, this)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             throw Exception("layoutResId is it right or not?")
         }
 
@@ -108,13 +109,31 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         setTextSize(textSize)
         showLabel(showLabel)
 
-        controller = DateTimeController().bindPicker(YEAR, mYearSpinner)
-            .bindPicker(MONTH, mMonthSpinner)
-            .bindPicker(DAY, mDaySpinner).bindPicker(HOUR, mHourSpinner)
-            .bindPicker(MIN, mMinuteSpinner).bindPicker(SECOND, mSecondSpinner).build()
+        //绑定控制器
+        bindController(controller?:DateTimeController())
     }
 
 
+    /**
+     * 绑定控制器
+     */
+    fun bindController(controller: BaseDateTimeController?){
+        this.controller = controller
+        if (this.controller == null)
+            this.controller = DateTimeController().bindPicker(YEAR, mYearSpinner)
+                .bindPicker(MONTH, mMonthSpinner)
+                .bindPicker(DAY, mDaySpinner).bindPicker(HOUR, mHourSpinner)
+                .bindPicker(MIN, mMinuteSpinner).bindPicker(SECOND, mSecondSpinner).build()
+        else
+            this.controller?.bindPicker(YEAR, mYearSpinner)
+                ?.bindPicker(MONTH, mMonthSpinner)
+                ?.bindPicker(DAY, mDaySpinner)?.bindPicker(HOUR, mHourSpinner)
+                ?.bindPicker(MIN, mMinuteSpinner)?.bindPicker(SECOND, mSecondSpinner)?.build()
+    }
+
+    /**
+     * 设置自定义layout
+     */
     fun setLayout(@NotNull layout: Int) {
         if (layout == 0)
             return
@@ -260,23 +279,23 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
 
     override fun setDefaultMillisecond(time: Long) {
-        controller.setDefaultMillisecond(time)
+        controller?.setDefaultMillisecond(time)
     }
 
     override fun setMinMillisecond(time: Long) {
-        controller.setMinMillisecond(time)
+        controller?.setMinMillisecond(time)
     }
 
     override fun setMaxMillisecond(time: Long) {
-        controller.setMaxMillisecond(time)
+        controller?.setMaxMillisecond(time)
     }
 
     override fun setWrapSelectorWheel(types: MutableList<Int>?, wrapSelector: Boolean) {
-        controller.setWrapSelectorWheel(types, wrapSelector)
+        controller?.setWrapSelectorWheel(types, wrapSelector)
     }
 
     override fun setOnDateTimeChangedListener(callback: ((Long) -> Unit)?) {
-        controller.setOnDateTimeChangedListener(callback)
+        controller?.setOnDateTimeChangedListener(callback)
     }
 
 
