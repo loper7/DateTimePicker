@@ -2,6 +2,7 @@ package com.loper7.date_time_picker
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
@@ -22,6 +23,7 @@ import com.loper7.tab_expand.ext.dip2px
 import com.loper7.tab_expand.ext.px2dip
 import org.jetbrains.annotations.NotNull
 import java.lang.Exception
+import kotlin.math.log
 
 class DateTimePicker : FrameLayout, DateTimeInterface {
 
@@ -36,7 +38,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
     private var showLabel = true
     private var themeColor = 0
-    private var textSize = 0
+    private var textSize = 15
 
     private var yearLabel = "年"
     private var monthLabel = "月"
@@ -66,6 +68,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
                     context.dip2px(15f)
                 ).toFloat()
             )
+
         layoutResId = attributesArray.getResourceId(
             R.styleable.DateTimePicker_layout,
             R.layout.layout_date_picker
@@ -110,14 +113,14 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         showLabel(showLabel)
 
         //绑定控制器
-        bindController(controller?:DateTimeController())
+        bindController(controller ?: DateTimeController())
     }
 
 
     /**
      * 绑定控制器
      */
-    fun bindController(controller: BaseDateTimeController?){
+    fun bindController(controller: BaseDateTimeController?) {
         this.controller = controller
         if (this.controller == null)
             this.controller = DateTimeController().bindPicker(YEAR, mYearSpinner)
@@ -207,12 +210,12 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     fun setThemeColor(@ColorInt color: Int) {
         if (color == 0) return
         themeColor = color
-        mYearSpinner?.setTextColor(themeColor)
-        mMonthSpinner?.setTextColor(themeColor)
-        mDaySpinner?.setTextColor(themeColor)
-        mHourSpinner?.setTextColor(themeColor)
-        mMinuteSpinner?.setTextColor(themeColor)
-        mSecondSpinner?.setTextColor(themeColor)
+        mYearSpinner?.selectedTextColor = themeColor
+        mMonthSpinner?.selectedTextColor = themeColor
+        mDaySpinner?.selectedTextColor = themeColor
+        mHourSpinner?.selectedTextColor = themeColor
+        mMinuteSpinner?.selectedTextColor = themeColor
+        mSecondSpinner?.selectedTextColor = themeColor
 
     }
 
@@ -223,13 +226,21 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
      */
     fun setTextSize(@Dimension sp: Int) {
         if (sp == 0) return
-        textSize = sp
-        mYearSpinner?.setTextSize(textSize)
-        mMonthSpinner?.setTextSize(textSize)
-        mDaySpinner?.setTextSize(textSize)
-        mHourSpinner?.setTextSize(textSize)
-        mMinuteSpinner?.setTextSize(textSize)
-        mSecondSpinner?.setTextSize(textSize)
+        var textSize = context!!.dip2px(sp.toFloat())
+        var normalTextSize =textSize.toFloat() - context!!.dip2px(2f)
+        mYearSpinner?.textSize = normalTextSize
+        mMonthSpinner?.textSize = normalTextSize
+        mDaySpinner?.textSize = normalTextSize
+        mHourSpinner?.textSize = normalTextSize
+        mMinuteSpinner?.textSize = normalTextSize
+        mSecondSpinner?.textSize = normalTextSize
+
+        mYearSpinner?.selectedTextSize = textSize.toFloat()
+        mMonthSpinner?.selectedTextSize = textSize.toFloat()
+        mDaySpinner?.selectedTextSize = textSize.toFloat()
+        mHourSpinner?.selectedTextSize = textSize.toFloat()
+        mMinuteSpinner?.selectedTextSize = textSize.toFloat()
+        mSecondSpinner?.selectedTextSize = textSize.toFloat()
 
     }
 

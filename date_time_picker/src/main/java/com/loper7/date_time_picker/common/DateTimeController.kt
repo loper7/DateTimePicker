@@ -144,34 +144,34 @@ class DateTimeController : BaseDateTimeController() {
     }
 
 
-    private val mOnYearChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
+    private val mOnYearChangedListener = NumberPicker.OnValueChangeListener { _, _, _ ->
         leapMonth()
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
-    private val mOnMonthChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
+    private val mOnMonthChangedListener = NumberPicker.OnValueChangeListener { _, _, _ ->
         leapMonth()
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
-    private val mOnDayChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
+    private val mOnDayChangedListener = NumberPicker.OnValueChangeListener { _, _, _ ->
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
-    private val mOnHourChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
+    private val mOnHourChangedListener = NumberPicker.OnValueChangeListener { _, _, _ ->
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
-    private val mOnMinuteChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
+    private val mOnMinuteChangedListener = NumberPicker.OnValueChangeListener { _, _, _ ->
         limitMaxAndMin()
         onDateTimeChanged()
     }
 
-    private val mOnSecondChangedListener = NumberPicker.OnValueChangeListener { _, _, _, _ ->
+    private val mOnSecondChangedListener = NumberPicker.OnValueChangeListener { _, _, _ ->
         onDateTimeChanged()
     }
 

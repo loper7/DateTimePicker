@@ -14,16 +14,13 @@
         android:orientation="horizontal">
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:tag="np_datetime_year"
-            app:internalLayout="@layout/number_picker_with_selector_wheel"
-            app:internalMaxHeight="184dp"
-            app:internalMinWidth="60dp"
-            app:selectionDivider="#E5E5E5"
-            app:selectionDividerHeight="1dp"
-            app:solidColor="#00000000"
-            app:virtualButtonPressedDrawable="#00000000" />
+            app:np_dividerColor="#E5E5E5"
+            app:np_dividerThickness="0.6dp"
+            app:np_height="184dp"
+            app:np_wheelItemCount="3"  />
 
 
         <View
@@ -33,16 +30,13 @@
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
             android:id="@+id/np_datetime_month"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:tag="np_datetime_month"
-            app:internalLayout="@layout/number_picker_with_selector_wheel"
-            app:internalMaxHeight="184dp"
-            app:internalMinWidth="60dp"
-            app:selectionDivider="#E5E5E5"
-            app:selectionDividerHeight="1dp"
-            app:solidColor="#00000000"
-            app:virtualButtonPressedDrawable="#00000000" />
+            app:np_dividerColor="#E5E5E5"
+            app:np_dividerThickness="0.6dp"
+            app:np_height="184dp"
+            app:np_wheelItemCount="3"/>
 
         <View
             android:layout_width="1dp"
@@ -50,16 +44,13 @@
             android:background="#E5E5E5" />
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:tag="np_datetime_day"
-            app:internalLayout="@layout/number_picker_with_selector_wheel"
-            app:internalMaxHeight="184dp"
-            app:internalMinWidth="60dp"
-            app:selectionDivider="#E5E5E5"
-            app:selectionDividerHeight="1dp"
-            app:solidColor="#00000000"
-            app:virtualButtonPressedDrawable="#00000000" />
+            app:np_dividerColor="#E5E5E5"
+            app:np_dividerThickness="0.6dp"
+            app:np_height="184dp"
+            app:np_wheelItemCount="3" />
     </LinearLayout>
 
     <LinearLayout
@@ -70,16 +61,13 @@
         android:orientation="horizontal">
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:tag="np_datetime_hour"
-            app:internalLayout="@layout/number_picker_with_selector_wheel"
-            app:internalMaxHeight="184dp"
-            app:internalMinWidth="60dp"
-            app:selectionDivider="#E5E5E5"
-            app:selectionDividerHeight="1dp"
-            app:solidColor="#00000000"
-            app:virtualButtonPressedDrawable="#00000000" />
+            app:np_dividerColor="#E5E5E5"
+            app:np_dividerThickness="0.6dp"
+            app:np_height="184dp"
+            app:np_wheelItemCount="3"/>
 
 
         <View
@@ -88,16 +76,13 @@
             android:background="#E5E5E5" />
 
         <com.loper7.date_time_picker.number_picker.NumberPicker
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:tag="np_datetime_minute"
-            app:internalLayout="@layout/number_picker_with_selector_wheel"
-            app:internalMaxHeight="184dp"
-            app:internalMinWidth="60dp"
-            app:selectionDivider="#E5E5E5"
-            app:selectionDividerHeight="1dp"
-            app:solidColor="#00000000"
-            app:virtualButtonPressedDrawable="#00000000" />
+            app:np_dividerColor="#E5E5E5"
+            app:np_dividerThickness="0.6dp"
+            app:np_height="184dp"
+            app:np_wheelItemCount="3" />
     </LinearLayout>
 
 </LinearLayout>

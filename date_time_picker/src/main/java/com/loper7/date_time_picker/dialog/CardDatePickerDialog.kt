@@ -202,7 +202,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
             builder!!.wrapSelectorWheel
         )
 
-        datePicker!!.setTextSize(15)
+        datePicker!!.setTextSize(14)
         if (builder!!.themeColor != 0) {
             datePicker!!.setThemeColor(builder!!.themeColor)
             tv_submit!!.setTextColor(builder!!.themeColor)

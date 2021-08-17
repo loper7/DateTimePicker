@@ -48,7 +48,7 @@
                 android:layout_marginRight="16dp"
                 android:text="Year"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <CheckBox
@@ -59,7 +59,7 @@
                 android:checked="true"
                 android:text="Month"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <CheckBox
@@ -70,7 +70,7 @@
                 android:checked="true"
                 android:text="Day"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <CheckBox
@@ -81,7 +81,7 @@
                 android:checked="true"
                 android:text="Hour"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <CheckBox
@@ -92,7 +92,7 @@
                 android:checked="true"
                 android:text="Minute"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <CheckBox
@@ -103,7 +103,7 @@
                 android:checked="true"
                 android:text="Second"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
         </com.google.android.flexbox.FlexboxLayout>
 
@@ -130,7 +130,7 @@
                 android:checked="true"
                 android:text="Date Info"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <CheckBox
@@ -141,7 +141,7 @@
                 android:checked="true"
                 android:text="Back Now"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <CheckBox
@@ -152,7 +152,7 @@
                 android:checked="true"
                 android:text="Unit"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
         </LinearLayout>
 
@@ -179,7 +179,7 @@
                 android:checked="true"
                 android:text="Card"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <RadioButton
@@ -189,7 +189,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="Cube"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <RadioButton
@@ -199,7 +199,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="Stack"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <RadioButton
@@ -209,7 +209,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="Custom"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
 
@@ -239,7 +239,7 @@
                 android:checked="true"
                 android:text="Default"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <RadioButton
@@ -249,7 +249,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="Segmentation"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
             <RadioButton
@@ -259,7 +259,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="Grid"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:theme="@style/CheckBoxWhite" />
 
         </RadioGroup>
@@ -291,17 +291,16 @@
                     android:layout_height="wrap_content"
                     android:text="Max Value："
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tvMaxDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:drawableEnd="@drawable/ic_action_set"
                     android:drawablePadding="10dp"
                     android:textColor="#AAFFFFFF"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/btnClearMax"
@@ -324,17 +323,16 @@
                     android:layout_height="wrap_content"
                     android:text="Min Value："
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tvMinDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:drawableEnd="@drawable/ic_action_set"
                     android:drawablePadding="10dp"
                     android:textColor="#AAFFFFFF"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/btnClearMin"
@@ -357,17 +355,16 @@
                     android:layout_height="wrap_content"
                     android:text="Def Value："
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tvDefaultDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:drawableEnd="@drawable/ic_action_set"
                     android:drawablePadding="10dp"
                     android:textColor="#AAFFFFFF"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/btnClearDefault"

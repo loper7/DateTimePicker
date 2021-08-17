@@ -33,7 +33,7 @@
             android:layout_gravity="center_horizontal"
             android:text=""
             android:textColor="@color/colorTextBlack"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <View
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                 android:layout_marginRight="120dp"
                 android:text="回到今天"
                 android:textColor="@color/colorTextGrayDark"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/btn_today"

@@ -1,3 +1,4 @@
+package com.loper7.date_time_picker.number_picker;
 /*
  * Copyright (C) 2006 The Android Open Source Project
  *
@@ -14,23 +15,52 @@
  * limitations under the License.
  */
 
-package com.loper7.date_time_picker.number_picker;
-
 import android.content.Context;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.view.ViewConfiguration;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
 
 /**
- * This class encapsulates scrolling.  The duration of the scroll
- * can be passed in the constructor and specifies the maximum time that
- * the scrolling animation should take.  Past this time, the scrolling is 
- * automatically moved to its final stage and computeScrollOffset()
- * will always return false to indicate that scrolling is over.
+ * <p>This class encapsulates scrolling. You can use scrollers ({@link Scroller}
+ * to collect the data you need to produce a scrolling animation&mdash;for
+ * example, in response to a fling gesture. Scrollers track scroll offsets
+ * for you over time, but they don't automatically apply those positions
+ * to your view. It's your responsibility to get and apply new coordinates
+ * at a rate that will make the scrolling animation look smooth.</p>
+ *
+ * <p>Here is a simple example:</p>
+ *
+ * <pre> private Scroller mScroller = new Scroller(context);
+ * ...
+ * public void zoomIn() {
+ *     // Revert any animation currently in progress
+ *     mScroller.forceFinished(true);
+ *     // Start scrolling by providing a starting point and
+ *     // the distance to travel
+ *     mScroller.startScroll(0, 0, 100, 0);
+ *     // Invalidate to request a redraw
+ *     invalidate();
+ * }</pre>
+ *
+ * <p>To track the changing positions of the x/y coordinates, use
+ * {@link #computeScrollOffset}. The method returns a boolean to indicate
+ * whether the scroller is finished. If it isn't, it means that a fling or
+ * programmatic pan operation is still in progress. You can use this method to
+ * find the current offsets of the x and y coordinates, for example:</p>
+ *
+ * <pre>if (mScroller.computeScrollOffset()) {
+ *     // Get current x and y positions
+ *     int currX = mScroller.getCurrX();
+ *     int currY = mScroller.getCurrY();
+ *    ...
+ * }</pre>
  */
 public class Scroller  {
+    private final Interpolator mInterpolator;
+
     private int mMode;
 
     private int mStartX;
@@ -51,53 +81,67 @@ public class Scroller  {
     private float mDeltaX;
     private float mDeltaY;
     private boolean mFinished;
-    private Interpolator mInterpolator;
     private boolean mFlywheel;
 
     private float mVelocity;
+    private float mCurrVelocity;
+    private int mDistance;
+
+    private float mFlingFriction = ViewConfiguration.getScrollFriction();
 
     private static final int DEFAULT_DURATION = 250;
     private static final int SCROLL_MODE = 0;
     private static final int FLING_MODE = 1;
 
-    private static float DECELERATION_RATE = (float) (Math.log(0.75) / Math.log(0.9));
-    private static float ALPHA = 800; // pixels / seconds
-    private static float START_TENSION = 0.4f; // Tension at start: (0.4 * total T, 1.0 * Distance)
-    private static float END_TENSION = 1.0f - START_TENSION;
+    private static float DECELERATION_RATE = (float) (Math.log(0.78) / Math.log(0.9));
+    private static final float INFLEXION = 0.35f; // Tension lines cross at (INFLEXION, 1)
+    private static final float START_TENSION = 0.5f;
+    private static final float END_TENSION = 1.0f;
+    private static final float P1 = START_TENSION * INFLEXION;
+    private static final float P2 = 1.0f - END_TENSION * (1.0f - INFLEXION);
+
     private static final int NB_SAMPLES = 100;
-    private static final float[] SPLINE = new float[NB_SAMPLES + 1];
+    private static final float[] SPLINE_POSITION = new float[NB_SAMPLES + 1];
+    private static final float[] SPLINE_TIME = new float[NB_SAMPLES + 1];
 
     private float mDeceleration;
     private final float mPpi;
 
+    // A context-specific coefficient adjusted to physical values.
+    private float mPhysicalCoeff;
+
     static {
         float x_min = 0.0f;
-        for (int i = 0; i <= NB_SAMPLES; i++) {
-            final float t = (float) i / NB_SAMPLES;
+        float y_min = 0.0f;
+        for (int i = 0; i < NB_SAMPLES; i++) {
+            final float alpha = (float) i / NB_SAMPLES;
+
             float x_max = 1.0f;
             float x, tx, coef;
             while (true) {
                 x = x_min + (x_max - x_min) / 2.0f;
                 coef = 3.0f * x * (1.0f - x);
-                tx = coef * ((1.0f - x) * START_TENSION + x * END_TENSION) + x * x * x;
-                if (Math.abs(tx - t) < 1E-5) break;
-                if (tx > t) x_max = x;
+                tx = coef * ((1.0f - x) * P1 + x * P2) + x * x * x;
+                if (Math.abs(tx - alpha) < 1E-5) break;
+                if (tx > alpha) x_max = x;
                 else x_min = x;
             }
-            final float d = coef + x * x * x;
-            SPLINE[i] = d;
+            SPLINE_POSITION[i] = coef * ((1.0f - x) * START_TENSION + x) + x * x * x;
+
+            float y_max = 1.0f;
+            float y, dy;
+            while (true) {
+                y = y_min + (y_max - y_min) / 2.0f;
+                coef = 3.0f * y * (1.0f - y);
+                dy = coef * ((1.0f - y) * START_TENSION + y) + y * y * y;
+                if (Math.abs(dy - alpha) < 1E-5) break;
+                if (dy > alpha) y_max = y;
+                else y_min = y;
+            }
+            SPLINE_TIME[i] = coef * ((1.0f - y) * P1 + y * P2) + y * y * y;
         }
-        SPLINE[NB_SAMPLES] = 1.0f;
-
-        // This controls the viscous fluid effect (how much of it)
-        sViscousFluidScale = 8.0f;
-        // must be set to 1.0 (used in viscousFluid())
-        sViscousFluidNormalize = 1.0f;
-        sViscousFluidNormalize = 1.0f / viscousFluid(1.0f);
+        SPLINE_POSITION[NB_SAMPLES] = SPLINE_TIME[NB_SAMPLES] = 1.0f;
     }
-
-    private static float sViscousFluidScale;
-    private static float sViscousFluidNormalize;
 
     /**
      * Create a Scroller with the default duration and interpolator.
@@ -112,7 +156,8 @@ public class Scroller  {
      * be in effect for apps targeting Honeycomb or newer.
      */
     public Scroller(Context context, Interpolator interpolator) {
-        this(context, interpolator, true);
+        this(context, interpolator,
+                context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.HONEYCOMB);
     }
 
     /**
@@ -122,76 +167,83 @@ public class Scroller  {
      */
     public Scroller(Context context, Interpolator interpolator, boolean flywheel) {
         mFinished = true;
-        mInterpolator = interpolator;
+        if (interpolator == null) {
+            mInterpolator = new ViscousFluidInterpolator();
+        } else {
+            mInterpolator = interpolator;
+        }
         mPpi = context.getResources().getDisplayMetrics().density * 160.0f;
         mDeceleration = computeDeceleration(ViewConfiguration.getScrollFriction());
         mFlywheel = flywheel;
+
+        mPhysicalCoeff = computeDeceleration(0.84f); // look and feel tuning
     }
 
     /**
      * The amount of friction applied to flings. The default value
      * is {@link ViewConfiguration#getScrollFriction}.
-     * 
+     *
      * @param friction A scalar dimension-less value representing the coefficient of
      *         friction.
      */
     public final void setFriction(float friction) {
         mDeceleration = computeDeceleration(friction);
+        mFlingFriction = friction;
     }
-    
+
     private float computeDeceleration(float friction) {
         return SensorManager.GRAVITY_EARTH   // g (m/s^2)
-                      * 39.37f               // inch/meter
-                      * mPpi                 // pixels per inch
-                      * friction;
+                * 39.37f               // inch/meter
+                * mPpi                 // pixels per inch
+                * friction;
     }
 
     /**
-     * 
+     *
      * Returns whether the scroller has finished scrolling.
-     * 
+     *
      * @return True if the scroller has finished scrolling, false otherwise.
      */
     public final boolean isFinished() {
         return mFinished;
     }
-    
+
     /**
      * Force the finished field to a particular value.
-     *  
+     *
      * @param finished The new finished value.
      */
     public final void forceFinished(boolean finished) {
         mFinished = finished;
     }
-    
+
     /**
      * Returns how long the scroll event will take, in milliseconds.
-     * 
+     *
      * @return The duration of the scroll in milliseconds.
      */
     public final int getDuration() {
         return mDuration;
     }
-    
+
     /**
-     * Returns the current X offset in the scroll. 
-     * 
+     * Returns the current X offset in the scroll.
+     *
      * @return The new X offset as an absolute distance from the origin.
      */
     public final int getCurrX() {
         return mCurrX;
     }
-    
+
     /**
-     * Returns the current Y offset in the scroll. 
-     * 
+     * Returns the current Y offset in the scroll.
+     *
      * @return The new Y offset as an absolute distance from the origin.
      */
     public final int getCurrY() {
         return mCurrY;
     }
-    
+
     /**
      * Returns the current velocity.
      *
@@ -199,39 +251,40 @@ public class Scroller  {
      * negative.
      */
     public float getCurrVelocity() {
-        return mVelocity - mDeceleration * timePassed() / 2000.0f;
+        return mMode == FLING_MODE ?
+                mCurrVelocity : mVelocity - mDeceleration * timePassed() / 2000.0f;
     }
 
     /**
-     * Returns the start X offset in the scroll. 
-     * 
+     * Returns the start X offset in the scroll.
+     *
      * @return The start X offset as an absolute distance from the origin.
      */
     public final int getStartX() {
         return mStartX;
     }
-    
+
     /**
-     * Returns the start Y offset in the scroll. 
-     * 
+     * Returns the start Y offset in the scroll.
+     *
      * @return The start Y offset as an absolute distance from the origin.
      */
     public final int getStartY() {
         return mStartY;
     }
-    
+
     /**
      * Returns where the scroll will end. Valid only for "fling" scrolls.
-     * 
+     *
      * @return The final X offset as an absolute distance from the origin.
      */
     public final int getFinalX() {
         return mFinalX;
     }
-    
+
     /**
      * Returns where the scroll will end. Valid only for "fling" scrolls.
-     * 
+     *
      * @return The final Y offset as an absolute distance from the origin.
      */
     public final int getFinalY() {
@@ -240,53 +293,53 @@ public class Scroller  {
 
     /**
      * Call this when you want to know the new location.  If it returns true,
-     * the animation is not yet finished.  loc will be altered to provide the
-     * new location.
-     */ 
+     * the animation is not yet finished.
+     */
     public boolean computeScrollOffset() {
         if (mFinished) {
             return false;
         }
 
         int timePassed = (int)(AnimationUtils.currentAnimationTimeMillis() - mStartTime);
-    
+
         if (timePassed < mDuration) {
             switch (mMode) {
-            case SCROLL_MODE:
-                float x = timePassed * mDurationReciprocal;
-    
-                if (mInterpolator == null)
-                    x = viscousFluid(x); 
-                else
-                    x = mInterpolator.getInterpolation(x);
-    
-                mCurrX = mStartX + Math.round(x * mDeltaX);
-                mCurrY = mStartY + Math.round(x * mDeltaY);
-                break;
-            case FLING_MODE:
-                final float t = (float) timePassed / mDuration;
-                final int index = (int) (NB_SAMPLES * t);
-                final float t_inf = (float) index / NB_SAMPLES;
-                final float t_sup = (float) (index + 1) / NB_SAMPLES;
-                final float d_inf = SPLINE[index];
-                final float d_sup = SPLINE[index + 1];
-                final float distanceCoef = d_inf + (t - t_inf) / (t_sup - t_inf) * (d_sup - d_inf);
-                
-                mCurrX = mStartX + Math.round(distanceCoef * (mFinalX - mStartX));
-                // Pin to mMinX <= mCurrX <= mMaxX
-                mCurrX = Math.min(mCurrX, mMaxX);
-                mCurrX = Math.max(mCurrX, mMinX);
-                
-                mCurrY = mStartY + Math.round(distanceCoef * (mFinalY - mStartY));
-                // Pin to mMinY <= mCurrY <= mMaxY
-                mCurrY = Math.min(mCurrY, mMaxY);
-                mCurrY = Math.max(mCurrY, mMinY);
+                case SCROLL_MODE:
+                    final float x = mInterpolator.getInterpolation(timePassed * mDurationReciprocal);
+                    mCurrX = mStartX + Math.round(x * mDeltaX);
+                    mCurrY = mStartY + Math.round(x * mDeltaY);
+                    break;
+                case FLING_MODE:
+                    final float t = (float) timePassed / mDuration;
+                    final int index = (int) (NB_SAMPLES * t);
+                    float distanceCoef = 1.f;
+                    float velocityCoef = 0.f;
+                    if (index < NB_SAMPLES) {
+                        final float t_inf = (float) index / NB_SAMPLES;
+                        final float t_sup = (float) (index + 1) / NB_SAMPLES;
+                        final float d_inf = SPLINE_POSITION[index];
+                        final float d_sup = SPLINE_POSITION[index + 1];
+                        velocityCoef = (d_sup - d_inf) / (t_sup - t_inf);
+                        distanceCoef = d_inf + (t - t_inf) * velocityCoef;
+                    }
 
-                if (mCurrX == mFinalX && mCurrY == mFinalY) {
-                    mFinished = true;
-                }
+                    mCurrVelocity = velocityCoef * mDistance / mDuration * 1000.0f;
 
-                break;
+                    mCurrX = mStartX + Math.round(distanceCoef * (mFinalX - mStartX));
+                    // Pin to mMinX <= mCurrX <= mMaxX
+                    mCurrX = Math.min(mCurrX, mMaxX);
+                    mCurrX = Math.max(mCurrX, mMinX);
+
+                    mCurrY = mStartY + Math.round(distanceCoef * (mFinalY - mStartY));
+                    // Pin to mMinY <= mCurrY <= mMaxY
+                    mCurrY = Math.min(mCurrY, mMaxY);
+                    mCurrY = Math.max(mCurrY, mMinY);
+
+                    if (mCurrX == mFinalX && mCurrY == mFinalY) {
+                        mFinished = true;
+                    }
+
+                    break;
             }
         }
         else {
@@ -296,12 +349,12 @@ public class Scroller  {
         }
         return true;
     }
-    
+
     /**
      * Start scrolling by providing a starting point and the distance to travel.
      * The scroll will use the default value of 250 milliseconds for the
      * duration.
-     * 
+     *
      * @param startX Starting horizontal scroll offset in pixels. Positive
      *        numbers will scroll the content to the left.
      * @param startY Starting vertical scroll offset in pixels. Positive numbers
@@ -316,8 +369,9 @@ public class Scroller  {
     }
 
     /**
-     * Start scrolling by providing a starting point and the distance to travel.
-     * 
+     * Start scrolling by providing a starting point, the distance to travel,
+     * and the duration of the scroll.
+     *
      * @param startX Starting horizontal scroll offset in pixels. Positive
      *        numbers will scroll the content to the left.
      * @param startY Starting vertical scroll offset in pixels. Positive numbers
@@ -345,7 +399,7 @@ public class Scroller  {
     /**
      * Start scrolling based on a fling gesture. The distance travelled will
      * depend on the initial velocity of the fling.
-     * 
+     *
      * @param startX Starting point of the scroll (X)
      * @param startY Starting point of the scroll (Y)
      * @param velocityX Initial velocity of the fling (X) measured in pixels per
@@ -362,14 +416,14 @@ public class Scroller  {
      *        point.
      */
     public void fling(int startX, int startY, int velocityX, int velocityY,
-            int minX, int maxX, int minY, int maxY) {
+                      int minX, int maxX, int minY, int maxY) {
         // Continue a scroll or fling in progress
         if (mFlywheel && !mFinished) {
             float oldVel = getCurrVelocity();
 
             float dx = (float) (mFinalX - mStartX);
             float dy = (float) (mFinalY - mStartY);
-            float hyp = (float) Math.sqrt(dx * dx + dy * dy);
+            float hyp = (float) Math.hypot(dx, dy);
 
             float ndx = dx / hyp;
             float ndy = dy / hyp;
@@ -386,11 +440,10 @@ public class Scroller  {
         mMode = FLING_MODE;
         mFinished = false;
 
-        float velocity =  (float) Math.sqrt(velocityX * velocityX + velocityY * velocityY);
-     
+        float velocity = (float) Math.hypot(velocityX, velocityY);
+
         mVelocity = velocity;
-        final double l = Math.log(START_TENSION * velocity / ALPHA);
-        mDuration = (int) (1000.0 * Math.exp(l / (DECELERATION_RATE - 1.0)));
+        mDuration = getSplineFlingDuration(velocity);
         mStartTime = AnimationUtils.currentAnimationTimeMillis();
         mStartX = startX;
         mStartY = startY;
@@ -398,39 +451,41 @@ public class Scroller  {
         float coeffX = velocity == 0 ? 1.0f : velocityX / velocity;
         float coeffY = velocity == 0 ? 1.0f : velocityY / velocity;
 
-        int totalDistance =
-                (int) (ALPHA * Math.exp(DECELERATION_RATE / (DECELERATION_RATE - 1.0) * l));
-        
+        double totalDistance = getSplineFlingDistance(velocity);
+        mDistance = (int) (totalDistance * Math.signum(velocity));
+
         mMinX = minX;
         mMaxX = maxX;
         mMinY = minY;
         mMaxY = maxY;
 
-        mFinalX = startX + Math.round(totalDistance * coeffX);
+        mFinalX = startX + (int) Math.round(totalDistance * coeffX);
         // Pin to mMinX <= mFinalX <= mMaxX
         mFinalX = Math.min(mFinalX, mMaxX);
         mFinalX = Math.max(mFinalX, mMinX);
-        
-        mFinalY = startY + Math.round(totalDistance * coeffY);
+
+        mFinalY = startY + (int) Math.round(totalDistance * coeffY);
         // Pin to mMinY <= mFinalY <= mMaxY
         mFinalY = Math.min(mFinalY, mMaxY);
         mFinalY = Math.max(mFinalY, mMinY);
     }
-    
-    static float viscousFluid(float x)
-    {
-        x *= sViscousFluidScale;
-        if (x < 1.0f) {
-            x -= (1.0f - (float) Math.exp(-x));
-        } else {
-            float start = 0.36787944117f;   // 1/e == exp(-1)
-            x = 1.0f - (float) Math.exp(1.0f - x);
-            x = start + x * (1.0f - start);
-        }
-        x *= sViscousFluidNormalize;
-        return x;
+
+    private double getSplineDeceleration(float velocity) {
+        return Math.log(INFLEXION * Math.abs(velocity) / (mFlingFriction * mPhysicalCoeff));
     }
-    
+
+    private int getSplineFlingDuration(float velocity) {
+        final double l = getSplineDeceleration(velocity);
+        final double decelMinusOne = DECELERATION_RATE - 1.0;
+        return (int) (1000.0 * Math.exp(l / decelMinusOne));
+    }
+
+    private double getSplineFlingDistance(float velocity) {
+        final double l = getSplineDeceleration(velocity);
+        final double decelMinusOne = DECELERATION_RATE - 1.0;
+        return mFlingFriction * mPhysicalCoeff * Math.exp(DECELERATION_RATE / decelMinusOne * l);
+    }
+
     /**
      * Stops the animation. Contrary to {@link #forceFinished(boolean)},
      * aborting the animating cause the scroller to move to the final x and y
@@ -443,7 +498,7 @@ public class Scroller  {
         mCurrY = mFinalY;
         mFinished = true;
     }
-    
+
     /**
      * Extend the scroll animation. This allows a running animation to scroll
      * further and longer, when used with {@link #setFinalX(int)} or {@link #setFinalY(int)}.
@@ -500,5 +555,42 @@ public class Scroller  {
     public boolean isScrollingInDirection(float xvel, float yvel) {
         return !mFinished && Math.signum(xvel) == Math.signum(mFinalX - mStartX) &&
                 Math.signum(yvel) == Math.signum(mFinalY - mStartY);
+    }
+
+    static class ViscousFluidInterpolator implements Interpolator {
+        /** Controls the viscous fluid effect (how much of it). */
+        private static final float VISCOUS_FLUID_SCALE = 8.0f;
+
+        private static final float VISCOUS_FLUID_NORMALIZE;
+        private static final float VISCOUS_FLUID_OFFSET;
+
+        static {
+
+            // must be set to 1.0 (used in viscousFluid())
+            VISCOUS_FLUID_NORMALIZE = 1.0f / viscousFluid(1.0f);
+            // account for very small floating-point error
+            VISCOUS_FLUID_OFFSET = 1.0f - VISCOUS_FLUID_NORMALIZE * viscousFluid(1.0f);
+        }
+
+        private static float viscousFluid(float x) {
+            x *= VISCOUS_FLUID_SCALE;
+            if (x < 1.0f) {
+                x -= (1.0f - (float)Math.exp(-x));
+            } else {
+                float start = 0.36787944117f;   // 1/e == exp(-1)
+                x = 1.0f - (float)Math.exp(1.0f - x);
+                x = start + x * (1.0f - start);
+            }
+            return x;
+        }
+
+        @Override
+        public float getInterpolation(float input) {
+            final float interpolated = VISCOUS_FLUID_NORMALIZE * viscousFluid(input);
+            if (interpolated > 0) {
+                return interpolated + VISCOUS_FLUID_OFFSET;
+            }
+            return interpolated;
+        }
     }
 }
