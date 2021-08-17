@@ -38,7 +38,7 @@ Step 2. 添加 Gradle依赖
 dependencies {
     ...
     implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation 'com.github.loperSeven:DateTimePicker:$version'//具体版本请看顶部jitpack标识，如0.3.1,仅支持androidx
+    implementation 'com.github.loperSeven:DateTimePicker:0.3.3'//具体版本请看顶部jitpack标识，如0.3.3,仅支持androidx
 }
 
 
@@ -56,6 +56,11 @@ dependencies {
 <br/>
 &ensp;&ensp;[DateTimePicker 自定义](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
 ## 更新日志
+
+### [v0.3.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.1) -> [v0.3.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.3)
+* fix [issues 24](https://github.com/loperSeven/DateTimePicker/issues/24)
+* fix [issues 26](https://github.com/loperSeven/DateTimePicker/issues/26)
+
 ### [v0.3.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.0) -> [v0.3.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.1)
 * fix [issues 18](https://github.com/loperSeven/DateTimePicker/issues/18)
 
