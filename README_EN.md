@@ -53,8 +53,12 @@ Pop-ups
 <br/>
 Custom DateTimePicker UI
 <br/>
-&ensp;&ensp;[DateTimePicker 自定义](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
+&ensp;&ensp;[DateTimePicker custom](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
 ## Update Log
+### [v0.3.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.1) -> [v0.3.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.3)
+* fix [issues 24](https://github.com/loperSeven/DateTimePicker/issues/24)
+* fix [issues 26](https://github.com/loperSeven/DateTimePicker/issues/26)
+
 ### [v0.3.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.0) -> [v0.3.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.1)
 * fix [issues 18](https://github.com/loperSeven/DateTimePicker/issues/18)
 
