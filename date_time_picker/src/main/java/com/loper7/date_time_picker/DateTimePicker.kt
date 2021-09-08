@@ -10,6 +10,7 @@ import androidx.annotation.Dimension
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import com.loper7.date_time_picker.DateTimeConfig.DAY
+import com.loper7.date_time_picker.DateTimeConfig.GLOBAL_LOCAL
 import com.loper7.date_time_picker.DateTimeConfig.HOUR
 import com.loper7.date_time_picker.DateTimeConfig.MIN
 import com.loper7.date_time_picker.DateTimeConfig.MONTH
@@ -46,6 +47,8 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     private var hourLabel = "时"
     private var minLabel = "分"
     private var secondLabel = "秒"
+
+    private var global = GLOBAL_LOCAL
 
     private var layoutResId = R.layout.layout_date_picker
 
@@ -84,7 +87,10 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     private fun init() {
         removeAllViews()
         try {
-            View.inflate(context, layoutResId, this)
+            if (!DateTimeConfig.showChina(global) && layoutResId == R.layout.layout_date_picker)
+                View.inflate(context, R.layout.layout_date_picker_globalization, this)
+            else
+                View.inflate(context, layoutResId, this)
         } catch (e: Exception) {
             throw Exception("layoutResId is it right or not?")
         }
@@ -126,12 +132,26 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
             this.controller = DateTimeController().bindPicker(YEAR, mYearSpinner)
                 .bindPicker(MONTH, mMonthSpinner)
                 .bindPicker(DAY, mDaySpinner).bindPicker(HOUR, mHourSpinner)
-                .bindPicker(MIN, mMinuteSpinner).bindPicker(SECOND, mSecondSpinner).build()
+                .bindPicker(MIN, mMinuteSpinner).bindPicker(SECOND, mSecondSpinner)
+                .bindGlobal(global)?.build()
         else
             this.controller?.bindPicker(YEAR, mYearSpinner)
                 ?.bindPicker(MONTH, mMonthSpinner)
                 ?.bindPicker(DAY, mDaySpinner)?.bindPicker(HOUR, mHourSpinner)
-                ?.bindPicker(MIN, mMinuteSpinner)?.bindPicker(SECOND, mSecondSpinner)?.build()
+                ?.bindPicker(MIN, mMinuteSpinner)?.bindPicker(SECOND, mSecondSpinner)
+                ?.bindGlobal(global)?.build()
+    }
+
+
+    /**
+     * 设置国际化日期格式显示
+     * @param global : DateTimeConfig.GLOBAL_LOCAL
+     *                 DateTimeConfig.GLOBAL_CHINA
+     *                 DateTimeConfig.GLOBAL_US
+     */
+    fun setGlobal(global: Int) {
+        this.global = global
+        init()
     }
 
     /**
@@ -227,7 +247,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     fun setTextSize(@Dimension sp: Int) {
         if (sp == 0) return
         var textSize = context!!.dip2px(sp.toFloat())
-        var normalTextSize =textSize.toFloat() - context!!.dip2px(2f)
+        var normalTextSize = textSize.toFloat() - context!!.dip2px(2f)
         mYearSpinner?.textSize = normalTextSize
         mMonthSpinner?.textSize = normalTextSize
         mDaySpinner?.textSize = normalTextSize
@@ -286,6 +306,22 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
      */
     fun setWrapSelectorWheel(wrapSelector: Boolean) {
         setWrapSelectorWheel(null, wrapSelector)
+    }
+
+    /**
+     * 获取类型对应的NumberPicker
+     * @param displayType 类型
+     */
+    fun getPicker(displayType: Int): NumberPicker? {
+        return when (displayType) {
+            YEAR -> mYearSpinner
+            MONTH -> mMinuteSpinner
+            DAY -> mDaySpinner
+            HOUR -> mHourSpinner
+            MIN -> mMinuteSpinner
+            SECOND -> mSecondSpinner
+            else -> null
+        }
     }
 
 

@@ -190,6 +190,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         linear_now!!.visibility = if (builder!!.backNow) View.VISIBLE else View.GONE
         tv_choose_date!!.visibility = if (builder!!.focusDateInfo) View.VISIBLE else View.GONE
 
+        //强制关闭国际化（不受系统语言影响）
+        datePicker!!.setGlobal(DateTimeConfig.GLOBAL_CHINA)
         //设置最小时间
         datePicker!!.setMinMillisecond(builder!!.minTime)
         //设置最大时间

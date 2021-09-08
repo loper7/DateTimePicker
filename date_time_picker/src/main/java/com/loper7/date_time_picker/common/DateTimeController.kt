@@ -47,6 +47,8 @@ class DateTimeController : BaseDateTimeController() {
     private var maxMinute = 59
     private var maxSecond = 59
 
+    private var global = DateTimeConfig.GLOBAL_LOCAL
+
     private var millisecond: Long = 0
     private var mOnDateTimeChangedListener: ((Long) -> Unit)? = null
 
@@ -63,6 +65,11 @@ class DateTimeController : BaseDateTimeController() {
             MIN -> mMinuteSpinner = picker
             SECOND -> mSecondSpinner = picker
         }
+        return this
+    }
+
+    override fun bindGlobal(global: Int) : DateTimeController{
+       this.global = global
         return this
     }
 
@@ -93,7 +100,12 @@ class DateTimeController : BaseDateTimeController() {
             value = mMonth
             isFocusable = true
             isFocusableInTouchMode = true
-            setFormatter(DateTimeConfig.formatter) //格式化显示数字，个位数前添加0
+
+            formatter = if (DateTimeConfig.showChina(global))
+                DateTimeConfig.formatter //格式化显示数字，个位数前添加0
+            else
+                DateTimeConfig.globalMonthFormatter
+
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(mOnMonthChangedListener)
         }
@@ -103,7 +115,7 @@ class DateTimeController : BaseDateTimeController() {
             value = mDay
             isFocusable = true
             isFocusableInTouchMode = true
-            setFormatter(DateTimeConfig.formatter)
+            formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(mOnDayChangedListener)
         }
@@ -114,7 +126,7 @@ class DateTimeController : BaseDateTimeController() {
             isFocusable = true
             isFocusableInTouchMode = true
             value = mHour
-            setFormatter(DateTimeConfig.formatter)
+            formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(mOnHourChangedListener)
         }
@@ -125,7 +137,7 @@ class DateTimeController : BaseDateTimeController() {
             isFocusable = true
             isFocusableInTouchMode = true
             value = mMinute
-            setFormatter(DateTimeConfig.formatter)
+            formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(mOnMinuteChangedListener)
         }
@@ -136,7 +148,7 @@ class DateTimeController : BaseDateTimeController() {
             isFocusable = true
             isFocusableInTouchMode = true
             value = mMinute
-            setFormatter(DateTimeConfig.formatter)
+            formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(mOnSecondChangedListener)
         }

@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CustomLayoutActivity"/>
-        <activity android:name=".ScannerActivity"/>
+        <activity android:name=".GlobalizationActivity"/>
     </application>
 
 </manifest>

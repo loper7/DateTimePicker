@@ -152,5 +152,8 @@ class MainActivity : AppCompatActivity() {
         btnCustomLayout.setOnClickListener {
             startActivity(Intent(context, CustomLayoutActivity::class.java))
         }
+        btnGlobalization.setOnClickListener {
+            startActivity(Intent(context, GlobalizationActivity::class.java))
+        }
     }
 }

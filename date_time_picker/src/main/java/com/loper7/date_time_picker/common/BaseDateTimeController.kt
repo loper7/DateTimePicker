@@ -13,5 +13,7 @@ abstract class BaseDateTimeController : DateTimeInterface {
 
     abstract fun bindPicker(type: Int, picker: NumberPicker?): BaseDateTimeController
 
+    abstract fun bindGlobal(global:Int):DateTimeController
+
     abstract fun build(): BaseDateTimeController
 }

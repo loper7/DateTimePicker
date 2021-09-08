@@ -1,6 +1,10 @@
 package com.loper7.date_time_picker
 
+import android.util.Log
 import com.loper7.date_time_picker.number_picker.NumberPicker
+import java.text.DateFormatSymbols
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  *
@@ -17,6 +21,10 @@ object DateTimeConfig {
     const val MIN = 4
     const val SECOND = 5
 
+    const val GLOBAL_LOCAL = 0
+    const val GLOBAL_CHINA = 1
+    const val GLOBAL_US = 2
+
     //数字格式化，<10的数字前自动加0
     val formatter =
         NumberPicker.Formatter { value: Int ->
@@ -26,4 +34,38 @@ object DateTimeConfig {
             }
             str
         }
+
+    //国际化格月份格式化
+    val globalizationMonthFormatter =
+        NumberPicker.Formatter { value: Int ->
+            var str = value.toString()
+            if (value in 1..12)
+                str = DateFormatSymbols(Locale.US).months.toList()[value - 1]
+            str
+        }
+
+    //国际化格月份格式化-缩写
+    val globalMonthFormatter =
+        NumberPicker.Formatter { value: Int ->
+            var str = value.toString()
+            if (value in 1..12) {
+                var month = DateFormatSymbols(Locale.US).months.toList()[value - 1]
+                str = if (month.length > 3)
+                    month.substring(0, 3)
+                else
+                    month
+            }
+            str
+        }
+
+
+    private fun isChina(): Boolean {
+        return Locale.getDefault() == Locale.CHINA || Locale.getDefault() == Locale.CHINESE
+    }
+
+    fun showChina(global: Int): Boolean {
+        return global == GLOBAL_CHINA || (global == GLOBAL_LOCAL && isChina())
+    }
+
+
 }
