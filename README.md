@@ -38,7 +38,7 @@ Step 2. 添加 Gradle依赖
 dependencies {
     ...
     implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation 'com.github.loperSeven:DateTimePicker:0.3.3'//具体版本请看顶部jitpack标识，如0.3.3,仅支持androidx
+    implementation 'com.github.loperSeven:DateTimePicker:0.3.4'//具体版本请看顶部jitpack标识，如0.3.4,仅支持androidx
 }
 
 
@@ -56,6 +56,35 @@ dependencies {
 <br/>
 &ensp;&ensp;[DateTimePicker 自定义](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
 ## 更新日志
+
+### [v0.3.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.3) -> [v0.3.4](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.4)
+**支持设置国际化日期选择格式**
+`DateTimePicker` 新增如下方法，`CardDatePickerDialog` 不受任何影响。
+* 设置国际化日期显示格式
+```kotlin
+    /**
+     * 设置国际化日期格式显示
+     * @param global : DateTimeConfig.GLOBAL_LOCAL 根据设备系统语言自动选择
+     *                 DateTimeConfig.GLOBAL_CHINA 设置日期格式为 yyyy-MM-dd HH:mm:ss
+     *                 DateTimeConfig.GLOBAL_US 设置日期格式为 dd-MM(单词缩写)-yyyy HH:mm:ss
+     */
+    fun setGlobal(global: Int) {
+      ...
+    }
+```
+* 获取类型对应的 NumberPicker
+```kotlin
+    /**
+     * 获取类型对应的NumberPicker
+     * @param displayType 类型
+     */
+    fun getPicker(displayType: Int): NumberPicker? {
+        ...
+    }
+```
+用例可见：[GlobalizationActivity](https://github.com/loperSeven/DateTimePicker/blob/master/app/src/main/java/com/loper7/datepicker/GlobalizationActivity.kt)
+
+
 
 ### [v0.3.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.1) -> [v0.3.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.3)
 * fix [issues 24](https://github.com/loperSeven/DateTimePicker/issues/24)
