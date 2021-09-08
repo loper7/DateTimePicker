@@ -60,10 +60,10 @@ dependencies {
 ### [v0.3.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.3) -> [v0.3.4](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.4)
 **支持设置国际化日期选择格式**
 `DateTimePicker` 新增如下方法，`CardDatePickerDialog` 不受任何影响。
-* 设置国际化日期显示格式
+* 设置国际化日期显示格式 
 ```kotlin
     /**
-     * 设置国际化日期格式显示
+     * 设置国际化日期格式显示 如果没有自定义layout且需要设置的日期格式为 dd-MM(单词缩写)-yyyy HH:mm:ss,此方法会改变年月日的顺序，及月份的显示。
      * @param global : DateTimeConfig.GLOBAL_LOCAL 根据设备系统语言自动选择
      *                 DateTimeConfig.GLOBAL_CHINA 设置日期格式为 yyyy-MM-dd HH:mm:ss
      *                 DateTimeConfig.GLOBAL_US 设置日期格式为 dd-MM(单词缩写)-yyyy HH:mm:ss
