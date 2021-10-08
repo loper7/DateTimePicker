@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.loper7.date_time_picker.DateTimeConfig
+import com.loper7.date_time_picker.number_picker.NumberPicker
 import kotlinx.android.synthetic.main.activity_globalization.*
 
 /**
@@ -23,6 +24,12 @@ class GlobalizationActivity: AppCompatActivity() {
         picker1.setGlobal(DateTimeConfig.GLOBAL_CHINA)
         picker2.setGlobal(DateTimeConfig.GLOBAL_LOCAL)
         picker2.setDisplayType(intArrayOf(DateTimeConfig.YEAR,DateTimeConfig.MONTH,DateTimeConfig.DAY))
+
+        picker1.setOnDateTimeChangedListener {
+            Log.e("loper7","${StringUtils.conversionTime(picker1.getMillisecond(),"yyyy-MM-dd HH:mm:ss")}")
+        }
+
+        var numberPicker:NumberPicker? = picker.getPicker(DateTimeConfig.YEAR)
 
     }
 }

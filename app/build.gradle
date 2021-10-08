@@ -3,13 +3,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.loper7.datepicker"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 2
         versionName "1.0.1"
 
@@ -27,6 +27,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.0.1'
+        kotlinCompilerVersion '1.5.21'
+    }
 }
 
 dependencies {
@@ -36,11 +46,22 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android:flexbox:2.0.1'
+    // Integration with activities
+    implementation 'androidx.activity:activity-compose:1.3.1'
+    // Compose Material Design
+    implementation 'androidx.compose.material:material:1.0.1'
+     // Animations
+    implementation 'androidx.compose.animation:animation:1.0.1'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.0.1'
+    // Integration with ViewModels
+   implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07'
 
     //标题栏
     implementation 'com.github.loperSeven:TitleBar:1.0.4'
     //material
     implementation 'com.google.android.material:material:1.1.0'
+
 //    implementation 'com.github.loperSeven:DateTimePicker:0.2.0'
     implementation project(path: ':date_time_picker')
 

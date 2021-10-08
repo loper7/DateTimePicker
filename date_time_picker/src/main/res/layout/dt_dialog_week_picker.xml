@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linear_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:paddingTop="25dp"
+        android:background="@drawable/shape_bg_round_white_5"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:layout_marginBottom="25dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="18sp" />
+
+        <com.loper7.date_time_picker.number_picker.NumberPicker
+            android:id="@+id/np_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="np_datetime_year"
+            app:np_dividerColor="#E5E5E5"
+            app:np_dividerThickness="0.6dp"
+            app:np_height="184dp"
+            app:np_wheelItemCount="3" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_marginTop="10dp"
+            android:background="#E5E5E5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dialog_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:text="取消"
+                android:textColor="@color/colorTextGray"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+            <View
+                android:id="@+id/dialog_select_border"
+                android:layout_width="0.6dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#E5E5E5" />
+
+            <TextView
+                android:id="@+id/dialog_submit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:text="确定"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

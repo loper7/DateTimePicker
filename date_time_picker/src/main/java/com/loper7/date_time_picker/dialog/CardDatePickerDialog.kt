@@ -4,20 +4,19 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.R
-import com.loper7.date_time_picker.StringUtils
+import com.loper7.date_time_picker.utils.StringUtils
 import org.jetbrains.annotations.NotNull
 import java.util.*
 
@@ -28,7 +27,7 @@ import java.util.*
  * @Package:        com.loper7.date_time_picker.dialog
  * @ClassName:      DateDateDateTimePickerDialog
  * @CreateDate:     2020/3/3 0003 11:38
- * @Description:    java类作用描述
+ * @Description:
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
@@ -69,7 +68,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setContentView(R.layout.dialog_time_picker)
+        setContentView(R.layout.dt_dialog_time_picker)
         super.onCreate(savedInstanceState)
 
         val bottomSheet = delegate.findViewById<FrameLayout>(R.id.design_bottom_sheet)

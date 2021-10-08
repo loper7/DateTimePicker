@@ -2,12 +2,10 @@ package com.loper7.date_time_picker
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
-import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import com.loper7.date_time_picker.DateTimeConfig.DAY
 import com.loper7.date_time_picker.DateTimeConfig.GLOBAL_LOCAL
@@ -16,15 +14,14 @@ import com.loper7.date_time_picker.DateTimeConfig.MIN
 import com.loper7.date_time_picker.DateTimeConfig.MONTH
 import com.loper7.date_time_picker.DateTimeConfig.SECOND
 import com.loper7.date_time_picker.DateTimeConfig.YEAR
-import com.loper7.date_time_picker.common.BaseDateTimeController
-import com.loper7.date_time_picker.common.DateTimeController
-import com.loper7.date_time_picker.common.DateTimeInterface
+import com.loper7.date_time_picker.controller.BaseDateTimeController
+import com.loper7.date_time_picker.controller.DateTimeController
+import com.loper7.date_time_picker.controller.DateTimeInterface
 import com.loper7.date_time_picker.number_picker.NumberPicker
 import com.loper7.tab_expand.ext.dip2px
 import com.loper7.tab_expand.ext.px2dip
 import org.jetbrains.annotations.NotNull
 import java.lang.Exception
-import kotlin.math.log
 
 class DateTimePicker : FrameLayout, DateTimeInterface {
 
@@ -50,7 +47,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
     private var global = GLOBAL_LOCAL
 
-    private var layoutResId = R.layout.layout_date_picker
+    private var layoutResId = R.layout.dt_layout_date_picker
 
     private var controller: BaseDateTimeController? = null
 
@@ -74,7 +71,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
         layoutResId = attributesArray.getResourceId(
             R.styleable.DateTimePicker_layout,
-            R.layout.layout_date_picker
+            R.layout.dt_layout_date_picker
         )
         attributesArray.recycle()
         init()
@@ -87,8 +84,8 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     private fun init() {
         removeAllViews()
         try {
-            if (!DateTimeConfig.showChina(global) && layoutResId == R.layout.layout_date_picker)
-                View.inflate(context, R.layout.layout_date_picker_globalization, this)
+            if (!DateTimeConfig.showChina(global) && layoutResId == R.layout.dt_layout_date_picker)
+                View.inflate(context, R.layout.dt_layout_date_picker_globalization, this)
             else
                 View.inflate(context, layoutResId, this)
         } catch (e: Exception) {
@@ -117,9 +114,11 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         setThemeColor(themeColor)
         setTextSize(textSize)
         showLabel(showLabel)
+        setDisplayType(displayType)
 
         //绑定控制器
         bindController(controller ?: DateTimeController())
+
     }
 
 
@@ -315,7 +314,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     fun getPicker(displayType: Int): NumberPicker? {
         return when (displayType) {
             YEAR -> mYearSpinner
-            MONTH -> mMinuteSpinner
+            MONTH -> mMonthSpinner
             DAY -> mDaySpinner
             HOUR -> mHourSpinner
             MIN -> mMinuteSpinner
@@ -343,6 +342,10 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
     override fun setOnDateTimeChangedListener(callback: ((Long) -> Unit)?) {
         controller?.setOnDateTimeChangedListener(callback)
+    }
+
+    override fun getMillisecond(): Long {
+        return controller?.getMillisecond() ?: 0L
     }
 
 

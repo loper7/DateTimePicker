@@ -15,7 +15,6 @@ import android.text.TextUtils;
 import android.text.method.NumberKeyListener;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -37,7 +36,6 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.DimenRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.StringRes;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 
 import java.lang.annotation.Retention;
@@ -834,7 +832,7 @@ public class NumberPicker extends LinearLayout {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.number_picker_material, this, true);
+        inflater.inflate(R.layout.dt_number_picker_material, this, true);
 
         // input text
         mSelectedText = findViewById(R.id.np__numberpicker_input);

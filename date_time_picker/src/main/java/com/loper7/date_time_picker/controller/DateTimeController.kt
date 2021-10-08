@@ -1,5 +1,6 @@
-package com.loper7.date_time_picker.common
+package com.loper7.date_time_picker.controller
 
+import android.util.Log
 import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimeConfig.DAY
 import com.loper7.date_time_picker.DateTimeConfig.HOUR
@@ -68,8 +69,8 @@ class DateTimeController : BaseDateTimeController() {
         return this
     }
 
-    override fun bindGlobal(global: Int) : DateTimeController{
-       this.global = global
+    override fun bindGlobal(global: Int): DateTimeController {
+        this.global = global
         return this
     }
 
@@ -204,7 +205,6 @@ class DateTimeController : BaseDateTimeController() {
      */
     private fun onDateTimeChanged() {
         syncDateData()
-//        Log.d("DateTimePicker","$mYear-$mMonth-$mDay $mHour:$mMinute:$mSecond")
 
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val date: Date = simpleDateFormat.parse("$mYear-$mMonth-$mDay $mHour:$mMinute:$mSecond")
@@ -379,7 +379,7 @@ class DateTimeController : BaseDateTimeController() {
 
     override fun setDefaultMillisecond(time: Long) {
         var vTime = time
-        if (vTime <= 0) vTime = System.currentTimeMillis()
+        if (vTime == 0L) vTime = System.currentTimeMillis()
         if (vTime < minMillisecond) return
         if (maxMillisecond in 1 until vTime) return
 
@@ -405,8 +405,9 @@ class DateTimeController : BaseDateTimeController() {
     }
 
     override fun setMinMillisecond(time: Long) {
-        if (time <= 0) return
-        if (maxMillisecond > 0 && maxMillisecond < time) return
+
+        if (time == 0L) return
+        if (maxMillisecond > 0L && maxMillisecond < time) return
         minMillisecond = time
         val mCalendar = Calendar.getInstance()
         mCalendar.timeInMillis = time
@@ -417,13 +418,15 @@ class DateTimeController : BaseDateTimeController() {
         minSecond = mCalendar.get(Calendar.SECOND)
         mYearSpinner?.minValue = mCalendar.get(Calendar.YEAR)
 
+
+
         limitMaxAndMin()
         setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
         if (this.millisecond < minMillisecond) setDefaultMillisecond(minMillisecond)
     }
 
     override fun setMaxMillisecond(time: Long) {
-        if (time <= 0) return
+        if (time == 0L) return
         if (minMillisecond > 0L && time < minMillisecond) return
         maxMillisecond = time
         val mCalendar = Calendar.getInstance()
@@ -472,6 +475,10 @@ class DateTimeController : BaseDateTimeController() {
     override fun setOnDateTimeChangedListener(callback: ((Long) -> Unit)?) {
         mOnDateTimeChangedListener = callback
         onDateTimeChanged()
+    }
+
+    override fun getMillisecond(): Long {
+        return millisecond
     }
 
 }

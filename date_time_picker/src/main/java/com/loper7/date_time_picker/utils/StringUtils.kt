@@ -1,7 +1,8 @@
-package com.loper7.date_time_picker
+package com.loper7.date_time_picker.utils
 
 import android.content.Context
 import android.text.format.DateFormat
+import java.lang.StringBuilder
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.*

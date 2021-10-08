@@ -1,6 +1,4 @@
-package com.loper7.date_time_picker.common
-
-import com.loper7.date_time_picker.DateTimeConfig
+package com.loper7.date_time_picker.controller
 
 /**
  *
@@ -39,5 +37,13 @@ internal interface DateTimeInterface {
      */
     fun setWrapSelectorWheel(types: MutableList<Int>?=null, wrapSelector: Boolean = true)
 
+    /**
+     * 选择回调监听
+     */
     fun setOnDateTimeChangedListener(callback: ((Long) -> Unit)? = null)
+
+    /**
+     * 获取当权选中的时间戳
+     */
+    fun getMillisecond():Long
 }
