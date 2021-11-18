@@ -9,12 +9,8 @@
 A simple and beautiful date&time picker, supports a large area of custom UI, built-in date&time selection dialog, based on Google BottomSheetDialog, can be used directly.
 <br/>
 ## Preview
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/display.gif)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/dialog.gif)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/mode.gif)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/layout.gif)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/mode_1.jpg)
-![](https://github.com/loperSeven/DateTimePicker/blob/master/images/mode_2.jpg)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/gif_date.gif)
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/gif_more.gif)
 <br/>
 ## Download APK
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/app_qrcode.png)
