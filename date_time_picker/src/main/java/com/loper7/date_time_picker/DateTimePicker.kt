@@ -1,6 +1,7 @@
 package com.loper7.date_time_picker
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -51,28 +52,38 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
     private var controller: BaseDateTimeController? = null
 
+    private var textBold = true
+    private var selectedTextBold = true
+
 
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : this(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val attributesArray = context.obtainStyledAttributes(attrs, R.styleable.DateTimePicker)
-        showLabel = attributesArray.getBoolean(R.styleable.DateTimePicker_showLabel, true)
+        showLabel = attributesArray.getBoolean(R.styleable.DateTimePicker_dt_showLabel, true)
         themeColor = attributesArray.getColor(
-            R.styleable.DateTimePicker_themeColor,
+            R.styleable.DateTimePicker_dt_themeColor,
             ContextCompat.getColor(context, R.color.colorAccent)
         )
         textSize =
             context.px2dip(
                 attributesArray.getDimensionPixelSize(
-                    R.styleable.DateTimePicker_textSize,
+                    R.styleable.DateTimePicker_dt_textSize,
                     context.dip2px(15f)
                 ).toFloat()
             )
 
         layoutResId = attributesArray.getResourceId(
-            R.styleable.DateTimePicker_layout,
+            R.styleable.DateTimePicker_dt_layout,
             R.layout.dt_layout_date_picker
         )
+        textBold = attributesArray.getBoolean(
+            R.styleable.DateTimePicker_dt_textBold, textBold
+        )
+        selectedTextBold = attributesArray.getBoolean(
+            R.styleable.DateTimePicker_dt_selectedTextBold, selectedTextBold
+        )
+
         attributesArray.recycle()
         init()
     }
@@ -115,6 +126,9 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         setTextSize(textSize)
         showLabel(showLabel)
         setDisplayType(displayType)
+        setSelectedTextBold(selectedTextBold)
+        setTextBold(textBold)
+
 
         //绑定控制器
         bindController(controller ?: DateTimeController())
@@ -321,6 +335,33 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
             SECOND -> mSecondSpinner
             else -> null
         }
+    }
+
+
+    /**
+     * 设置选择器字体是否加粗
+     */
+    fun setTextBold(textBold: Boolean) {
+        this.textBold = textBold
+        mYearSpinner?.isTextBold = textBold
+        mMonthSpinner?.isTextBold = textBold
+        mDaySpinner?.isTextBold = textBold
+        mHourSpinner?.isTextBold = textBold
+        mMinuteSpinner?.isTextBold = textBold
+        mSecondSpinner?.isTextBold = textBold
+    }
+
+    /**
+     * 设置选择器选中字体是否加粗
+     */
+    fun setSelectedTextBold(selectedTextBold: Boolean) {
+        this.selectedTextBold = selectedTextBold
+        mYearSpinner?.isSelectedTextBold = selectedTextBold
+        mMonthSpinner?.isSelectedTextBold = selectedTextBold
+        mDaySpinner?.isSelectedTextBold = selectedTextBold
+        mHourSpinner?.isSelectedTextBold = selectedTextBold
+        mMinuteSpinner?.isSelectedTextBold = selectedTextBold
+        mSecondSpinner?.isSelectedTextBold = selectedTextBold
     }
 
 

@@ -56,12 +56,16 @@
         <attr name="np_value" format="integer" />
         <attr name="np_wheelItemCount" format="integer" />
         <attr name="np_wrapSelectorWheel" format="boolean" />
+        <attr name="np_textBold" format="boolean" />
+        <attr name="np_selectedTextBold" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="DateTimePicker">
-        <attr name="showLabel" format="boolean" />
-        <attr name="themeColor" format="color" />
-        <attr name="textSize" format="dimension" />
-        <attr name="layout" format="reference" />
+        <attr name="dt_showLabel" format="boolean" />
+        <attr name="dt_themeColor" format="color" />
+        <attr name="dt_textSize" format="dimension" />
+        <attr name="dt_layout" format="reference" />
+        <attr name="dt_textBold" format="boolean" />
+        <attr name="dt_selectedTextBold" format="boolean" />
     </declare-styleable>
 </resources>

@@ -1,454 +1,401 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/colorPrimary"
-    android:descendantFocusability="blocksDescendants"
-    tools:context=".JMainActivity">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.loper7.layout.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:tBackImage="@drawable/ic_action_back"
+        app:tTitleText="CardDatePickerDialog" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CardDatePickerDialog Examples"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Display Type"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="6dp"
-            app:flexDirection="row"
-            app:flexWrap="wrap">
-
-            <CheckBox
-                android:id="@+id/checkYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:layout_marginRight="16dp"
-                android:text="Year"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <CheckBox
-                android:id="@+id/checkMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:checked="true"
-                android:text="Month"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <CheckBox
-                android:id="@+id/checkDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:checked="true"
-                android:text="Day"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <CheckBox
-                android:id="@+id/checkHour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:checked="true"
-                android:text="Hour"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <CheckBox
-                android:id="@+id/checkMin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:checked="true"
-                android:text="Minute"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <CheckBox
-                android:id="@+id/checkSecond"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:checked="true"
-                android:text="Second"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-        </com.google.android.flexbox.FlexboxLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Dialog Config"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
+        android:descendantFocusability="blocksDescendants">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <CheckBox
-                android:id="@+id/checkDateInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Date Info"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <CheckBox
-                android:id="@+id/checkBackNow"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:checked="true"
-                android:text="Back Now"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
+                android:layout_marginTop="10dp"
+                android:text="Display Type"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
 
-            <CheckBox
-                android:id="@+id/checkUnitLabel"
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                app:flexDirection="row"
+                app:flexWrap="wrap">
+
+                <CheckBox
+                    android:id="@+id/checkYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="true"
+                    android:text="Year"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <CheckBox
+                    android:id="@+id/checkMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="true"
+                    android:text="Month"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <CheckBox
+                    android:id="@+id/checkDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="true"
+                    android:text="Day"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <CheckBox
+                    android:id="@+id/checkHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="true"
+                    android:text="Hour"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <CheckBox
+                    android:id="@+id/checkMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="true"
+                    android:text="Minute"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <CheckBox
+                    android:id="@+id/checkSecond"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="true"
+                    android:text="Second"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:checked="true"
-                android:text="Unit"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
+                android:layout_marginTop="10dp"
+                android:text="Dialog Config"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkDateInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Date Info"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <CheckBox
+                    android:id="@+id/checkBackNow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:checked="true"
+                    android:text="Back Now"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <CheckBox
+                    android:id="@+id/checkUnitLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:checked="true"
+                    android:text="Unit"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Dialog Show Model"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioModelCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Card"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <RadioButton
+                    android:id="@+id/radioModelCube"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Cube"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <RadioButton
+                    android:id="@+id/radioModelStack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Stack"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <RadioButton
+                    android:id="@+id/radioModelCustom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Custom"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Picker Layout"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/rgPickerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioPickerDefault"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Default"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <RadioButton
+                    android:id="@+id/radioPickerSegmentation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Segmentation"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+                <RadioButton
+                    android:id="@+id/radioPickerGrid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Grid"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="13sp"
+                    android:theme="@style/CheckBoxWhite" />
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Constraint"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="Max Value："
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvMaxDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_action_set"
+                        android:drawablePadding="10dp"
+                        android:textColor="#AAFFFFFF"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btnClearMax"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="CLEAR"
+                        android:textColor="@color/colorTextWhite" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="Min Value："
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvMinDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_action_set"
+                        android:drawablePadding="10dp"
+                        android:textColor="#AAFFFFFF"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btnClearMin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="CLEAR"
+                        android:textColor="@color/colorTextWhite" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="Def Value："
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvDefaultDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_action_set"
+                        android:drawablePadding="10dp"
+                        android:textColor="#AAFFFFFF"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btnClearDefault"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="CLEAR"
+                        android:textColor="@color/colorTextWhite" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/btnCardDialogShow"
+                android:layout_width="300dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/shape_button_bg"
+                android:drawablePadding="10dp"
+                android:drawableTint="#333333"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Show Dialog"
+                android:textColor="#333333"
+                android:textSize="16sp" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Dialog Show Model"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioModelCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Card"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <RadioButton
-                android:id="@+id/radioModelCube"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Cube"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <RadioButton
-                android:id="@+id/radioModelStack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Stack"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <RadioButton
-                android:id="@+id/radioModelCustom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Custom"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-
-        </RadioGroup>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Picker Layout"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
-        <RadioGroup
-            android:id="@+id/rgPickerLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioPickerDefault"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Default"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <RadioButton
-                android:id="@+id/radioPickerSegmentation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Segmentation"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-            <RadioButton
-                android:id="@+id/radioPickerGrid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Grid"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="13sp"
-                android:theme="@style/CheckBoxWhite" />
-
-        </RadioGroup>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Constraint"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="6dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:text="Max Value："
-                    android:textColor="#FFFFFF"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tvMaxDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_action_set"
-                    android:drawablePadding="10dp"
-                    android:textColor="#AAFFFFFF"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/btnClearMax"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="CLEAR"
-                    android:textColor="@color/colorTextWhite" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:text="Min Value："
-                    android:textColor="#FFFFFF"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tvMinDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_action_set"
-                    android:drawablePadding="10dp"
-                    android:textColor="#AAFFFFFF"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/btnClearMin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="CLEAR"
-                    android:textColor="@color/colorTextWhite" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:text="Def Value："
-                    android:textColor="#FFFFFF"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tvDefaultDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_action_set"
-                    android:drawablePadding="10dp"
-                    android:textColor="#AAFFFFFF"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/btnClearDefault"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="CLEAR"
-                    android:textColor="@color/colorTextWhite" />
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/btnCardDialogShow"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/shape_button_bg"
-            android:drawableLeft="@drawable/ic_action_smile"
-            android:drawablePadding="10dp"
-            android:drawableTint="#333333"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="Show Dialog"
-            android:textColor="#333333"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="DateTimePicker Examples"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/btnCustomLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/shape_button_bg"
-            android:drawableLeft="@drawable/ic_action_set"
-            android:drawablePadding="10dp"
-            android:drawableTint="#333333"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="Open Examples"
-            android:textColor="#333333"
-            android:textSize="16sp" />
-        <TextView
-            android:id="@+id/btnGlobalization"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/shape_button_bg"
-            android:drawableLeft="@drawable/ic_action_set"
-            android:drawablePadding="10dp"
-            android:drawableTint="#333333"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="Open Globalization"
-            android:textColor="#333333"
-            android:textSize="16sp" />
-        <TextView
-            android:id="@+id/btnWeekDialog"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/shape_button_bg"
-            android:drawableLeft="@drawable/ic_action_set"
-            android:drawablePadding="10dp"
-            android:drawableTint="#333333"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="Open Week Dialog"
-            android:textColor="#333333"
-            android:textSize="16sp" />
-
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

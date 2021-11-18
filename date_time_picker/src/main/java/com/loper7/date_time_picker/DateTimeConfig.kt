@@ -60,7 +60,7 @@ object DateTimeConfig {
 
 
     private fun isChina(): Boolean {
-        return Locale.getDefault() == Locale.CHINA || Locale.getDefault() == Locale.CHINESE
+        return Locale.getDefault().language.contains("zh", true)
     }
 
     fun showChina(global: Int): Boolean {

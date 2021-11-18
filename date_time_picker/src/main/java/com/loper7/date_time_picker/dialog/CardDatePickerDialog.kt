@@ -58,7 +58,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     private var millisecond: Long = 0
 
 
-    constructor(context: Context, builder: Builder):this(context) {
+    constructor(context: Context, builder: Builder) : this(context) {
         this.builder = builder
     }
 
@@ -311,6 +311,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置标题
+         * @param value 标题
+         * @return Builder
          */
         fun setTitle(value: String): Builder {
             this.titleValue = value
@@ -319,6 +321,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置显示值
+         * @param types 要显示的年月日时分秒标签
+         * @return Builder
          */
         fun setDisplayType(vararg types: Int): Builder {
             this.displayTypes = types
@@ -327,6 +331,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置显示值
+         * @param types 要显示的年月日时分秒标签
+         * @return Builder
          */
         fun setDisplayType(types: MutableList<Int>?): Builder {
             this.displayTypes = types?.toIntArray()
@@ -335,6 +341,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置默认时间
+         * @param millisecond 默认时间
+         * @return Builder
          */
         fun setDefaultTime(millisecond: Long): Builder {
             this.defaultMillisecond = millisecond
@@ -343,6 +351,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置范围最小值
+         * @param millisecond 范围最小值
+         * @return Builder
          */
         fun setMinTime(millisecond: Long): Builder {
             this.minTime = millisecond
@@ -351,6 +361,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置范围最大值
+         * @param millisecond
+         * @return Builder
          */
         fun setMaxTime(millisecond: Long): Builder {
             this.maxTime = millisecond
@@ -359,6 +371,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 是否显示回到当前
+         * @param b 是否显示回到当前
+         * @return Builder
          */
         fun showBackNow(b: Boolean): Builder {
             this.backNow = b
@@ -367,6 +381,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 是否显示选中日期信息
+         * @param b 是否显示选中日期信息
+         * @return Builder
          */
         fun showFocusDateInfo(b: Boolean): Builder {
             this.focusDateInfo = b
@@ -375,6 +391,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 是否显示单位标签
+         * @param b 是否显示单位标签
+         * @return Builder
          */
         fun showDateLabel(b: Boolean): Builder {
             this.dateLabel = b
@@ -383,6 +401,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 显示模式
+         * @param model  CARD,CUBE,STACK
+         * @return Builder
          */
         fun setBackGroundModel(model: Int): Builder {
             this.model = model
@@ -391,6 +411,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置主题颜色
+         * @param themeColor 主题颜色
+         * @return Builder
          */
         fun setThemeColor(@ColorInt themeColor: Int): Builder {
             this.themeColor = themeColor
@@ -405,6 +427,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
          * @param hour 时标签
          * @param min 分标签
          * @param second 秒标签
+         *setLabelText("年","月","日","时")
+         *setLabelText(month="月",hour="时")
+         * @return Builder
          */
         fun setLabelText(
             year: String = yearLabel,
@@ -425,9 +450,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          *设置是否循环滚动
-         *setWrapSelectorWheel()
-         *setLabelText("年","月","日","时")
-         *setLabelText(month="月",hour="时")
+         *{@link #setWrapSelectorWheel()}
+         * @return Builder
          */
         fun setWrapSelectorWheel(vararg types: Int, wrapSelector: Boolean): Builder {
             return setWrapSelectorWheel(types.toMutableList(), wrapSelector)
@@ -435,6 +459,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置是否循环滚动
+         * @param wrapSelector
+         * @return Builder
          */
         fun setWrapSelectorWheel(wrapSelector: Boolean): Builder {
             return setWrapSelectorWheel(null, wrapSelector)
@@ -442,6 +468,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置是否循环滚动
+         * @param types 需要设置的标签项
+         * @param wrapSelector 是否循环滚动
+         * @return Builder
          */
         fun setWrapSelectorWheel(types: MutableList<Int>?, wrapSelector: Boolean): Builder {
             this.wrapSelectorWheelTypes = types
@@ -452,6 +481,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 绑定选择监听
+         * @param text 按钮文字
+         * @param listener 选择监听函数 long 时间戳
+         * @return Builder
          */
         fun setOnChoose(text: String = "确定", listener: ((Long) -> Unit)? = null): Builder {
             this.onChooseListener = listener
@@ -461,6 +493,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 绑定取消监听
+         * @param text 按钮文字
+         * @param listener 取消监听函数
+         * @return Builder
          */
         fun setOnCancel(text: String = "取消", listener: (() -> Unit)? = null): Builder {
             this.onCancelListener = listener
@@ -470,7 +505,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         /**
          * 设置自定义选择器layout
-         *
+         * @param layoutResId xml资源id
          */
         fun setPickerLayout(@NotNull layoutResId: Int): Builder {
             this.pickerLayoutResId = layoutResId
@@ -478,7 +513,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         }
 
         fun build(): CardDatePickerDialog {
-            return CardDatePickerDialog(context,this)
+            return CardDatePickerDialog(context, this)
         }
     }
 

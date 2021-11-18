@@ -18,7 +18,7 @@ internal object StringUtils {
     fun conversionTime(
         time: String,
         format: String = "yyyy-MM-dd HH:mm:ss"
-    ): Long? {
+    ): Long {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val ofPattern = DateTimeFormatter.ofPattern(format)
@@ -27,7 +27,7 @@ internal object StringUtils {
         } else {
             val sdf = SimpleDateFormat(format, Locale.getDefault())
             try {
-                return sdf.parse(time)?.time
+                return sdf.parse(time)?.time?:0
             } catch (e: ParseException) {
                 e.printStackTrace()
             }

@@ -182,6 +182,9 @@ public class NumberPicker extends LinearLayout {
      */
     private String label = "";
 
+    private boolean textBold = true;
+    private boolean selectedTextBold = true;
+
     /**
      * Use a custom NumberPicker formatting callback to use two-digit minutes
      * strings like "01". Keeping a static formatter etc. is the most efficient
@@ -823,6 +826,12 @@ public class NumberPicker extends LinearLayout {
                 R.styleable.NumberPicker_np_accessibilityDescriptionEnabled, true);
         mItemSpacing = attributes.getDimensionPixelSize(
                 R.styleable.NumberPicker_np_itemSpacing, 0);
+
+        textBold = attributes.getBoolean(
+                R.styleable.NumberPicker_np_textBold, textBold);
+        selectedTextBold = attributes.getBoolean(
+                R.styleable.NumberPicker_np_selectedTextBold, selectedTextBold);
+
         // By default LinearLayout that we extend is not drawn. This is
         // its draw() method is not called but dispatchDraw() is called
         // directly (see ViewGroup.drawChild()). However, this class uses
@@ -833,6 +842,7 @@ public class NumberPicker extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.dt_number_picker_material, this, true);
+
 
         // input text
         mSelectedText = findViewById(R.id.np__numberpicker_input);
@@ -1796,6 +1806,7 @@ public class NumberPicker extends LinearLayout {
                 mSelectorWheelPaint.setTextAlign(Paint.Align.values()[mSelectedTextAlign]);
                 mSelectorWheelPaint.setTextSize(mSelectedTextSize);
                 mSelectorWheelPaint.setColor(mSelectedTextColor);
+                mSelectorWheelPaint.setFakeBoldText(selectedTextBold);
                 mSelectorWheelPaint.setStrikeThruText(mSelectedTextStrikeThru);
                 mSelectorWheelPaint.setUnderlineText(mSelectedTextUnderline);
                 mSelectorWheelPaint.setTypeface(mSelectedTypeface);
@@ -1804,6 +1815,7 @@ public class NumberPicker extends LinearLayout {
                 mSelectorWheelPaint.setTextAlign(Paint.Align.values()[mTextAlign]);
                 mSelectorWheelPaint.setTextSize(mTextSize);
                 mSelectorWheelPaint.setColor(mTextColor);
+                mSelectorWheelPaint.setFakeBoldText(textBold);
                 mSelectorWheelPaint.setStrikeThruText(mTextStrikeThru);
                 mSelectorWheelPaint.setUnderlineText(mTextUnderline);
                 mSelectorWheelPaint.setTypeface(mTypeface);
@@ -2637,7 +2649,7 @@ public class NumberPicker extends LinearLayout {
 
     private String formatNumberWithLocale(int value) {
 //        return mNumberFormatter.format(value);
-        return value+"";
+        return value + "";
     }
 
     private float dpToPx(float dp) {
@@ -3013,4 +3025,19 @@ public class NumberPicker extends LinearLayout {
         return label;
     }
 
+    public boolean isTextBold() {
+        return textBold;
+    }
+
+    public void setTextBold(boolean bold) {
+        this.textBold = bold;
+    }
+
+    public boolean isSelectedTextBold() {
+        return selectedTextBold;
+    }
+
+    public void setSelectedTextBold(boolean selectBold) {
+        this.selectedTextBold = selectBold;
+    }
 }

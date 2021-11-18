@@ -36,7 +36,6 @@ class DatePickerExampleActivity : AppCompatActivity() {
                     maxDate = it
                     tvMaxDate.text = StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm:ss")
                 }.build().show()
-
         }
 
 
@@ -147,17 +146,6 @@ class DatePickerExampleActivity : AppCompatActivity() {
                 }
                 .setOnCancel("关闭") {
                 }.build().show()
-        }
-
-        btnCustomLayout.setOnClickListener {
-            startActivity(Intent(context, CustomLayoutActivity::class.java))
-        }
-        btnGlobalization.setOnClickListener {
-            startActivity(Intent(context, GlobalizationActivity::class.java))
-        }
-
-        btnWeekDialog.setOnClickListener {
-            CardWeekPickerDialog.builder(context).setTitle("选择周").build().show()
         }
     }
 }

@@ -39,11 +39,13 @@ internal interface DateTimeInterface {
 
     /**
      * 选择回调监听
+     * @param long 选择时间戳
      */
     fun setOnDateTimeChangedListener(callback: ((Long) -> Unit)? = null)
 
     /**
-     * 获取当权选中的时间戳
+     * 获取当前选中的时间戳
+     * @return long 当前选中的时间戳
      */
     fun getMillisecond():Long
 }
