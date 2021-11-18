@@ -105,6 +105,7 @@ class WeekPickerExampleActivity : AppCompatActivity() {
                 }
                 .setOnCancel("关闭") {
                 }.build().show()
+
         }
     }
 }
