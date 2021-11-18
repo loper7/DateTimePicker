@@ -37,9 +37,8 @@ Step 2. 添加 Gradle依赖
 ```
 dependencies {
     ...
-    // 0.3.4 目前有个bug - issue #29  ，建议先使用0.3.3
     implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation 'com.github.loperSeven:DateTimePicker:0.3.4'//具体版本请看顶部jitpack标识，如0.3.4,仅支持androidx
+    implementation 'com.github.loperSeven:DateTimePicker:0.4.1'//具体版本请看顶部jitpack标识，如0.4.1,仅支持androidx
 }
 
 
@@ -57,6 +56,15 @@ dependencies {
 <br/>
 &ensp;&ensp;[DateTimePicker 自定义](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
 ## 更新日志
+
+### [v0.3.4](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.4) -> [v0.4.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.4.1)
+* fix [issues 29](https://github.com/loperSeven/DateTimePicker/issues/29)
+* fix [issues 30](https://github.com/loperSeven/DateTimePicker/issues/30)
+* fix [issues 32](https://github.com/loperSeven/DateTimePicker/issues/32)
+* fix [issues 34](https://github.com/loperSeven/DateTimePicker/issues/34)
+* fix [issues 35](https://github.com/loperSeven/DateTimePicker/issues/35)
+* DateTimePicker 新增 getMillisecond() 方法
+* 新增选择周功能弹窗
 
 ### [v0.3.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.3) -> [v0.3.4](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.4)
 **支持设置国际化日期选择格式**
@@ -84,8 +92,6 @@ dependencies {
     }
 ```
 用例可见：[GlobalizationActivity](https://github.com/loperSeven/DateTimePicker/blob/master/app/src/main/java/com/loper7/datepicker/GlobalizationActivity.kt)
-
-
 
 ### [v0.3.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.1) -> [v0.3.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.3)
 * fix [issues 24](https://github.com/loperSeven/DateTimePicker/issues/24)
