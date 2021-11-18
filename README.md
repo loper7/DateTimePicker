@@ -38,7 +38,7 @@ Step 2. 添加 Gradle依赖
 dependencies {
     ...
     implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation 'com.github.loperSeven:DateTimePicker:0.4.1'//具体版本请看顶部jitpack标识，如0.4.1,仅支持androidx
+    implementation 'com.github.loperSeven:DateTimePicker:0.5.0'//具体版本请看顶部jitpack标识，如0.5.0,仅支持androidx
 }
 
 
@@ -55,7 +55,17 @@ dependencies {
 自定义选择器
 <br/>
 &ensp;&ensp;[DateTimePicker 自定义](https://github.com/loperSeven/DateTimePicker/wiki/DateTimePicker-%E8%87%AA%E5%AE%9A%E4%B9%89)
+周选择弹窗
+<br/>
+&ensp;&ensp;[CardWeekPickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardWeekPickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 ## 更新日志
+
+### [v0.4.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.4.1) -> [v0.5.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.0)
+* fix [issues 40](https://github.com/loperSeven/DateTimePicker/issues/40)
+* fix [issues 39](https://github.com/loperSeven/DateTimePicker/issues/39)
+* fix [issues 37](https://github.com/loperSeven/DateTimePicker/issues/37)
+* 优化选择周功能
+> 注意：为了规避属性名与系统冲突问题，此版本对自定义属性名添加了前缀`dt`。
 
 ### [v0.3.4](https://github.com/loperSeven/DateTimePicker/releases/tag/0.3.4) -> [v0.4.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.4.1)
 * fix [issues 29](https://github.com/loperSeven/DateTimePicker/issues/29)
