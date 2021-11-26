@@ -12,4 +12,38 @@
         <item name="android:colorControlActivated">@color/colorTextWhite</item>
         <item name="android:colorControlNormal">@color/colorTextWhite</item>
     </style>
+
+
+    <style name="Theme.SplashScreen" parent="Theme.SplashScreenBase">
+        <item name="postSplashScreenTheme">?android:attr/theme</item>
+        <item name="windowSplashScreenAnimationDuration">@integer/default_icon_animation_duration</item>
+        <item name="windowSplashScreenBackground">@android:color/background_light</item>
+        <item name="windowSplashScreenAnimatedIcon">@android:drawable/sym_def_app_icon</item>
+    </style>
+
+    <style name="Theme.SplashScreenBase" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/compat_splash_screen</item>
+        <item name="android:opacity">opaque</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="JetpackSplashTheme" parent="JetpackSplashTheme.Base">
+    </style>
+
+    <style name="JetpackSplashTheme.Base" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/leak_canary_icon</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="windowSplashScreenBackground">@color/colorPrimary</item>
+        <item name="postSplashScreenTheme">@style/SplashActivityTheme</item>
+    </style>
+
+    <style name="SplashActivityTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 </resources>

@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.SplashScreen" parent="AppTheme">
+        <item name="android:windowSplashScreenAnimatedIcon" >?windowSplashScreenAnimatedIcon</item>
+        <item name="android:windowSplashScreenBackground">?windowSplashScreenBackground</item>
+        <item name="android:windowSplashScreenAnimationDuration" >?windowSplashScreenAnimationDuration</item>
+    </style>
+
+    <style name="JetpackSplashTheme" parent="JetpackSplashTheme.Base">
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/colorPrimary</item>
+    </style>
+
+</resources>

@@ -3,13 +3,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.loper7.datepicker"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 2
         versionName "1.0.1"
 
@@ -28,15 +28,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-//    buildFeatures {
-//        // Enables Jetpack Compose for this module
-//        compose true
-//    }
-
-//    composeOptions {
-//        kotlinCompilerExtensionVersion '1.0.1'
-//        kotlinCompilerVersion '1.5.21'
-//    }
 }
 
 dependencies {
@@ -46,16 +37,8 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android:flexbox:2.0.1'
-    // Integration with activities
-//    implementation 'androidx.activity:activity-compose:1.3.1'
-//    // Compose Material Design
-//    implementation 'androidx.compose.material:material:1.0.1'
-//     // Animations
-//    implementation 'androidx.compose.animation:animation:1.0.1'
-//    // Tooling support (Previews, etc.)
-//    implementation 'androidx.compose.ui:ui-tooling:1.0.1'
-//    // Integration with ViewModels
-//   implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 
     //标题栏
     implementation 'com.github.loperSeven:TitleBar:1.0.4'
@@ -65,5 +48,7 @@ dependencies {
 //   implementation 'com.github.loperSeven:DateTimePicker:master-SNAPSHOT'
     implementation project(path: ':date_time_picker')
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+
+    implementation "androidx.core:core-splashscreen:1.0.0-alpha02"
 }

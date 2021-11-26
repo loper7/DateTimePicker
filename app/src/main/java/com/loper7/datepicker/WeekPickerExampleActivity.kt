@@ -10,6 +10,7 @@ import android.util.Log
 import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.dialog.CardDatePickerDialog
 import com.loper7.date_time_picker.dialog.CardWeekPickerDialog
+import com.loper7.date_time_picker.number_picker.NumberPicker
 import kotlinx.android.synthetic.main.activity_week_picker_example.*
 
 class WeekPickerExampleActivity : AppCompatActivity() {
@@ -100,12 +101,30 @@ class WeekPickerExampleActivity : AppCompatActivity() {
                 .setStartMillisecond(minDate)
                 .setEndMillisecond(maxDate)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
+                .setFormatter {
+                    NumberPicker.Formatter { value: Int ->
+                        var weekData = it[value - 1].toFormatList("MM月dd日")
+                        var str = "从${weekData.first()}  开始到  ${weekData.last()}结束"
+                        str
+                    }
+                }
                 .setOnChoose("选择") {weekData,formatValue ->
                     btnCardDialogShow.text = formatValue
                 }
                 .setOnCancel("关闭") {
                 }.build().show()
-
         }
     }
+}
+
+/**
+ * 将时间戳集合格式化为指定日期格式的集合
+ * @return MutableList<String> [2021-09-09,2021--09-10,...]
+ */
+internal fun MutableList<Long>.toFormatList(format: String = "yyyy-MM-dd"): MutableList<String> {
+    var formatList = mutableListOf<String>()
+    for (i in this) {
+        formatList.add(StringUtils.conversionTime(i, format))
+    }
+    return formatList
 }

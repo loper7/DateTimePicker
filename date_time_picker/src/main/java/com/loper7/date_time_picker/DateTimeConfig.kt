@@ -34,7 +34,6 @@ object DateTimeConfig {
             }
             str
         }
-
     //国际化格月份格式化
     val globalizationMonthFormatter =
         NumberPicker.Formatter { value: Int ->

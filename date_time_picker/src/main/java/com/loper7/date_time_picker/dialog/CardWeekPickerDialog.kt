@@ -71,7 +71,8 @@ class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         weeksData = calendar.getWeeks()
         builder?.apply {
-            weeksData = calendar.getWeeks(startMillisecond,endMillisecond,startContain,endContain)
+            weeksData =
+                calendar.getWeeks(startMillisecond, endMillisecond, startContain, endContain)
             //背景模式
             if (model != 0) {
                 val parmas = LinearLayout.LayoutParams(linear_bg!!.layoutParams)
@@ -136,17 +137,18 @@ class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), View.
 
             minValue = 1
             maxValue = weeksData.size
-            value = weeksData.index(builder?.defaultMillisecond)+1
+            value = weeksData.index(builder?.defaultMillisecond) + 1
             isFocusable = true
             isFocusableInTouchMode = true
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
-            wrapSelectorWheel = builder?.wrapSelectorWheel?:true
+            wrapSelectorWheel = builder?.wrapSelectorWheel ?: true
 
-            formatter = NumberPicker.Formatter { value: Int ->
-                var weekData = weeksData[value - 1].toFormatList("yyyy/MM/dd")
-                var str = "${weekData.first()}  -  ${weekData.last()}"
-                str
-            }
+            formatter =
+                builder?.formatter?.invoke(weeksData) ?: NumberPicker.Formatter { value: Int ->
+                    var weekData = weeksData[value - 1].toFormatList("yyyy/MM/dd")
+                    var str = "${weekData.first()}  -  ${weekData.last()}"
+                    str
+                }
         }
 
         tv_cancel!!.setOnClickListener(this)
@@ -214,7 +216,10 @@ class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), View.
         var endMillisecond: Long = 0
 
         @JvmField
-        var endContain:  Boolean = true
+        var endContain: Boolean = true
+
+        @JvmField
+        var formatter: ((MutableList<MutableList<Long>>) -> NumberPicker.Formatter?)? = null
 
         /**
          * 设置标题
@@ -286,6 +291,16 @@ class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), View.
         fun setEndMillisecond(millisecond: Long, contain: Boolean = true): Builder {
             this.endMillisecond = millisecond
             this.endContain = contain
+            return this
+        }
+
+        /**
+         * 设置格式化
+         * @param datas 数据
+         * @return Builder
+         */
+        fun setFormatter(formatter: (MutableList<MutableList<Long>>) -> NumberPicker.Formatter?): Builder {
+            this.formatter = formatter
             return this
         }
 
