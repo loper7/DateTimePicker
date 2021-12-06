@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
@@ -225,7 +226,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
             calendar.clear()
             calendar.timeInMillis = millisecond
             Lunar.getInstance(calendar)?.apply {
-                tv_choose_date?.text = "农历    $yearName $monthName $dayName    ${StringUtils.getWeek(millisecond)}"
+                var str =  "<font color='#999999'>农历</font>&nbsp;&nbsp;&nbsp;<font color='#333333'>$yearName $monthName $dayName<font/>&nbsp;&nbsp;&nbsp;<font color='#999999'>${StringUtils.getWeek(millisecond)}</font>"
+                tv_choose_date?.text = Html.fromHtml(str)
             }
         }
     }
