@@ -86,7 +86,7 @@ class DateTimeController : BaseDateTimeController() {
 
         mYearSpinner?.run {
             maxValue = mYear + 100
-            minValue = 1800
+            minValue = 1900
             value = mYear
             isFocusable = true
             isFocusableInTouchMode = true
@@ -221,66 +221,14 @@ class DateTimeController : BaseDateTimeController() {
     private fun leapMonth() {
         mYearSpinner?.apply { mYear = value }
         mMonthSpinner?.apply { mMonth = value }
-        if (mMonth == 2) {
-            if (isLeapYear(mYear)) {
-                if (mDaySpinner?.maxValue != 29) {
-                    mDaySpinner?.run {
-                        displayedValues = null
-                        minValue = 1
-                        maxValue = 29
-                    }
-                }
-            } else {
-                if (mDaySpinner?.maxValue != 28) {
-                    mDaySpinner?.run {
-                        displayedValues = null
-                        minValue = 1
-                        maxValue = 28
-                    }
-                }
-            }
-        } else {
-            when (mMonth) {
-                4, 6, 9, 11 -> if (mDaySpinner?.maxValue != 30) {
-                    mDaySpinner?.run {
-                        displayedValues = null
-                        minValue = 1
-                        maxValue = 30
-                    }
-                }
-                else -> if (mDaySpinner?.maxValue != 31) {
-                    mDaySpinner?.run {
-                        displayedValues = null
-                        minValue = 1
-                        maxValue = 31
-                    }
-                }
-            }
+        mDaySpinner?.run {
+            displayedValues = null
+            minValue = 1
+            maxValue = getMaxDayInMonth(mYear, mMonth-1)
         }
         if (mYear == mYearSpinner?.minValue && mMonth == mMonthSpinner?.minValue) {
             mDaySpinner?.run {
                 minValue = minDay
-            }
-        }
-    }
-
-    /**
-     * 当前年2月有多少天
-     *
-     * @return
-     */
-    private fun leapMonth2days(year: Int): Int {
-        syncDateData()
-        return if (mMonth == 2) {
-            if (isLeapYear(year)) {
-                29
-            } else {
-                28
-            }
-        } else {
-            when (mMonth) {
-                4, 6, 9, 11 -> 30
-                else -> 31
             }
         }
     }
@@ -309,7 +257,7 @@ class DateTimeController : BaseDateTimeController() {
         mDaySpinner?.run {
             maxValue =
                 if (mYear == mYearSpinner?.maxValue && mMonth == mMonthSpinner?.maxValue) maxDay
-                else leapMonth2days(mYear)
+                else getMaxDayInMonth(mYear, mMonth-1)
         }
 
 
@@ -364,18 +312,6 @@ class DateTimeController : BaseDateTimeController() {
 
     }
 
-    /**
-     * 是否为闰年
-     *
-     * @param year 当前年份
-     * @return true or false
-     */
-    private fun isLeapYear(year: Int): Boolean {
-        val c = Calendar.getInstance()
-        c[year, 2] = 1
-        c.add(Calendar.DAY_OF_MONTH, -1)
-        return c[Calendar.DAY_OF_MONTH] == 29
-    }
 
     override fun setDefaultMillisecond(time: Long) {
         var vTime = time

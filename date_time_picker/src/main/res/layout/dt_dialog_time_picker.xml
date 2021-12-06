@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:visibility="gone"
-            android:layout_marginBottom="25dp"
+            android:layout_marginBottom="20dp"
             android:textStyle="bold"
             android:textColor="@color/colorTextBlack"
             android:textSize="18sp" />

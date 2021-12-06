@@ -17,6 +17,7 @@ import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.R
 import com.loper7.date_time_picker.utils.StringUtils
+import com.loper7.date_time_picker.utils.lunar.Lunar
 import org.jetbrains.annotations.NotNull
 import java.util.*
 
@@ -220,10 +221,12 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         datePicker!!.setOnDateTimeChangedListener { millisecond ->
             this@CardDatePickerDialog.millisecond = millisecond
-            tv_choose_date!!.text =
-                (StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
-                    millisecond
-                ))
+            var calendar = Calendar.getInstance()
+            calendar.clear()
+            calendar.timeInMillis = millisecond
+            Lunar.getInstance(calendar)?.apply {
+                tv_choose_date?.text = "农历    $yearName $monthName $dayName    ${StringUtils.getWeek(millisecond)}"
+            }
         }
     }
 

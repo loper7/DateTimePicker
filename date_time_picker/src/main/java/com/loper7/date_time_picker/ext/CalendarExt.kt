@@ -1,6 +1,7 @@
 package com.loper7.date_time_picker.ext
 
 import java.lang.RuntimeException
+import java.time.Year
 import java.util.*
 
 /**
@@ -128,4 +129,22 @@ internal fun Calendar.getDaysOfWeek(
         weekData.add(timeInMillis + (86400000 * i))
     }
     return weekData
+}
+
+/**
+ * 获取一年最多有多少天
+ *
+ * @param year
+ * @return
+ */
+internal fun GregorianCalendar.getMaxDayAtYear(year: Int): Int {
+    set(Calendar.YEAR,year)
+    return (if (isLeapYear(year)) 1 else 0) + 365
+}
+
+/**
+ * 获取一月中最大的一天
+ */
+internal fun Calendar.getMaxDayInMonth():Int{
+    return this.getActualMaximum(Calendar.DAY_OF_MONTH)
 }
