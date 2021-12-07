@@ -58,6 +58,17 @@ dependencies {
 &ensp;&ensp;[CardWeekPickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardWeekPickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 ## 更新日志
 
+### [v0.5.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.0) -> [v0.5.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.1)
+* 支持农历日期转换
+```kotlin
+var lunar = Lunar.getInstance(calendar)
+             lunar?.apply {
+                 Log.e("lunar",lunar.toString())
+             }
+```
+* `CardDatePickerDialog` 内原标题下日期信息变更为农历日期信息<br><br>
+![](https://github.com/loperSeven/DateTimePicker/blob/master/images/img_lunar.jpg)
+
 ### [v0.4.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.4.1) -> [v0.5.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.0)
 * fix [issues 40](https://github.com/loperSeven/DateTimePicker/issues/40)
 * fix [issues 39](https://github.com/loperSeven/DateTimePicker/issues/39)
