@@ -62,9 +62,9 @@ dependencies {
 * 支持农历日期转换
 ```kotlin
 var lunar = Lunar.getInstance(calendar)
-             lunar?.apply {
-                 Log.e("lunar",lunar.toString())
-             }
+lunar?.apply {
+   Log.d("lunar",lunar.toString())
+}
 ```
 * `CardDatePickerDialog` 内原标题下日期信息变更为农历日期信息<br><br>
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/img_lunar.jpg)
