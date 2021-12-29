@@ -89,6 +89,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         mBehavior = BottomSheetBehavior.from(bottomSheet)
 
+        //滑动关闭
+        mBehavior?.isHideable = builder?.touchHideable?:true
 
         //背景模式
         if (builder!!.model != 0) {
@@ -300,6 +302,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         @JvmField
         var wrapSelectorWheelTypes: MutableList<Int>? = mutableListOf()
+
+        @JvmField
+        var touchHideable:Boolean = true
 
         @JvmField
         var onChooseListener: ((Long) -> Unit)? = null
@@ -514,6 +519,15 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
          */
         fun setPickerLayout(@NotNull layoutResId: Int): Builder {
             this.pickerLayoutResId = layoutResId
+            return this
+        }
+
+        /**
+         * 是否可以滑动关闭弹窗
+         * @param touchHideable 默认为 true
+         */
+        fun setTouchHideable(touchHideable:Boolean = true):Builder{
+            this.touchHideable = touchHideable
             return this
         }
 

@@ -22,6 +22,8 @@
             android:visibility="gone"
             android:layout_marginBottom="20dp"
             android:textStyle="bold"
+
+
             android:textColor="@color/colorTextBlack"
             android:textSize="18sp" />
 

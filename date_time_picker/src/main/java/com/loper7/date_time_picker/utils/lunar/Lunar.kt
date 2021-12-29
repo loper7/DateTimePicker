@@ -23,6 +23,13 @@ class Lunar(
 
     companion object {
 
+
+        fun getInstance(timeInMillis: Long): Lunar? {
+            var calendar = Calendar.getInstance()
+            calendar.timeInMillis = timeInMillis
+            return getInstance(calendar)
+        }
+
         fun getInstance(calendar: Calendar = Calendar.getInstance()): Lunar? {
 
             //传入的时间超出了计算范围
@@ -117,12 +124,12 @@ class Lunar(
      *
      * @return
      */
-    val yearName :String
-    get() {
-        var tg = LUNAR_TG[(year-4)%10]
-        var dz = LUNAR_DZ[(year-4)%12]
-        return "${tg}${dz}年"
-    }
+    val yearName: String
+        get() {
+            var tg = LUNAR_TG[(year - 4) % 10]
+            var dz = LUNAR_DZ[(year - 4) % 12]
+            return "${tg}${dz}年"
+        }
 
     /**
      * 获取农历月名称
@@ -157,8 +164,6 @@ class Lunar(
             (hexValue shr 12 and 0x1) + 29
         } else (hexValue shr 24 - month + 1 and 0x1) + 29
     }
-
-
 
 
     override fun equals(o: Any?): Boolean {
