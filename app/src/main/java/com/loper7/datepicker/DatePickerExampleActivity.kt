@@ -7,6 +7,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.dialog.CardDatePickerDialog
 import com.loper7.date_time_picker.dialog.CardWeekPickerDialog
@@ -124,8 +125,7 @@ class DatePickerExampleActivity : AppCompatActivity() {
             }
 
 
-
-            CardDatePickerDialog.builder(context)
+            var dialog = CardDatePickerDialog.builder(context)
                 .setTitle("DATE&TIME PICKER")
                 .setDisplayType(displayList)
                 .setBackGroundModel(model)
@@ -134,18 +134,25 @@ class DatePickerExampleActivity : AppCompatActivity() {
                 .setPickerLayout(pickerLayout)
                 .setMinTime(minDate)
                 .setDefaultTime(defaultDate)
+                .setTouchHideable(true)
                 .setWrapSelectorWheel(false)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)
                 .showFocusDateInfo(checkDateInfo.isChecked)
                 .setOnChoose("选择") {
-                    btnCardDialogShow.text = "${StringUtils.conversionTime(
-                        it,
-                        "yyyy-MM-dd HH:mm:ss"
-                    )}    ${StringUtils.getWeek(it)}"
+                    btnCardDialogShow.text = "${
+                        StringUtils.conversionTime(
+                            it,
+                            "yyyy-MM-dd HH:mm:ss"
+                        )
+                    }    ${StringUtils.getWeek(it)}"
                 }
                 .setOnCancel("关闭") {
-                }.build().show()
+                }.build()
+            dialog.show()
+            //重点 需要在dialog show 方法后
+            //得到 BottomSheetDialog 实体，设置其 isHideable 为 fasle
+            (dialog as BottomSheetDialog).behavior.isHideable = false
         }
     }
 }

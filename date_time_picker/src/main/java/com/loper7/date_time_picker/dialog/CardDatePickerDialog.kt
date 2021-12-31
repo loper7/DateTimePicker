@@ -33,7 +33,7 @@ import java.util.*
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
+class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style.DateTimePicker_BottomSheetDialog), View.OnClickListener {
     companion object {
         const val CARD = 0 //卡片
         const val CUBE = 1 //方形
@@ -73,6 +73,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
         setContentView(R.layout.dt_dialog_time_picker)
         super.onCreate(savedInstanceState)
 
+
         val bottomSheet = delegate.findViewById<FrameLayout>(R.id.design_bottom_sheet)
         bottomSheet!!.setBackgroundColor(Color.TRANSPARENT)
 
@@ -89,6 +90,8 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         mBehavior = BottomSheetBehavior.from(bottomSheet)
 
+        //滑动关闭
+        mBehavior?.isHideable = builder?.touchHideable?:true
 
         //背景模式
         if (builder!!.model != 0) {
@@ -300,6 +303,9 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
 
         @JvmField
         var wrapSelectorWheelTypes: MutableList<Int>? = mutableListOf()
+
+        @JvmField
+        var touchHideable:Boolean = true
 
         @JvmField
         var onChooseListener: ((Long) -> Unit)? = null
@@ -514,6 +520,15 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
          */
         fun setPickerLayout(@NotNull layoutResId: Int): Builder {
             this.pickerLayoutResId = layoutResId
+            return this
+        }
+
+        /**
+         * 是否可以滑动关闭弹窗
+         * @param touchHideable 默认为 true
+         */
+        fun setTouchHideable(touchHideable:Boolean = true):Builder{
+            this.touchHideable = touchHideable
             return this
         }
 
