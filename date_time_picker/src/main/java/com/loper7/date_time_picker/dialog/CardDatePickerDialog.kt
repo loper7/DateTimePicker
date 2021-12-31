@@ -33,7 +33,7 @@ import java.util.*
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
+class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style.DateTimePicker_BottomSheetDialog), View.OnClickListener {
     companion object {
         const val CARD = 0 //卡片
         const val CUBE = 1 //方形
@@ -72,6 +72,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context), View.
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dt_dialog_time_picker)
         super.onCreate(savedInstanceState)
+
 
         val bottomSheet = delegate.findViewById<FrameLayout>(R.id.design_bottom_sheet)
         bottomSheet!!.setBackgroundColor(Color.TRANSPARENT)
