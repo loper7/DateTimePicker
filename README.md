@@ -58,6 +58,34 @@ dependencies {
 &ensp;&ensp;[CardWeekPickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardWeekPickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 ## 更新日志
 
+
+### [v0.5.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.1) -> [v0.5.2](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.2)
+* fix [issues 44](https://github.com/loperSeven/DateTimePicker/issues/44)
+* `CardDatePickerDialog` 支持设置 `touchHideable`， 用以控制是否允许滑动手势关闭弹窗
+```kotlin
+	/**
+         * 是否可以滑动关闭弹窗
+         * @param touchHideable 默认为 true
+         */
+        fun setTouchHideable(touchHideable:Boolean = true):Builder{
+            this.touchHideable = touchHideable
+            return this
+        }
+```
+* `CardWeekPickerDialog` 支持设置 `formatter` ，可自定义格式化展示样式
+```kotlin
+	/**
+         * 设置格式化
+         * @param datas 数据
+         * @return Builder
+         */
+        fun setFormatter(formatter: (MutableList<MutableList<Long>>) -> NumberPicker.Formatter?): Builder {
+            this.formatter = formatter
+            return this
+        }
+```
+
+
 ### [v0.5.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.0) -> [v0.5.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.1)
 * 支持农历日期转换
 ```kotlin
