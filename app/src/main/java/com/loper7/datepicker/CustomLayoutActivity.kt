@@ -16,7 +16,7 @@ class CustomLayoutActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_picker)
-        picker.setLayout(R.layout.layout_date_picker_segmentation)
+//        picker.setLayout(R.layout.layout_date_picker_segmentation)
 //        picker.setTextSize(15)
 //        picker.bindController(DateTimeCustomController())
 

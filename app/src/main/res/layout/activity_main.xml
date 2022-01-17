@@ -23,7 +23,8 @@
         android:layout_margin="16dp"
         android:background="@drawable/shape_bg_round_white_5"
         app:dt_showLabel="true"
-        app:dt_textSize="16sp" />
+        app:dt_normalTextSize="14sp"
+        app:dt_selectTextSize="16sp" />
 
 
     <TextView
