@@ -1,5 +1,6 @@
 package com.loper7.date_time_picker.ext
 
+import android.util.Log
 import java.lang.RuntimeException
 import java.time.Year
 import java.util.*
@@ -138,13 +139,62 @@ internal fun Calendar.getDaysOfWeek(
  * @return
  */
 internal fun GregorianCalendar.getMaxDayAtYear(year: Int): Int {
-    set(Calendar.YEAR,year)
+    set(Calendar.YEAR, year)
     return (if (isLeapYear(year)) 1 else 0) + 365
 }
 
 /**
  * 获取一月中最大的一天
  */
-internal fun Calendar.getMaxDayInMonth():Int{
+internal fun Calendar.getMaxDayInMonth(): Int {
     return this.getActualMaximum(Calendar.DAY_OF_MONTH)
 }
+
+/**
+ *  与传入日历是否为同一年
+ *  @param calendar
+ */
+internal fun Calendar.isSameYear(calendar: Calendar): Boolean {
+    return get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+}
+
+/**
+ *  与传入日历是否为同一月
+ *  @param calendar
+ */
+internal fun Calendar.isSameMonth(calendar: Calendar): Boolean {
+    return isSameYear(calendar) && get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+}
+
+/**
+ *  与传入日历是否为同一天
+ *  @param calendar
+ */
+internal fun Calendar.isSameDay(calendar: Calendar): Boolean {
+    return isSameYear(calendar) && get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR)
+}
+
+/**
+ *  与传入日历是否为同一时
+ *  @param calendar
+ */
+internal fun Calendar.isSameHour(calendar: Calendar): Boolean {
+    return isSameDay(calendar) && get(Calendar.HOUR_OF_DAY) == calendar.get(Calendar.HOUR_OF_DAY)
+}
+
+/**
+ *  与传入日历是否为同一分
+ *  @param calendar
+ */
+internal fun Calendar.isSameMinute(calendar: Calendar): Boolean {
+    return isSameHour(calendar) && get(Calendar.MINUTE) == calendar.get(Calendar.MINUTE)
+}
+
+/**
+ *  与传入日历是否为同一秒
+ *  @param calendar
+ */
+internal fun Calendar.isSameSecond(calendar: Calendar): Boolean {
+    return isSameMinute(calendar) && get(Calendar.SECOND) == calendar.get(Calendar.SECOND)
+}
+

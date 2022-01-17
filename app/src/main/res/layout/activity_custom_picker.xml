@@ -39,8 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_bg_round_white_5"
-                app:dt_showLabel="true"
-                app:dt_textSize="16sp" />
+                app:dt_showLabel="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -57,8 +56,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_bg_round_white_5"
                 app:dt_layout="@layout/layout_date_picker_segmentation"
-                app:dt_showLabel="true"
-                app:dt_textSize="16sp" />
+                app:dt_showLabel="true"/>
 
             <com.loper7.date_time_picker.DateTimePicker
                 android:layout_width="match_parent"
@@ -66,8 +64,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_bg_round_white_5"
                 app:dt_layout="@layout/layout_date_picker_segmentation"
-                app:dt_showLabel="false"
-                app:dt_textSize="16sp" />
+                app:dt_showLabel="false"/>
 
 
             <TextView
@@ -85,8 +82,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_bg_round_white_5"
                 app:dt_layout="@layout/layout_date_picker_grid"
-                app:dt_showLabel="true"
-                app:dt_textSize="16sp" />
+                app:dt_showLabel="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,8 +99,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_bg_round_white_5"
                 app:dt_layout="@layout/layout_date_picker_pyramid"
-                app:dt_showLabel="true"
-                app:dt_textSize="16sp" />
+                app:dt_showLabel="true" />
 
         </LinearLayout>
 

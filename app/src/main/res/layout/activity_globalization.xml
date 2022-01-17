@@ -41,7 +41,8 @@
                 android:background="@drawable/shape_bg_round_white_5"
                 app:dt_layout="@layout/layout_date_picker_globalization1"
                 app:dt_showLabel="false"
-                app:dt_textSize="16sp" />
+                app:dt_normalTextSize="14sp"
+                app:dt_selectTextSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,7 +60,8 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_bg_round_white_5"
                 app:dt_showLabel="true"
-                app:dt_textSize="16sp" />
+                app:dt_normalTextSize="14sp"
+                app:dt_selectTextSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -77,7 +79,8 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_bg_round_white_5"
                 app:dt_showLabel="false"
-                app:dt_textSize="16sp" />
+                app:dt_normalTextSize="14sp"
+                app:dt_selectTextSize="16sp" />
 
         </LinearLayout>
 

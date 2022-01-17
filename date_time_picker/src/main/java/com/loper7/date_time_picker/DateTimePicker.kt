@@ -1,7 +1,6 @@
 package com.loper7.date_time_picker
 
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -16,8 +15,8 @@ import com.loper7.date_time_picker.DateTimeConfig.MONTH
 import com.loper7.date_time_picker.DateTimeConfig.SECOND
 import com.loper7.date_time_picker.DateTimeConfig.YEAR
 import com.loper7.date_time_picker.controller.BaseDateTimeController
-import com.loper7.date_time_picker.controller.DateTimeController
 import com.loper7.date_time_picker.controller.DateTimeInterface
+import com.loper7.date_time_picker.controller.DateTimeController
 import com.loper7.date_time_picker.number_picker.NumberPicker
 import com.loper7.tab_expand.ext.dip2px
 import com.loper7.tab_expand.ext.px2dip
@@ -37,7 +36,8 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
     private var showLabel = true
     private var themeColor = 0
-    private var textSize = 15
+    private var selectTextSize = 0
+    private var normalTextSize = 0
 
     private var yearLabel = "年"
     private var monthLabel = "月"
@@ -65,11 +65,18 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
             R.styleable.DateTimePicker_dt_themeColor,
             ContextCompat.getColor(context, R.color.colorAccent)
         )
-        textSize =
+        selectTextSize =
             context.px2dip(
                 attributesArray.getDimensionPixelSize(
-                    R.styleable.DateTimePicker_dt_textSize,
-                    context.dip2px(15f)
+                    R.styleable.DateTimePicker_dt_selectTextSize,
+                    context.dip2px(0f)
+                ).toFloat()
+            )
+        normalTextSize =
+            context.px2dip(
+                attributesArray.getDimensionPixelSize(
+                    R.styleable.DateTimePicker_dt_normalTextSize,
+                    context.dip2px(0f)
                 ).toFloat()
             )
 
@@ -123,7 +130,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
             mSecondSpinner = findViewWithTag("np_datetime_second")
 
         setThemeColor(themeColor)
-        setTextSize(textSize)
+        setTextSize(normalTextSize,selectTextSize)
         showLabel(showLabel)
         setDisplayType(displayType)
         setSelectedTextBold(selectedTextBold)
@@ -255,18 +262,20 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     /**
      * 字体大小
      *
-     * @param sp
+     * @param normal
+     * @param select
      */
-    fun setTextSize(@Dimension sp: Int) {
-        if (sp == 0) return
-        var textSize = context!!.dip2px(sp.toFloat())
-        var normalTextSize = textSize.toFloat() - context!!.dip2px(2f)
-        mYearSpinner?.textSize = normalTextSize
-        mMonthSpinner?.textSize = normalTextSize
-        mDaySpinner?.textSize = normalTextSize
-        mHourSpinner?.textSize = normalTextSize
-        mMinuteSpinner?.textSize = normalTextSize
-        mSecondSpinner?.textSize = normalTextSize
+    fun setTextSize(@Dimension normal: Int,@Dimension select: Int) {
+        if (normal == 0) return
+        if (select == 0) return
+        var textSize = context!!.dip2px(select.toFloat())
+        var normalTextSize = context!!.dip2px(normal.toFloat())
+        mYearSpinner?.textSize = normalTextSize.toFloat()
+        mMonthSpinner?.textSize = normalTextSize.toFloat()
+        mDaySpinner?.textSize = normalTextSize.toFloat()
+        mHourSpinner?.textSize = normalTextSize.toFloat()
+        mMinuteSpinner?.textSize = normalTextSize.toFloat()
+        mSecondSpinner?.textSize = normalTextSize.toFloat()
 
         mYearSpinner?.selectedTextSize = textSize.toFloat()
         mMonthSpinner?.selectedTextSize = textSize.toFloat()
