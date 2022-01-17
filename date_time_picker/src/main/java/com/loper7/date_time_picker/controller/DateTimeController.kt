@@ -86,7 +86,7 @@ class DateTimeController : BaseDateTimeController() {
             isFocusable = true
             isFocusableInTouchMode = true
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
-            setOnScrollListener(onScrollListener)
+            setOnValueChangedListener(onChangeListener)
         }
 
 
@@ -103,7 +103,7 @@ class DateTimeController : BaseDateTimeController() {
                 DateTimeConfig.globalMonthFormatter
 
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-            setOnScrollListener(onScrollListener)
+            setOnValueChangedListener(onChangeListener)
         }
 
         mDaySpinner?.run {
@@ -114,7 +114,7 @@ class DateTimeController : BaseDateTimeController() {
             isFocusableInTouchMode = true
             formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-            setOnScrollListener(onScrollListener)
+            setOnValueChangedListener(onChangeListener)
         }
 
         mHourSpinner?.run {
@@ -125,7 +125,7 @@ class DateTimeController : BaseDateTimeController() {
             value = calendar.get(Calendar.HOUR_OF_DAY)
             formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-            setOnScrollListener(onScrollListener)
+            setOnValueChangedListener(onChangeListener)
         }
 
         mMinuteSpinner?.run {
@@ -136,7 +136,7 @@ class DateTimeController : BaseDateTimeController() {
             value = calendar.get(Calendar.MINUTE)
             formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-            setOnScrollListener(onScrollListener)
+            setOnValueChangedListener(onChangeListener)
         }
 
         mSecondSpinner?.run {
@@ -147,17 +147,15 @@ class DateTimeController : BaseDateTimeController() {
             value = calendar.get(Calendar.SECOND)
             formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-            setOnScrollListener(onScrollListener)
+            setOnValueChangedListener(onChangeListener)
         }
         return this
     }
 
 
-    private val onScrollListener = NumberPicker.OnScrollListener { view, scrollState ->
-        if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
-            limitMaxAndMin()
-            onDateTimeChanged()
-        }
+    private val onChangeListener = NumberPicker.OnValueChangeListener { view, old, new ->
+        limitMaxAndMin()
+        onDateTimeChanged()
     }
 
     /**
@@ -191,25 +189,33 @@ class DateTimeController : BaseDateTimeController() {
         var maxDayInMonth = getMaxDayInMonth(mYearSpinner?.value, (mMonthSpinner?.value ?: 0) - 1)
 
         mMonthSpinner?.apply {
-            minValue = if (calendar.isSameYear(minCalendar)) minCalendar.get(Calendar.MONTH) + 1 else 1
-            maxValue = if ((calendar.isSameYear(maxCalendar))) maxCalendar.get(Calendar.MONTH) + 1 else 12
+            minValue =
+                if (calendar.isSameYear(minCalendar)) minCalendar.get(Calendar.MONTH) + 1 else 1
+            maxValue =
+                if ((calendar.isSameYear(maxCalendar))) maxCalendar.get(Calendar.MONTH) + 1 else 12
         }
         mDaySpinner?.apply {
-            minValue = if (calendar.isSameMonth(minCalendar)) minCalendar.get(Calendar.DAY_OF_MONTH) else 1
+            minValue =
+                if (calendar.isSameMonth(minCalendar)) minCalendar.get(Calendar.DAY_OF_MONTH) else 1
             maxValue =
                 if (calendar.isSameMonth(maxCalendar)) maxCalendar.get(Calendar.DAY_OF_MONTH) else maxDayInMonth
         }
         mHourSpinner?.apply {
-            minValue = if (calendar.isSameDay(minCalendar)) minCalendar.get(Calendar.HOUR_OF_DAY) else 0
-            maxValue = if (calendar.isSameDay(maxCalendar)) maxCalendar.get(Calendar.HOUR_OF_DAY) else 23
+            minValue =
+                if (calendar.isSameDay(minCalendar)) minCalendar.get(Calendar.HOUR_OF_DAY) else 0
+            maxValue =
+                if (calendar.isSameDay(maxCalendar)) maxCalendar.get(Calendar.HOUR_OF_DAY) else 23
         }
         mMinuteSpinner?.apply {
             minValue = if (calendar.isSameHour(minCalendar)) minCalendar.get(Calendar.MINUTE) else 0
-            maxValue = if (calendar.isSameHour(maxCalendar)) maxCalendar.get(Calendar.MINUTE) else 59
+            maxValue =
+                if (calendar.isSameHour(maxCalendar)) maxCalendar.get(Calendar.MINUTE) else 59
         }
         mSecondSpinner?.apply {
-            minValue = if (calendar.isSameMinute(minCalendar)) minCalendar.get(Calendar.SECOND) else 0
-            maxValue = if (calendar.isSameMinute(maxCalendar)) maxCalendar.get(Calendar.SECOND) else 59
+            minValue =
+                if (calendar.isSameMinute(minCalendar)) minCalendar.get(Calendar.SECOND) else 0
+            maxValue =
+                if (calendar.isSameMinute(maxCalendar)) maxCalendar.get(Calendar.SECOND) else 59
         }
 
         if (mDaySpinner?.value ?: 0 >= maxDayInMonth) {
