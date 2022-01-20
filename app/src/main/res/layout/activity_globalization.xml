@@ -41,6 +41,9 @@
                 android:background="@drawable/shape_bg_round_white_5"
                 app:dt_layout="@layout/layout_date_picker_globalization1"
                 app:dt_showLabel="false"
+                app:dt_textBold="true"
+                app:dt_selectedTextBold="true"
+                app:dt_themeColor="@color/colorPrimary"
                 app:dt_normalTextSize="14sp"
                 app:dt_selectTextSize="16sp" />
 

@@ -1,6 +1,5 @@
 package com.loper7.date_time_picker.controller
 
-import android.util.Log
 import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimeConfig.DAY
 import com.loper7.date_time_picker.DateTimeConfig.HOUR
@@ -9,13 +8,10 @@ import com.loper7.date_time_picker.DateTimeConfig.MONTH
 import com.loper7.date_time_picker.DateTimeConfig.SECOND
 import com.loper7.date_time_picker.DateTimeConfig.YEAR
 import com.loper7.date_time_picker.ext.*
-import com.loper7.date_time_picker.ext.getMaxDayInMonth
-import com.loper7.date_time_picker.ext.isSameDay
-import com.loper7.date_time_picker.ext.isSameMonth
-import com.loper7.date_time_picker.ext.isSameYear
 import com.loper7.date_time_picker.number_picker.NumberPicker
+import com.loper7.date_time_picker.utils.lunar.Lunar
+import com.loper7.date_time_picker.utils.lunar.LunarConstants
 import java.util.*
-import kotlin.math.min
 
 /**
  *
@@ -24,7 +20,7 @@ import kotlin.math.min
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-class DateTimeController : BaseDateTimeController() {
+class LunarDateTimeController : BaseDateTimeController() {
     private var mYearSpinner: NumberPicker? = null
     private var mMonthSpinner: NumberPicker? = null
     private var mDaySpinner: NumberPicker? = null
@@ -32,9 +28,9 @@ class DateTimeController : BaseDateTimeController() {
     private var mMinuteSpinner: NumberPicker? = null
     private var mSecondSpinner: NumberPicker? = null
 
-    private lateinit var calendar: Calendar
-    private lateinit var minCalendar: Calendar
-    private lateinit var maxCalendar: Calendar
+    private lateinit var lunar: Lunar
+    private lateinit var minLunar: Lunar
+    private lateinit var maxLunar: Lunar
 
     private var global = DateTimeConfig.GLOBAL_LOCAL
 
@@ -43,8 +39,11 @@ class DateTimeController : BaseDateTimeController() {
     private var wrapSelectorWheel = true
     private var wrapSelectorWheelTypes: MutableList<Int>? = null
 
+    private var defaultMin = Lunar.getInstance(1900, 1, false, 1, 0, 0, 0)
+    private var defaultMax = Lunar.getInstance(2100, 12, false, 29, 23, 59, 59)
 
-    override fun bindPicker(type: Int, picker: NumberPicker?): DateTimeController {
+
+    override fun bindPicker(type: Int, picker: NumberPicker?): LunarDateTimeController {
         when (type) {
             YEAR -> mYearSpinner = picker
             MONTH -> mMonthSpinner = picker
@@ -56,33 +55,20 @@ class DateTimeController : BaseDateTimeController() {
         return this
     }
 
-    override fun bindGlobal(global: Int): DateTimeController {
+    override fun bindGlobal(global: Int): LunarDateTimeController {
         this.global = global
         return this
     }
 
-    override fun build(): DateTimeController {
-        calendar = Calendar.getInstance()
-        minCalendar = Calendar.getInstance()
-        minCalendar.set(Calendar.YEAR, 1900)
-        minCalendar.set(Calendar.MONTH, 0)
-        minCalendar.set(Calendar.DAY_OF_MONTH, 1)
-        minCalendar.set(Calendar.HOUR_OF_DAY, 0)
-        minCalendar.set(Calendar.MINUTE, 0)
-        minCalendar.set(Calendar.SECOND, 0)
-
-        maxCalendar = Calendar.getInstance()
-        maxCalendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 100)
-        maxCalendar.set(Calendar.MONTH, 11)
-        maxCalendar.set(Calendar.DAY_OF_MONTH, maxCalendar.getMaxDayInMonth())
-        maxCalendar.set(Calendar.HOUR_OF_DAY, 23)
-        maxCalendar.set(Calendar.MINUTE, 59)
-        maxCalendar.set(Calendar.SECOND, 59)
+    override fun build(): LunarDateTimeController {
+        lunar = Lunar.getInstance() ?: defaultMin
+        minLunar = defaultMin
+        maxLunar = defaultMax
 
         mYearSpinner?.run {
-            maxValue = maxCalendar.get(Calendar.YEAR)
-            minValue = minCalendar.get(Calendar.YEAR)
-            value = calendar.get(Calendar.YEAR)
+            maxValue = maxLunar.year
+            minValue = minLunar.year
+            value = lunar.year
             isFocusable = true
             isFocusableInTouchMode = true
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS //设置NumberPicker不可编辑
@@ -91,60 +77,64 @@ class DateTimeController : BaseDateTimeController() {
 
 
         mMonthSpinner?.run {
-            maxValue = maxCalendar.get(Calendar.MONTH)
-            minValue = minCalendar.get(Calendar.MONTH)
-            value = calendar.get(Calendar.MONTH) + 1
+            maxValue = maxLunar.monthIndex
+            minValue = minLunar.monthIndex
+            value = lunar.monthIndex
             isFocusable = true
             isFocusableInTouchMode = true
 
-            formatter = if (DateTimeConfig.showChina(global))
-                DateTimeConfig.formatter //格式化显示数字，个位数前添加0
-            else
-                DateTimeConfig.globalMonthFormatter
+            formatter = NumberPicker.Formatter { value: Int ->
+                Lunar.getMonthName(mYearSpinner?.value ?: 0, value) + "月"
+            }
 
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(onChangeListener)
         }
 
         mDaySpinner?.run {
-            maxValue = maxCalendar.get(Calendar.DAY_OF_MONTH)
-            minValue = minCalendar.get(Calendar.DAY_OF_MONTH)
-            value = calendar.get(Calendar.DAY_OF_MONTH)
+            maxValue = maxLunar.day
+            minValue = minLunar.day
+            value = lunar.day
             isFocusable = true
             isFocusableInTouchMode = true
-            formatter = DateTimeConfig.formatter
+            formatter = NumberPicker.Formatter { value: Int ->
+                if (value != 0)
+                    LunarConstants.LUNAR_DAY_NAMES[value - 1]
+                else
+                    "$value"
+            }
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(onChangeListener)
         }
 
         mHourSpinner?.run {
-            maxValue = maxCalendar.get(Calendar.HOUR_OF_DAY)
-            minValue = minCalendar.get(Calendar.HOUR_OF_DAY)
+            maxValue = maxLunar.hour
+            minValue = minLunar.hour
             isFocusable = true
             isFocusableInTouchMode = true
-            value = calendar.get(Calendar.HOUR_OF_DAY)
+            value = lunar.hour
             formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(onChangeListener)
         }
 
         mMinuteSpinner?.run {
-            maxValue = maxCalendar.get(Calendar.MINUTE)
-            minValue = minCalendar.get(Calendar.MINUTE)
+            maxValue = maxLunar.minute
+            minValue = minLunar.minute
             isFocusable = true
             isFocusableInTouchMode = true
-            value = calendar.get(Calendar.MINUTE)
+            value = lunar.minute
             formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(onChangeListener)
         }
 
         mSecondSpinner?.run {
-            maxValue = maxCalendar.get(Calendar.SECOND)
-            minValue = minCalendar.get(Calendar.SECOND)
+            maxValue = maxLunar.seconds
+            minValue = minLunar.seconds
             isFocusable = true
             isFocusableInTouchMode = true
-            value = calendar.get(Calendar.SECOND)
+            value = lunar.seconds
             formatter = DateTimeConfig.formatter
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             setOnValueChangedListener(onChangeListener)
@@ -162,12 +152,12 @@ class DateTimeController : BaseDateTimeController() {
      * 同步数据
      */
     private fun syncDateData() {
-        mYearSpinner?.apply { calendar.set(Calendar.YEAR, value) }
-        mMonthSpinner?.apply { calendar.set(Calendar.MONTH, value - 1) }
-        mDaySpinner?.apply { calendar.set(Calendar.DAY_OF_MONTH, value) }
-        mHourSpinner?.apply { calendar.set(Calendar.HOUR_OF_DAY, value) }
-        mMinuteSpinner?.apply { calendar.set(Calendar.MINUTE, value) }
-        mSecondSpinner?.apply { calendar.set(Calendar.SECOND, value) }
+        mYearSpinner?.apply { lunar.year = value }
+        mMonthSpinner?.apply { lunar.updateMonth(value) }
+        mDaySpinner?.apply { lunar.day = value }
+        mHourSpinner?.apply { lunar.hour = value }
+        mMinuteSpinner?.apply { lunar.minute = value }
+        mSecondSpinner?.apply { lunar.seconds = value }
     }
 
     /**
@@ -176,7 +166,7 @@ class DateTimeController : BaseDateTimeController() {
     private fun onDateTimeChanged() {
         syncDateData()
         if (mOnDateTimeChangedListener != null) {
-            mOnDateTimeChangedListener?.invoke(calendar.timeInMillis)
+            mOnDateTimeChangedListener?.invoke(lunar.toCalendar()?.timeInMillis ?: 0)
         }
     }
 
@@ -186,36 +176,36 @@ class DateTimeController : BaseDateTimeController() {
     private fun limitMaxAndMin() {
         syncDateData()
 
-        var maxDayInMonth = getMaxDayInMonth(mYearSpinner?.value, (mMonthSpinner?.value ?: 0) - 1)
+        var maxDayInMonth = lunar.getMaxDayInMonth()
 
         mMonthSpinner?.apply {
             minValue =
-                if (calendar.isSameYear(minCalendar)) minCalendar.get(Calendar.MONTH) + 1 else 1
+                if (lunar.isSameYear(minLunar)) minLunar.monthIndex else 1
             maxValue =
-                if ((calendar.isSameYear(maxCalendar))) maxCalendar.get(Calendar.MONTH) + 1 else 12
+                if ((lunar.isSameYear(maxLunar))) maxLunar.monthIndex else lunar.getTotalMonth()
         }
         mDaySpinner?.apply {
             minValue =
-                if (calendar.isSameMonth(minCalendar)) minCalendar.get(Calendar.DAY_OF_MONTH) else 1
+                if (lunar.isSameMonth(minLunar)) minLunar.day else 1
             maxValue =
-                if (calendar.isSameMonth(maxCalendar)) maxCalendar.get(Calendar.DAY_OF_MONTH) else maxDayInMonth
+                if (lunar.isSameMonth(maxLunar)) maxLunar.day else maxDayInMonth
         }
         mHourSpinner?.apply {
             minValue =
-                if (calendar.isSameDay(minCalendar)) minCalendar.get(Calendar.HOUR_OF_DAY) else 0
+                if (lunar.isSameDay(minLunar)) minLunar.hour else 0
             maxValue =
-                if (calendar.isSameDay(maxCalendar)) maxCalendar.get(Calendar.HOUR_OF_DAY) else 23
+                if (lunar.isSameDay(maxLunar)) maxLunar.hour else 23
         }
         mMinuteSpinner?.apply {
-            minValue = if (calendar.isSameHour(minCalendar)) minCalendar.get(Calendar.MINUTE) else 0
+            minValue = if (lunar.isSameHour(minLunar)) minLunar.minute else 0
             maxValue =
-                if (calendar.isSameHour(maxCalendar)) maxCalendar.get(Calendar.MINUTE) else 59
+                if (lunar.isSameHour(maxLunar)) maxLunar.minute else 59
         }
         mSecondSpinner?.apply {
             minValue =
-                if (calendar.isSameMinute(minCalendar)) minCalendar.get(Calendar.SECOND) else 0
+                if (lunar.isSameMinute(minLunar)) minLunar.seconds else 0
             maxValue =
-                if (calendar.isSameMinute(maxCalendar)) maxCalendar.get(Calendar.SECOND) else 59
+                if (lunar.isSameMinute(maxLunar)) maxLunar.seconds else 59
         }
 
         if (mDaySpinner?.value ?: 0 >= maxDayInMonth) {
@@ -229,17 +219,17 @@ class DateTimeController : BaseDateTimeController() {
 
     override fun setDefaultMillisecond(time: Long) {
         if (time == 0L) return
-        if (time < minCalendar?.timeInMillis ?: 0) return
-        if (time > maxCalendar?.timeInMillis ?: 0) return
+        if (time < minLunar.toCalendar()?.timeInMillis ?: 0) return
+        if (time > maxLunar.toCalendar()?.timeInMillis ?: 0) return
 
-        calendar.timeInMillis = time
+        lunar = Lunar.getInstance(time) ?: defaultMin
 
-        mYearSpinner?.value = calendar.get(Calendar.YEAR)
-        mMonthSpinner?.value = calendar.get(Calendar.MONTH) + 1
-        mDaySpinner?.value = calendar.get(Calendar.DAY_OF_MONTH)
-        mHourSpinner?.value = calendar.get(Calendar.HOUR_OF_DAY)
-        mMinuteSpinner?.value = calendar.get(Calendar.MINUTE)
-        mSecondSpinner?.value = calendar.get(Calendar.SECOND)
+        mYearSpinner?.value = lunar.year
+        mMonthSpinner?.value = lunar.monthIndex
+        mDaySpinner?.value = lunar.day
+        mHourSpinner?.value = lunar.hour
+        mMinuteSpinner?.value = lunar.minute
+        mSecondSpinner?.value = lunar.seconds
 
         limitMaxAndMin()
         onDateTimeChanged()
@@ -248,30 +238,25 @@ class DateTimeController : BaseDateTimeController() {
     override fun setMinMillisecond(time: Long) {
 
         if (time == 0L) return
-        if (maxCalendar?.timeInMillis ?: 0 in 1 until time) return
-        if (minCalendar == null)
-            minCalendar = Calendar.getInstance()
-        minCalendar?.timeInMillis = time
+        if (maxLunar?.toCalendar()?.timeInMillis ?: 0 in 1 until time) return
+        minLunar = Lunar.getInstance(time) ?: defaultMin
 
-        mYearSpinner?.minValue = minCalendar?.get(Calendar.YEAR) ?: 1900
+        mYearSpinner?.minValue = minLunar.year
 
         limitMaxAndMin()
         setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
-        if (calendar < minCalendar) setDefaultMillisecond(minCalendar?.timeInMillis ?: 0)
+        if (!lunar.isLast(minLunar)) setDefaultMillisecond(minLunar.toCalendar()?.timeInMillis ?: 0)
     }
 
     override fun setMaxMillisecond(time: Long) {
         if (time == 0L) return
-        if (minCalendar?.timeInMillis ?: 0 > 0L && time < minCalendar?.timeInMillis ?: 0) return
-        if (maxCalendar == null)
-            maxCalendar = Calendar.getInstance()
-        maxCalendar?.timeInMillis = time
+        if (minLunar?.toCalendar()?.timeInMillis ?: 0 > 0L && time < minLunar?.toCalendar()?.timeInMillis ?: 0) return
+        maxLunar = Lunar.getInstance(time) ?: defaultMax
 
-        mYearSpinner?.maxValue =
-            maxCalendar?.get(Calendar.YEAR) ?: calendar.get(Calendar.YEAR) + 100
+        mYearSpinner?.maxValue = maxLunar.year
         limitMaxAndMin()
         setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
-        if (calendar > maxCalendar) setDefaultMillisecond(maxCalendar?.timeInMillis ?: 0)
+        if (lunar.isLast(minLunar)) setDefaultMillisecond(maxLunar.toCalendar()?.timeInMillis ?: 0)
     }
 
 
@@ -309,7 +294,7 @@ class DateTimeController : BaseDateTimeController() {
     }
 
     override fun getMillisecond(): Long {
-        return calendar.timeInMillis
+        return lunar.toCalendar()?.timeInMillis ?: 0
     }
 
 }
