@@ -35,7 +35,7 @@ Step 2. 添加 Gradle依赖
 dependencies {
     ...
     implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation 'com.github.loperSeven:DateTimePicker:0.5.3'//具体版本请看顶部jitpack标识，如0.5.3,仅支持androidx
+    implementation 'com.github.loperSeven:DateTimePicker:0.5.4'//具体版本请看顶部jitpack标识，如0.5.4,仅支持androidx
 }
 
 
