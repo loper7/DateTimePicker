@@ -9,7 +9,7 @@
 DateTimePicker 一个简约、漂亮的日期时间选择器，支持全方位自定义UI，内置日期时间选择弹窗，基于 Google BottomSheetDialog，可直接使用。
 <br/>
 ## 预览
-加载不出图片可以前往 [简书](https://www.jianshu.com/p/5610db432512) 或 [掘金](https://juejin.im/post/5ecf7699e51d4578644e9320) 查看
+加载不出图片可以前往 [掘金](https://juejin.cn/post/6917909994985750535) 查看
 <br/>
 <br/>
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/gif_date.gif)
