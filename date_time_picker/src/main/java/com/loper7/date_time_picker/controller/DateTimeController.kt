@@ -14,6 +14,7 @@ import com.loper7.date_time_picker.ext.isSameDay
 import com.loper7.date_time_picker.ext.isSameMonth
 import com.loper7.date_time_picker.ext.isSameYear
 import com.loper7.date_time_picker.number_picker.NumberPicker
+import com.loper7.date_time_picker.utils.StringUtils
 import java.util.*
 import kotlin.math.min
 
@@ -91,8 +92,8 @@ class DateTimeController : BaseDateTimeController() {
 
 
         mMonthSpinner?.run {
-            maxValue = maxCalendar.get(Calendar.MONTH)+1
-            minValue = minCalendar.get(Calendar.MONTH)+1
+            maxValue = maxCalendar.get(Calendar.MONTH) + 1
+            minValue = minCalendar.get(Calendar.MONTH) + 1
             value = calendar.get(Calendar.MONTH) + 1
             isFocusable = true
             isFocusableInTouchMode = true
@@ -193,35 +194,52 @@ class DateTimeController : BaseDateTimeController() {
                 if (calendar.isSameYear(minCalendar)) minCalendar.get(Calendar.MONTH) + 1 else 1
             maxValue =
                 if ((calendar.isSameYear(maxCalendar))) maxCalendar.get(Calendar.MONTH) + 1 else 12
+            if(value<minValue)  value = minValue
+            if(value>maxValue)  value = maxValue
+            syncDateData()
         }
         mDaySpinner?.apply {
             minValue =
                 if (calendar.isSameMonth(minCalendar)) minCalendar.get(Calendar.DAY_OF_MONTH) else 1
             maxValue =
                 if (calendar.isSameMonth(maxCalendar)) maxCalendar.get(Calendar.DAY_OF_MONTH) else maxDayInMonth
+            if(value<minValue)  value = minValue
+            if(value>maxValue)  value = maxValue
+            syncDateData()
         }
         mHourSpinner?.apply {
             minValue =
                 if (calendar.isSameDay(minCalendar)) minCalendar.get(Calendar.HOUR_OF_DAY) else 0
             maxValue =
                 if (calendar.isSameDay(maxCalendar)) maxCalendar.get(Calendar.HOUR_OF_DAY) else 23
+            if(value<minValue)  value = minValue
+            if(value>maxValue)  value = maxValue
+            syncDateData()
         }
         mMinuteSpinner?.apply {
             minValue = if (calendar.isSameHour(minCalendar)) minCalendar.get(Calendar.MINUTE) else 0
             maxValue =
                 if (calendar.isSameHour(maxCalendar)) maxCalendar.get(Calendar.MINUTE) else 59
+            if(value<minValue)  value = minValue
+            if(value>maxValue)  value = maxValue
+            syncDateData()
         }
         mSecondSpinner?.apply {
             minValue =
                 if (calendar.isSameMinute(minCalendar)) minCalendar.get(Calendar.SECOND) else 0
             maxValue =
                 if (calendar.isSameMinute(maxCalendar)) maxCalendar.get(Calendar.SECOND) else 59
+            if(value<minValue)  value = minValue
+            if(value>maxValue)  value = maxValue
+            syncDateData()
         }
 
         if (mDaySpinner?.value ?: 0 >= maxDayInMonth) {
-            mDaySpinner?.value = maxDayInMonth
+            mDaySpinner?.value =
+                if (mDaySpinner!!.maxValue == maxDayInMonth) maxDayInMonth else mDaySpinner!!.maxValue
             onDateTimeChanged()
         }
+
         setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
 
     }
