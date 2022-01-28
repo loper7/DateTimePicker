@@ -11,12 +11,15 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.loper7.date_time_picker.DateTimeConfig
 import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.R
+import com.loper7.date_time_picker.controller.DateTimeController
+import com.loper7.date_time_picker.controller.LunarDateTimeController
 import com.loper7.date_time_picker.utils.StringUtils
 import com.loper7.date_time_picker.utils.lunar.Lunar
 import org.jetbrains.annotations.NotNull
@@ -55,6 +58,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style
     private var tv_go_back: TextView? = null
     private var linear_now: LinearLayout? = null
     private var linear_bg: LinearLayout? = null
+    private var switch_model:SwitchCompat?=null
     private var mBehavior: BottomSheetBehavior<FrameLayout>? = null
 
     private var millisecond: Long = 0
@@ -87,6 +91,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style
         tv_go_back = findViewById(R.id.tv_go_back)
         linear_now = findViewById(R.id.linear_now)
         linear_bg = findViewById(R.id.linear_bg)
+        switch_model = findViewById(R.id.switch_model)
 
         mBehavior = BottomSheetBehavior.from(bottomSheet)
 
@@ -194,6 +199,30 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style
         linear_now!!.visibility = if (builder!!.backNow) View.VISIBLE else View.GONE
         tv_choose_date!!.visibility = if (builder!!.focusDateInfo) View.VISIBLE else View.GONE
 
+        switch_model?.apply {
+            setOnClickListener {
+                if(isChecked)
+                    datePicker?.bindController(LunarDateTimeController())
+                else
+                    datePicker?.bindController(DateTimeController())
+
+                //强制关闭国际化（不受系统语言影响）
+                datePicker!!.setGlobal(DateTimeConfig.GLOBAL_CHINA)
+                //设置最小时间
+                datePicker!!.setMinMillisecond(builder!!.minTime)
+                //设置最大时间
+                datePicker!!.setMaxMillisecond(builder!!.maxTime)
+                //设置默认时间
+                datePicker!!.setDefaultMillisecond(builder!!.defaultMillisecond)
+                //设置是否循环滚动
+                datePicker!!.setWrapSelectorWheel(
+                    builder!!.wrapSelectorWheelTypes,
+                    builder!!.wrapSelectorWheel
+                )
+            }
+        }
+
+
         //强制关闭国际化（不受系统语言影响）
         datePicker!!.setGlobal(DateTimeConfig.GLOBAL_CHINA)
         //设置最小时间
@@ -243,7 +272,6 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style
     override fun onClick(v: View) {
         this.dismiss()
         when (v.id) {
-
             R.id.btn_today -> {
                 builder?.onChooseListener?.invoke(Calendar.getInstance().timeInMillis)
             }

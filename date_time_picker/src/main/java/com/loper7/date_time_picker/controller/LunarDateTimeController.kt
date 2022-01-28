@@ -84,7 +84,7 @@ class LunarDateTimeController : BaseDateTimeController() {
             isFocusableInTouchMode = true
 
             formatter = NumberPicker.Formatter { value: Int ->
-                Lunar.getMonthName(mYearSpinner?.value ?: 0, value) + "月"
+                Lunar.getMonthName(mYearSpinner?.value ?: 0, value)
             }
 
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS

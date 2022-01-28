@@ -91,8 +91,8 @@ class DateTimeController : BaseDateTimeController() {
 
 
         mMonthSpinner?.run {
-            maxValue = maxCalendar.get(Calendar.MONTH)
-            minValue = minCalendar.get(Calendar.MONTH)
+            maxValue = maxCalendar.get(Calendar.MONTH)+1
+            minValue = minCalendar.get(Calendar.MONTH)+1
             value = calendar.get(Calendar.MONTH) + 1
             isFocusable = true
             isFocusableInTouchMode = true
