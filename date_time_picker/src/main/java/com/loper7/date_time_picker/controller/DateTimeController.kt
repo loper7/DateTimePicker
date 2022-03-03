@@ -250,10 +250,11 @@ class DateTimeController : BaseDateTimeController() {
         if (time < minCalendar?.timeInMillis ?: 0) return
         if (time > maxCalendar?.timeInMillis ?: 0) return
 
+        calendar.clear()
         calendar.timeInMillis = time
 
         mYearSpinner?.value = calendar.get(Calendar.YEAR)
-        mMonthSpinner?.value = calendar.get(Calendar.MONTH) + 1
+        mMonthSpinner?.value =calendar.get(Calendar.MONTH) + 1
         mDaySpinner?.value = calendar.get(Calendar.DAY_OF_MONTH)
         mHourSpinner?.value = calendar.get(Calendar.HOUR_OF_DAY)
         mMinuteSpinner?.value = calendar.get(Calendar.MINUTE)
@@ -266,30 +267,27 @@ class DateTimeController : BaseDateTimeController() {
     override fun setMinMillisecond(time: Long) {
 
         if (time == 0L) return
-        if (maxCalendar?.timeInMillis ?: 0 in 1 until time) return
+        if (maxCalendar?.timeInMillis in 1 until time) return
         if (minCalendar == null)
             minCalendar = Calendar.getInstance()
         minCalendar?.timeInMillis = time
 
-        mYearSpinner?.minValue = minCalendar?.get(Calendar.YEAR) ?: 1900
+        mYearSpinner?.minValue = minCalendar?.get(Calendar.YEAR)
 
-        limitMaxAndMin()
-        setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
-        if (calendar < minCalendar) setDefaultMillisecond(minCalendar?.timeInMillis ?: 0)
+        setDefaultMillisecond(calendar.timeInMillis)
     }
 
     override fun setMaxMillisecond(time: Long) {
         if (time == 0L) return
-        if (minCalendar?.timeInMillis ?: 0 > 0L && time < minCalendar?.timeInMillis ?: 0) return
+        if (minCalendar?.timeInMillis > 0L && time < minCalendar?.timeInMillis) return
         if (maxCalendar == null)
             maxCalendar = Calendar.getInstance()
         maxCalendar?.timeInMillis = time
 
         mYearSpinner?.maxValue =
-            maxCalendar?.get(Calendar.YEAR) ?: calendar.get(Calendar.YEAR) + 100
-        limitMaxAndMin()
-        setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
-        if (calendar > maxCalendar) setDefaultMillisecond(maxCalendar?.timeInMillis ?: 0)
+            maxCalendar?.get(Calendar.YEAR)
+
+        setDefaultMillisecond(calendar.timeInMillis)
     }
 
 
