@@ -59,6 +59,10 @@ dependencies {
 ## 更新日志
 
 
+### [v0.5.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.3) -> [v0.5.7](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.7)
+* fix [issues 51](https://github.com/loperSeven/DateTimePicker/issues/51)
+* fix [issues 53](https://github.com/loperSeven/DateTimePicker/issues/53)
+
 ### [v0.5.2](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.2) -> [v0.5.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.3)
 * fix [issues 47](https://github.com/loperSeven/DateTimePicker/issues/47)
 * fix [issues 48](https://github.com/loperSeven/DateTimePicker/issues/48)
