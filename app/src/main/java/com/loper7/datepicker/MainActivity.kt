@@ -24,10 +24,6 @@ class MainActivity : AppCompatActivity() {
         picker.setOnDateTimeChangedListener{
             var calendar  = Calendar.getInstance()
             calendar.timeInMillis = it
-            var lunar = Lunar.getInstance(calendar)
-             lunar?.apply {
-                 Log.e("lunar",lunar.toString()+";maxDay->${getMaxDayInMonth()}")
-             }
         }
 
         btnCardDialog.setOnClickListener {

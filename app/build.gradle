@@ -47,8 +47,8 @@ dependencies {
     //material
     implementation 'com.google.android.material:material:1.2.4'
 
-    implementation 'com.github.loperSeven:DateTimePicker:0.5.7'
-//    implementation project(path: ':date_time_picker')
+//    implementation 'com.github.loperSeven:DateTimePicker:0.5.7'
+    implementation project(path: ':date_time_picker')
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 

@@ -33,7 +33,8 @@ import java.util.*
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style.DateTimePicker_BottomSheetDialog), View.OnClickListener {
+class CardDatePickerDialog(context: Context) :
+    BottomSheetDialog(context, R.style.DateTimePicker_BottomSheetDialog), View.OnClickListener {
     companion object {
         const val CARD = 0 //卡片
         const val CUBE = 1 //方形
@@ -91,7 +92,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style
         mBehavior = BottomSheetBehavior.from(bottomSheet)
 
         //滑动关闭
-        mBehavior?.isHideable = builder?.touchHideable?:true
+        mBehavior?.isHideable = builder?.touchHideable ?: true
 
         //背景模式
         if (builder!!.model != 0) {
@@ -208,7 +209,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style
             builder!!.wrapSelectorWheel
         )
 
-        datePicker!!.setTextSize(13,15)
+        datePicker!!.setTextSize(13, 15)
         if (builder!!.themeColor != 0) {
             datePicker!!.setThemeColor(builder!!.themeColor)
             tv_submit!!.setTextColor(builder!!.themeColor)
@@ -228,8 +229,15 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style
             var calendar = Calendar.getInstance()
             calendar.clear()
             calendar.timeInMillis = millisecond
-            Lunar.getInstance(calendar)?.apply {
-                var str =  "<font color='#999999'>农历</font>&nbsp;&nbsp;&nbsp;<font color='#333333'>$yearName $monthName $dayName<font/>&nbsp;&nbsp;&nbsp;<font color='#999999'>${StringUtils.getWeek(millisecond)}</font>"
+            Lunar.getInstance(calendar).apply {
+                var str = if (this == null)
+                    "<font color='#999999'>暂无农历信息</font>"
+                else
+                    "<font color='#999999'>农历</font>&nbsp;&nbsp;&nbsp;<font color='#333333'>$yearName $monthName $dayName<font/>&nbsp;&nbsp;&nbsp;<font color='#999999'>${
+                        StringUtils.getWeek(
+                            millisecond
+                        )
+                    }</font>"
                 tv_choose_date?.text = Html.fromHtml(str)
             }
         }
@@ -305,7 +313,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style
         var wrapSelectorWheelTypes: MutableList<Int>? = mutableListOf()
 
         @JvmField
-        var touchHideable:Boolean = true
+        var touchHideable: Boolean = true
 
         @JvmField
         var onChooseListener: ((Long) -> Unit)? = null
@@ -527,7 +535,7 @@ class CardDatePickerDialog(context: Context) : BottomSheetDialog(context,R.style
          * 是否可以滑动关闭弹窗
          * @param touchHideable 默认为 true
          */
-        fun setTouchHideable(touchHideable:Boolean = true):Builder{
+        fun setTouchHideable(touchHideable: Boolean = true): Builder {
             this.touchHideable = touchHideable
             return this
         }

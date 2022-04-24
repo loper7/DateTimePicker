@@ -1,5 +1,6 @@
 package com.loper7.date_time_picker.utils.lunar
 
+import android.util.Log
 import com.loper7.date_time_picker.ext.getMaxDayAtYear
 import com.loper7.date_time_picker.utils.lunar.LunarConstants.LUNAR_DAY_NAMES
 import com.loper7.date_time_picker.utils.lunar.LunarConstants.LUNAR_DZ
@@ -100,21 +101,25 @@ class Lunar(
          * @param calendar
          * @return
          */
-        @Synchronized
         fun hasLunarInfo(calendar: Calendar): Boolean {
-            val syear = calendar[Calendar.YEAR]
-            val dayoffset = calendar[Calendar.DAY_OF_YEAR] - 1
-            val lindex = syear - MIN_LUNAR_YEAR
-            if (lindex < 0 || lindex > LUNAR_TABLE.size) {
-                return false
+            return try {
+                val syear = calendar[Calendar.YEAR]
+                val dayoffset = calendar[Calendar.DAY_OF_YEAR] - 1
+                val lindex = syear - MIN_LUNAR_YEAR
+                if (lindex < 0 || lindex >= LUNAR_TABLE.size) {
+                    return false
+                }
+                var lyear = syear
+                val hexValue = LUNAR_TABLE[lindex]
+                val ldayoffset = hexValue and 0xFF
+                if (ldayoffset > dayoffset) {
+                    lyear--
+                }
+                lyear >= MIN_LUNAR_YEAR
+            } catch (e: Throwable) {
+                e.printStackTrace()
+                false
             }
-            var lyear = syear
-            val hexValue = LUNAR_TABLE[lindex]
-            val ldayoffset = hexValue and 0xFF
-            if (ldayoffset > dayoffset) {
-                lyear--
-            }
-            return lyear >= MIN_LUNAR_YEAR
         }
     }
 
