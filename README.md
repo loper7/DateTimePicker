@@ -35,7 +35,7 @@ Step 2. 添加 Gradle依赖
 dependencies {
     ...
     implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation 'com.github.loperSeven:DateTimePicker:0.5.4'//具体版本请看顶部jitpack标识，如0.5.4,仅支持androidx
+    implementation 'com.github.loperSeven:DateTimePicker:0.5.8'//具体版本请看顶部jitpack标识，如0.5.8,仅支持androidx
 }
 
 
@@ -58,6 +58,8 @@ dependencies {
 &ensp;&ensp;[CardWeekPickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardWeekPickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 ## 更新日志
 
+### [v0.5.7](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.7) -> [v0.5.8](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.8)
+* fix [issues 57](https://github.com/loperSeven/DateTimePicker/issues/57)
 
 ### [v0.5.3](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.3) -> [v0.5.7](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.7)
 * fix [issues 51](https://github.com/loperSeven/DateTimePicker/issues/51)
