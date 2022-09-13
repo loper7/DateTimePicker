@@ -22,7 +22,6 @@ import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.R
 import com.loper7.date_time_picker.utils.StringUtils
 import com.loper7.date_time_picker.utils.lunar.Lunar
-import kotlinx.android.synthetic.main.dt_dialog_time_picker.*
 import org.jetbrains.annotations.NotNull
 import java.util.*
 
@@ -61,6 +60,9 @@ open class CardDatePickerDialog(context: Context) :
     private var linear_now: LinearLayout? = null
     private var linear_bg: LinearLayout? = null
     private var mBehavior: BottomSheetBehavior<FrameLayout>? = null
+    private var divider_top:View?=null
+    private var divider_bottom:View?=null
+    private var divider_line:View?=null
 
     private var millisecond: Long = 0
 
@@ -93,6 +95,9 @@ open class CardDatePickerDialog(context: Context) :
         tv_go_back = findViewById(R.id.tv_go_back)
         linear_now = findViewById(R.id.linear_now)
         linear_bg = findViewById(R.id.linear_bg)
+        divider_top = findViewById(R.id.divider_top)
+        divider_bottom = findViewById(R.id.divider_bottom)
+        divider_line = findViewById(R.id.dialog_select_border)
 
         mBehavior = BottomSheetBehavior.from(bottomSheet)
 
@@ -232,13 +237,13 @@ open class CardDatePickerDialog(context: Context) :
             tv_cancel?.setTextColor(builder!!.assistColor)
             datePicker!!.setTextColor(builder!!.assistColor)
 
-            var dividerColor = Color.parseColor("#FFFFFF") - builder!!.assistColor
-            if(builder!!.assistColor!=0 && dividerColor==0)
-                dividerColor = Color.parseColor("#40000000")
-            divider_top?.setBackgroundColor(dividerColor)
-            divider_bottom?.setBackgroundColor(dividerColor)
-            dialog_select_border?.setBackgroundColor(dividerColor)
-            datePicker!!.setDividerColor(dividerColor)
+
+        }
+        if (builder!!.dividerColor != 0) {
+            divider_top?.setBackgroundColor(builder!!.dividerColor)
+            divider_bottom?.setBackgroundColor(builder!!.dividerColor)
+            divider_line?.setBackgroundColor(builder!!.dividerColor)
+            datePicker!!.setDividerColor(builder!!.dividerColor)
         }
 
         tv_cancel!!.setOnClickListener(this)
@@ -330,6 +335,9 @@ open class CardDatePickerDialog(context: Context) :
 
         @JvmField
         var assistColor: Int = 0
+
+        @JvmField
+        var dividerColor: Int = 0
 
         @JvmField
         var pickerLayoutResId: Int = 0
@@ -588,6 +596,15 @@ open class CardDatePickerDialog(context: Context) :
          */
         fun setAssistColor(@ColorInt value: Int): Builder {
             this.assistColor = value
+            return this
+        }
+
+        /**
+         * 这只dialog内分割线颜色
+         * @return Builder
+         */
+        fun setDividerColor(@ColorInt value: Int): Builder {
+            this.dividerColor = value
             return this
         }
 
