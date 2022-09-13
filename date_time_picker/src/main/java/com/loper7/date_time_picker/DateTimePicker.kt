@@ -36,6 +36,8 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
 
     private var showLabel = true
     private var themeColor = 0
+    private var textColor = 0
+    private var dividerColor = 0
     private var selectTextSize = 0
     private var normalTextSize = 0
 
@@ -64,6 +66,14 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         themeColor = attributesArray.getColor(
             R.styleable.DateTimePicker_dt_themeColor,
             ContextCompat.getColor(context, R.color.colorAccent)
+        )
+        textColor = attributesArray.getColor(
+            R.styleable.DateTimePicker_dt_textColor,
+            ContextCompat.getColor(context, R.color.colorTextGray)
+        )
+        dividerColor= attributesArray.getColor(
+            R.styleable.DateTimePicker_dt_dividerColor,
+            ContextCompat.getColor(context, R.color.colorDivider)
         )
         selectTextSize =
             context.px2dip(
@@ -130,11 +140,13 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
             mSecondSpinner = findViewWithTag("np_datetime_second")
 
         setThemeColor(themeColor)
-        setTextSize(normalTextSize,selectTextSize)
+        setTextSize(normalTextSize, selectTextSize)
         showLabel(showLabel)
         setDisplayType(displayType)
         setSelectedTextBold(selectedTextBold)
         setTextBold(textBold)
+        setTextColor(textColor)
+        setDividerColor(dividerColor)
 
 
         //绑定控制器
@@ -260,12 +272,40 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     }
 
     /**
+     * 设置选择器字体颜色
+     */
+    fun setTextColor(@ColorInt color: Int) {
+        if (color == 0) return
+        textColor = color
+        mYearSpinner?.textColor = textColor
+        mMonthSpinner?.textColor = textColor
+        mDaySpinner?.textColor = textColor
+        mHourSpinner?.textColor = textColor
+        mMinuteSpinner?.textColor = textColor
+        mSecondSpinner?.textColor = textColor
+    }
+
+    /**
+     * 设置选择器字体颜色
+     */
+    fun setDividerColor(@ColorInt color: Int) {
+        if (color == 0) return
+        dividerColor = color
+        mYearSpinner?.dividerColor = color
+        mMonthSpinner?.dividerColor = color
+        mDaySpinner?.dividerColor = color
+        mHourSpinner?.dividerColor = color
+        mMinuteSpinner?.dividerColor = color
+        mSecondSpinner?.dividerColor = color
+    }
+
+    /**
      * 字体大小
      *
      * @param normal
      * @param select
      */
-    fun setTextSize(@Dimension normal: Int,@Dimension select: Int) {
+    fun setTextSize(@Dimension normal: Int, @Dimension select: Int) {
         if (normal == 0) return
         if (select == 0) return
         var textSize = context!!.dip2px(select.toFloat())
@@ -359,6 +399,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
         mMinuteSpinner?.isTextBold = textBold
         mSecondSpinner?.isTextBold = textBold
     }
+
 
     /**
      * 设置选择器选中字体是否加粗

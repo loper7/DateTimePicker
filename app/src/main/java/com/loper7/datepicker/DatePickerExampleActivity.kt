@@ -128,7 +128,8 @@ class DatePickerExampleActivity : AppCompatActivity() {
             var dialog = CardDatePickerDialog.builder(context)
                 .setTitle("DATE&TIME PICKER")
                 .setDisplayType(displayList)
-                .setBackGroundModel(model)
+//                .setBackGroundModel(model)
+                .setBackGroundModel(R.drawable.shape_bg_dialog_dark)
                 .showBackNow(checkBackNow.isChecked)
                 .setMaxTime(maxDate)
                 .setPickerLayout(pickerLayout)
@@ -138,6 +139,7 @@ class DatePickerExampleActivity : AppCompatActivity() {
                 .setChooseDateModel(DateTimeConfig.DATE_LUNAR)
                 .setWrapSelectorWheel(false)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
+                .setAssistColor(Color.parseColor("#ffffff"))
                 .showDateLabel(checkUnitLabel.isChecked)
                 .showFocusDateInfo(checkDateInfo.isChecked)
                 .setOnChoose("选择") {

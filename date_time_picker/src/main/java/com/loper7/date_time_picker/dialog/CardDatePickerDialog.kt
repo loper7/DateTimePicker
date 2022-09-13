@@ -22,6 +22,7 @@ import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.R
 import com.loper7.date_time_picker.utils.StringUtils
 import com.loper7.date_time_picker.utils.lunar.Lunar
+import kotlinx.android.synthetic.main.dt_dialog_time_picker.*
 import org.jetbrains.annotations.NotNull
 import java.util.*
 
@@ -224,6 +225,22 @@ open class CardDatePickerDialog(context: Context) :
             btn_today!!.background = gd
         }
 
+        if (builder!!.assistColor != 0) {
+            tv_title?.setTextColor(builder!!.assistColor)
+            tv_choose_date?.setTextColor(builder!!.assistColor)
+            tv_go_back?.setTextColor(builder!!.assistColor)
+            tv_cancel?.setTextColor(builder!!.assistColor)
+            datePicker!!.setTextColor(builder!!.assistColor)
+
+            var dividerColor = Color.parseColor("#FFFFFF") - builder!!.assistColor
+            if(builder!!.assistColor!=0 && dividerColor==0)
+                dividerColor = Color.parseColor("#40000000")
+            divider_top?.setBackgroundColor(dividerColor)
+            divider_bottom?.setBackgroundColor(dividerColor)
+            dialog_select_border?.setBackgroundColor(dividerColor)
+            datePicker!!.setDividerColor(dividerColor)
+        }
+
         tv_cancel!!.setOnClickListener(this)
         tv_submit!!.setOnClickListener(this)
         btn_today!!.setOnClickListener(this)
@@ -237,13 +254,9 @@ open class CardDatePickerDialog(context: Context) :
                 DATE_LUNAR -> {
                     Lunar.getInstance(calendar).apply {
                         var str = if (this == null)
-                            "<font color='#999999'>暂无农历信息</font>"
+                            "暂无农历信息"
                         else
-                            "<font color='#999999'>农历</font>&nbsp;&nbsp;&nbsp;<font color='#333333'>$yearName $monthName $dayName<font/>&nbsp;&nbsp;&nbsp;<font color='#999999'>${
-                                StringUtils.getWeek(
-                                    millisecond
-                                )
-                            }</font>"
+                            "农历 $yearName$monthName$dayName ${StringUtils.getWeek(millisecond)}"
                         tv_choose_date?.text = Html.fromHtml(str)
                     }
                 }
@@ -314,6 +327,9 @@ open class CardDatePickerDialog(context: Context) :
 
         @JvmField
         var themeColor: Int = 0
+
+        @JvmField
+        var assistColor: Int = 0
 
         @JvmField
         var pickerLayoutResId: Int = 0
@@ -563,6 +579,15 @@ open class CardDatePickerDialog(context: Context) :
          */
         fun setChooseDateModel(value: Int): Builder {
             this.chooseDateModel = value
+            return this
+        }
+
+        /**
+         * 这只dialog内辅助文字的颜色
+         * @return Builder
+         */
+        fun setAssistColor(@ColorInt value: Int): Builder {
+            this.assistColor = value
             return this
         }
 

@@ -62,6 +62,8 @@
 
     <declare-styleable name="DateTimePicker">
         <attr name="dt_showLabel" format="boolean" />
+        <attr name="dt_textColor" format="color" />
+        <attr name="dt_dividerColor" format="color" />
         <attr name="dt_themeColor" format="color" />
         <attr name="dt_selectTextSize" format="dimension" />
         <attr name="dt_normalTextSize" format="dimension" />
