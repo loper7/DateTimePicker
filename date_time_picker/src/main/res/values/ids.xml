@@ -4,5 +4,6 @@
     <!-- Just adding these so I wont have to remove a lot of code from NumberPicker.java. -->
     <item name="np__increment" type="id" />
     <item name="np__decrement" type="id" />
+    <item name="design_bottom_sheet" type="id" />
 
 </resources>
