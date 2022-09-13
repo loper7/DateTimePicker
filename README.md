@@ -60,7 +60,7 @@ dependencies {
 
 ### [v0.5.8](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.8) -> [v0.6.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.6.0)
 * fix [issues 64](https://github.com/loperSeven/DateTimePicker/issues/64)
-* fix [issues 64](https://github.com/loperSeven/DateTimePicker/issues/66)
+* fix [issues 66](https://github.com/loperSeven/DateTimePicker/issues/66)
 * CardDatePickerDialog 内选中日期信息支持选择农历模式 or 公历模式
 ```kotlin
 /**
