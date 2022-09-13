@@ -135,6 +135,7 @@ class DatePickerExampleActivity : AppCompatActivity() {
                 .setMinTime(minDate)
                 .setDefaultTime(defaultDate)
                 .setTouchHideable(true)
+                .setChooseDateModel(DateTimeConfig.DATE_LUNAR)
                 .setWrapSelectorWheel(false)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
                 .showDateLabel(checkUnitLabel.isChecked)

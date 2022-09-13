@@ -25,6 +25,9 @@ object DateTimeConfig {
     const val GLOBAL_CHINA = 1
     const val GLOBAL_US = 2
 
+    const val DATE_DEFAULT = 0 //公历
+    const val DATE_LUNAR = 1 //农历
+
     //数字格式化，<10的数字前自动加0
     val formatter =
         NumberPicker.Formatter { value: Int ->

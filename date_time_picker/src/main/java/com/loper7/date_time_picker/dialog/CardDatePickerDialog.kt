@@ -1,5 +1,6 @@
 package com.loper7.date_time_picker.dialog
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -15,6 +16,8 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.loper7.date_time_picker.DateTimeConfig
+import com.loper7.date_time_picker.DateTimeConfig.DATE_DEFAULT
+import com.loper7.date_time_picker.DateTimeConfig.DATE_LUNAR
 import com.loper7.date_time_picker.DateTimePicker
 import com.loper7.date_time_picker.R
 import com.loper7.date_time_picker.utils.StringUtils
@@ -33,7 +36,7 @@ import java.util.*
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-class CardDatePickerDialog(context: Context) :
+open class CardDatePickerDialog(context: Context) :
     BottomSheetDialog(context, R.style.DateTimePicker_BottomSheetDialog), View.OnClickListener {
     companion object {
         const val CARD = 0 //卡片
@@ -70,6 +73,7 @@ class CardDatePickerDialog(context: Context) :
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dt_dialog_time_picker)
         super.onCreate(savedInstanceState)
@@ -229,16 +233,21 @@ class CardDatePickerDialog(context: Context) :
             var calendar = Calendar.getInstance()
             calendar.clear()
             calendar.timeInMillis = millisecond
-            Lunar.getInstance(calendar).apply {
-                var str = if (this == null)
-                    "<font color='#999999'>暂无农历信息</font>"
-                else
-                    "<font color='#999999'>农历</font>&nbsp;&nbsp;&nbsp;<font color='#333333'>$yearName $monthName $dayName<font/>&nbsp;&nbsp;&nbsp;<font color='#999999'>${
-                        StringUtils.getWeek(
-                            millisecond
-                        )
-                    }</font>"
-                tv_choose_date?.text = Html.fromHtml(str)
+            when (builder?.chooseDateModel) {
+                DATE_LUNAR -> {
+                    Lunar.getInstance(calendar).apply {
+                        var str = if (this == null)
+                            "<font color='#999999'>暂无农历信息</font>"
+                        else
+                            "<font color='#999999'>农历</font>&nbsp;&nbsp;&nbsp;<font color='#333333'>$yearName $monthName $dayName<font/>&nbsp;&nbsp;&nbsp;<font color='#999999'>${
+                                StringUtils.getWeek(
+                                    millisecond
+                                )
+                            }</font>"
+                        tv_choose_date?.text = Html.fromHtml(str)
+                    }
+                }
+                else -> tv_choose_date?.text = StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(millisecond)
             }
         }
     }
@@ -316,10 +325,14 @@ class CardDatePickerDialog(context: Context) :
         var touchHideable: Boolean = true
 
         @JvmField
+        var chooseDateModel: Int = DATE_DEFAULT
+
+        @JvmField
         var onChooseListener: ((Long) -> Unit)? = null
 
         @JvmField
         var onCancelListener: (() -> Unit)? = null
+
 
         var yearLabel = "年"
         var monthLabel = "月"
@@ -537,6 +550,16 @@ class CardDatePickerDialog(context: Context) :
          */
         fun setTouchHideable(touchHideable: Boolean = true): Builder {
             this.touchHideable = touchHideable
+            return this
+        }
+
+        /**
+         * 设置dialog选中日期信息展示格式
+         * @param value 1:LUNAR 0:DEFAULT
+         * @return Builder
+         */
+        fun setChooseDateModel(value: Int): Builder {
+            this.chooseDateModel = value
             return this
         }
 

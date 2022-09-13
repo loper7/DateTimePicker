@@ -26,7 +26,7 @@ import java.util.*
 /**
  * 卡片 周视图 选择器
  */
-class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
+open class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
     companion object {
         const val CARD = 0 //卡片
         const val CUBE = 1 //方形
