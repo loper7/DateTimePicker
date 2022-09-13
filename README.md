@@ -35,7 +35,7 @@ Step 2. 添加 Gradle依赖
 dependencies {
     ...
     implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation 'com.github.loperSeven:DateTimePicker:0.5.8'//具体版本请看顶部jitpack标识，如0.5.8,仅支持androidx
+    implementation 'com.github.loperSeven:DateTimePicker:0.6.0'//具体版本请看顶部jitpack标识，如0.6.0,仅支持androidx
 }
 
 
@@ -80,9 +80,9 @@ dependencies {
 //1.自定义dialog背景，为light/dark模式设置不同的值
 builder.setBackGroundModel(if(isDark) R.drawable.shape_bg_dialog_dark else R.drawable.shape_bg_dialog_light)
 //2.自定义dialog辅助文字颜色
-setAssistColor(if(isDark) darkColor else lightColor)
+.setAssistColor(if(isDark) darkColor else lightColor)
 //3.自定义dialog分割线颜色
-setDividerColor(if(isDark) darkColor else lightColor)
+.setDividerColor(if(isDark) darkColor else lightColor)
 
 //这样深色模式就适配完成了，当然，以上三个方法的作用不仅可以用于适配深色模式，也可以传入更契合app主题的颜色，用于与app统一UI风格。
 ```
