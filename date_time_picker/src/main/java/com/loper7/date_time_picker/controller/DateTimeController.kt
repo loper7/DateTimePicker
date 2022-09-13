@@ -247,8 +247,6 @@ class DateTimeController : BaseDateTimeController() {
 
     override fun setDefaultMillisecond(time: Long) {
         if (time == 0L) return
-        if (time < minCalendar?.timeInMillis ?: 0) return
-        if (time > maxCalendar?.timeInMillis ?: 0) return
 
         calendar.clear()
         calendar.timeInMillis = time

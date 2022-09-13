@@ -247,7 +247,10 @@ open class CardDatePickerDialog(context: Context) :
                         tv_choose_date?.text = Html.fromHtml(str)
                     }
                 }
-                else -> tv_choose_date?.text = StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(millisecond)
+                else -> tv_choose_date?.text =
+                    StringUtils.conversionTime(millisecond, "yyyy年MM月dd日 ") + StringUtils.getWeek(
+                        millisecond
+                    )
             }
         }
     }
