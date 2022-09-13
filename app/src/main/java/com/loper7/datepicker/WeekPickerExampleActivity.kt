@@ -101,6 +101,9 @@ class WeekPickerExampleActivity : AppCompatActivity() {
                 .setStartMillisecond(minDate)
                 .setEndMillisecond(maxDate)
                 .setThemeColor(if (model == R.drawable.shape_bg_dialog_custom) Color.parseColor("#FF8000") else 0)
+//                .setBackGroundModel(R.drawable.shape_bg_dialog_dark)
+//                .setAssistColor(Color.parseColor("#DDFFFFFF"))
+//                .setDividerColor(Color.parseColor("#222222"))
                 .setFormatter {
                     NumberPicker.Formatter { value: Int ->
                         var weekData = it[value - 1].toFormatList("MM月dd日")

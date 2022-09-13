@@ -26,7 +26,8 @@ import java.util.*
 /**
  * 卡片 周视图 选择器
  */
-open class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), View.OnClickListener {
+open class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context),
+    View.OnClickListener {
     companion object {
         const val CARD = 0 //卡片
         const val CUBE = 1 //方形
@@ -44,6 +45,8 @@ open class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), 
     private val tv_submit by lazy { delegate.findViewById<TextView>(R.id.dialog_submit) }
     private val tv_title by lazy { delegate.findViewById<TextView>(R.id.tv_title) }
     private val linear_bg by lazy { delegate.findViewById<LinearLayout>(R.id.linear_bg) }
+    private val divider_bottom by lazy { delegate.findViewById<View>(R.id.divider_bottom) }
+    private val divider_line by lazy { delegate.findViewById<View>(R.id.dialog_select_border) }
 
     private var mBehavior: BottomSheetBehavior<FrameLayout>? = null
 
@@ -128,6 +131,19 @@ open class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), 
                 np_week!!.selectedTextColor = themeColor
             }
 
+            if (builder!!.assistColor != 0) {
+                tv_title?.setTextColor(builder!!.assistColor)
+                tv_cancel?.setTextColor(builder!!.assistColor)
+                np_week!!.textColor = builder!!.assistColor
+
+
+            }
+            if (builder!!.dividerColor != 0) {
+                divider_bottom?.setBackgroundColor(builder!!.dividerColor)
+                divider_line?.setBackgroundColor(builder!!.dividerColor)
+                np_week!!.dividerColor = builder!!.dividerColor
+            }
+
         }
 
         //视图周
@@ -193,6 +209,12 @@ open class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), 
 
         @JvmField
         var themeColor: Int = 0
+
+        @JvmField
+        var assistColor: Int = 0
+
+        @JvmField
+        var dividerColor: Int = 0
 
         @JvmField
         var wrapSelectorWheel: Boolean = true
@@ -328,6 +350,24 @@ open class CardWeekPickerDialog(context: Context) : BottomSheetDialog(context), 
         fun setOnCancel(text: String = "取消", listener: (() -> Unit)? = null): Builder {
             this.onCancelListener = listener
             this.cancelText = text
+            return this
+        }
+
+        /**
+         * 这只dialog内辅助文字的颜色
+         * @return Builder
+         */
+        fun setAssistColor(@ColorInt value: Int): Builder {
+            this.assistColor = value
+            return this
+        }
+
+        /**
+         * 这只dialog内分割线颜色
+         * @return Builder
+         */
+        fun setDividerColor(@ColorInt value: Int): Builder {
+            this.dividerColor = value
             return this
         }
 

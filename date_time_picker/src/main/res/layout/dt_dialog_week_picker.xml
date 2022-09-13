@@ -37,6 +37,7 @@
             app:np_wheelItemCount="3" />
 
         <View
+            android:id="@+id/divider_bottom"
             android:layout_width="match_parent"
             android:layout_height="0.6dp"
             android:layout_marginTop="10dp"
