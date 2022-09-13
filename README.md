@@ -58,6 +58,35 @@ dependencies {
 &ensp;&ensp;[CardWeekPickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardWeekPickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 ## 更新日志
 
+### [v0.5.8](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.8) -> [v0.6.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.6.0)
+* fix [issues 64](https://github.com/loperSeven/DateTimePicker/issues/64)
+* fix [issues 64](https://github.com/loperSeven/DateTimePicker/issues/66)
+* CardDatePickerDialog 内选中日期信息支持选择农历模式 or 公历模式
+```kotlin
+/**
+ * 设置dialog选中日期信息展示格式
+ * @param value 1:LUNAR 0:DEFAULT
+ * @return Builder
+ */
+ fun setChooseDateModel(value: Int): Builder {
+ 	this.chooseDateModel = value
+        return this
+ }
+```
+* 适配深色模式
+```kotlin
+//由于背景、DateTimePicker以及主题色均可由开发者灵活配置，为了兼容这些配置，所以适配深色模式需要调用以下几个方法进行设置。
+
+//1.自定义dialog背景，为light/dark模式设置不同的值
+builder.setBackGroundModel(if(isDark) R.drawable.shape_bg_dialog_dark else R.drawable.shape_bg_dialog_light)
+//2.自定义dialog辅助文字颜色
+setAssistColor(if(isDark) darkColor else lightColor)
+//3.自定义dialog分割线颜色
+setDividerColor(if(isDark) darkColor else lightColor)
+
+//这样深色模式就适配完成了，当然，以上三个方法的作用不仅可以用于适配深色模式，也可以传入更契合app主题的颜色，用于与app统一UI风格。
+```
+
 ### [v0.5.7](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.7) -> [v0.5.8](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.8)
 * fix [issues 57](https://github.com/loperSeven/DateTimePicker/issues/57)
 
