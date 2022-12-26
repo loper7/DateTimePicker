@@ -1,6 +1,7 @@
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/title.png)
 <br/>
-[![](https://jitpack.io/v/loperSeven/DateTimePicker.svg)](https://jitpack.io/#loperSeven/DateTimePicker)&ensp;[![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)&ensp;[![](https://img.shields.io/badge/platform-android-green)](https://github.com/loperSeven)&ensp;[![](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/licenses/MIT)
+[![](https://www.jitpack.io/v/loperSeven/DateTimePicker.svg)](https://www.jitpack.io/#loperSeven/DateTimePicker)
+&ensp;[![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)&ensp;[![](https://img.shields.io/badge/platform-android-green)](https://github.com/loperSeven)&ensp;[![](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/licenses/MIT)
 <br/>
 ## Language
 中文 | [English](https://github.com/loperSeven/DateTimePicker/blob/master/README_EN.md)
@@ -57,6 +58,10 @@ dependencies {
 <br/>
 &ensp;&ensp;[CardWeekPickerDialog 使用说明](https://github.com/loperSeven/DateTimePicker/wiki/CardWeekPickerDialog-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 ## 更新日志
+
+### [v0.6.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.6.0) -> [v0.6.1](https://github.com/loperSeven/DateTimePicker/releases/tag/0.6.1)
+* fix [issues 70](https://github.com/loperSeven/DateTimePicker/issues/70)
+<br/>ps：thanks for [Bter](https://github.com/Bter)
 
 ### [v0.5.8](https://github.com/loperSeven/DateTimePicker/releases/tag/0.5.8) -> [v0.6.0](https://github.com/loperSeven/DateTimePicker/releases/tag/0.6.0)
 * fix [issues 64](https://github.com/loperSeven/DateTimePicker/issues/64)
