@@ -129,7 +129,7 @@ class DatePickerExampleActivity : AppCompatActivity() {
                 .setTitle("DATE&TIME PICKER")
                 .setDisplayType(displayList)
                 .setBackGroundModel(model)
-//                .setBackGroundModel(R.drawable.shape_bg_dialog_dark)
+//                .setBackGroundModel(if(isDark) R.drawable.shape_bg_dialog_dark else R.drawable.shape_bg_dialog_light)
                 .showBackNow(checkBackNow.isChecked)
                 .setMaxTime(maxDate)
                 .setPickerLayout(pickerLayout)

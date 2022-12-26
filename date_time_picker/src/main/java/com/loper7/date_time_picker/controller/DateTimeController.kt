@@ -64,6 +64,7 @@ class DateTimeController : BaseDateTimeController() {
 
     override fun build(): DateTimeController {
         calendar = Calendar.getInstance()
+        calendar.set(Calendar.MILLISECOND,0)
         minCalendar = Calendar.getInstance()
         minCalendar.set(Calendar.YEAR, 1900)
         minCalendar.set(Calendar.MONTH, 0)
@@ -155,6 +156,7 @@ class DateTimeController : BaseDateTimeController() {
 
 
     private val onChangeListener = NumberPicker.OnValueChangeListener { view, old, new ->
+        applyDateData();
         limitMaxAndMin()
         onDateTimeChanged()
     }
@@ -162,9 +164,15 @@ class DateTimeController : BaseDateTimeController() {
     /**
      * 同步数据
      */
-    private fun syncDateData() {
+    private fun applyDateData() {
         mYearSpinner?.apply { calendar.set(Calendar.YEAR, value) }
-        mMonthSpinner?.apply { calendar.set(Calendar.MONTH, value - 1) }
+        mMonthSpinner?.apply { calendar.set(Calendar.MONTH, (value - 1)) }
+
+        var maxDayInMonth = getMaxDayInMonth(mYearSpinner?.value, (mMonthSpinner?.value ?: 0) - 1)
+        if (mDaySpinner?.value ?: 0 >= maxDayInMonth) {
+            mDaySpinner?.value = maxDayInMonth
+        }
+
         mDaySpinner?.apply { calendar.set(Calendar.DAY_OF_MONTH, value) }
         mHourSpinner?.apply { calendar.set(Calendar.HOUR_OF_DAY, value) }
         mMinuteSpinner?.apply { calendar.set(Calendar.MINUTE, value) }
@@ -175,7 +183,6 @@ class DateTimeController : BaseDateTimeController() {
      * 日期发生变化
      */
     private fun onDateTimeChanged() {
-        syncDateData()
         if (mOnDateTimeChangedListener != null) {
             mOnDateTimeChangedListener?.invoke(calendar.timeInMillis)
         }
@@ -185,79 +192,64 @@ class DateTimeController : BaseDateTimeController() {
      * 设置允许选择的区间
      */
     private fun limitMaxAndMin() {
-        syncDateData()
-
         var maxDayInMonth = getMaxDayInMonth(mYearSpinner?.value, (mMonthSpinner?.value ?: 0) - 1)
+
+        if(calendar.timeInMillis < minCalendar.timeInMillis){
+            calendar.timeInMillis = minCalendar.timeInMillis
+        }
+        if(calendar.timeInMillis > maxCalendar.timeInMillis){
+            calendar.timeInMillis = maxCalendar.timeInMillis
+        }
 
         mMonthSpinner?.apply {
             minValue =
                 if (calendar.isSameYear(minCalendar)) minCalendar.get(Calendar.MONTH) + 1 else 1
             maxValue =
                 if ((calendar.isSameYear(maxCalendar))) maxCalendar.get(Calendar.MONTH) + 1 else 12
-            if(value<minValue)  value = minValue
-            if(value>maxValue)  value = maxValue
-            syncDateData()
         }
         mDaySpinner?.apply {
             minValue =
                 if (calendar.isSameMonth(minCalendar)) minCalendar.get(Calendar.DAY_OF_MONTH) else 1
             maxValue =
                 if (calendar.isSameMonth(maxCalendar)) maxCalendar.get(Calendar.DAY_OF_MONTH) else maxDayInMonth
-            if(value<minValue)  value = minValue
-            if(value>maxValue)  value = maxValue
-            syncDateData()
         }
         mHourSpinner?.apply {
             minValue =
                 if (calendar.isSameDay(minCalendar)) minCalendar.get(Calendar.HOUR_OF_DAY) else 0
             maxValue =
                 if (calendar.isSameDay(maxCalendar)) maxCalendar.get(Calendar.HOUR_OF_DAY) else 23
-            if(value<minValue)  value = minValue
-            if(value>maxValue)  value = maxValue
-            syncDateData()
         }
         mMinuteSpinner?.apply {
             minValue = if (calendar.isSameHour(minCalendar)) minCalendar.get(Calendar.MINUTE) else 0
             maxValue =
                 if (calendar.isSameHour(maxCalendar)) maxCalendar.get(Calendar.MINUTE) else 59
-            if(value<minValue)  value = minValue
-            if(value>maxValue)  value = maxValue
-            syncDateData()
         }
         mSecondSpinner?.apply {
             minValue =
                 if (calendar.isSameMinute(minCalendar)) minCalendar.get(Calendar.SECOND) else 0
             maxValue =
                 if (calendar.isSameMinute(maxCalendar)) maxCalendar.get(Calendar.SECOND) else 59
-            if(value<minValue)  value = minValue
-            if(value>maxValue)  value = maxValue
-            syncDateData()
         }
-
-        if (mDaySpinner?.value ?: 0 >= maxDayInMonth) {
-            mDaySpinner?.value =
-                if (mDaySpinner!!.maxValue == maxDayInMonth) maxDayInMonth else mDaySpinner!!.maxValue
-            onDateTimeChanged()
-        }
-
-        setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
-
-    }
-
-
-    override fun setDefaultMillisecond(time: Long) {
-        if (time == 0L) return
-
-        calendar.clear()
-        calendar.timeInMillis = time
 
         mYearSpinner?.value = calendar.get(Calendar.YEAR)
-        mMonthSpinner?.value =calendar.get(Calendar.MONTH) + 1
+        mMonthSpinner?.value = calendar.get(Calendar.MONTH) + 1
         mDaySpinner?.value = calendar.get(Calendar.DAY_OF_MONTH)
         mHourSpinner?.value = calendar.get(Calendar.HOUR_OF_DAY)
         mMinuteSpinner?.value = calendar.get(Calendar.MINUTE)
         mSecondSpinner?.value = calendar.get(Calendar.SECOND)
 
+        if (mDaySpinner?.value ?: 0 >= maxDayInMonth) {
+            mDaySpinner?.value = maxDayInMonth
+        }
+
+        setWrapSelectorWheel(wrapSelectorWheelTypes, wrapSelectorWheel)
+    }
+
+
+    override fun setDefaultMillisecond(time: Long) {
+        if (time == 0L) return
+        calendar.clear()
+        calendar.timeInMillis = time
         limitMaxAndMin()
         onDateTimeChanged()
     }
@@ -325,5 +317,4 @@ class DateTimeController : BaseDateTimeController() {
     override fun getMillisecond(): Long {
         return calendar.timeInMillis
     }
-
 }

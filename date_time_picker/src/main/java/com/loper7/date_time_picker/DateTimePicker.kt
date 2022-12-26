@@ -286,7 +286,7 @@ class DateTimePicker : FrameLayout, DateTimeInterface {
     }
 
     /**
-     * 设置选择器字体颜色
+     * 设置选择器分割线颜色
      */
     fun setDividerColor(@ColorInt color: Int) {
         if (color == 0) return
