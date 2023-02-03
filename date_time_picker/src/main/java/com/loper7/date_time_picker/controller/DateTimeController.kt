@@ -156,7 +156,7 @@ class DateTimeController : BaseDateTimeController() {
 
 
     private val onChangeListener = NumberPicker.OnValueChangeListener { view, old, new ->
-        applyDateData();
+        applyDateData()
         limitMaxAndMin()
         onDateTimeChanged()
     }
@@ -165,6 +165,7 @@ class DateTimeController : BaseDateTimeController() {
      * 同步数据
      */
     private fun applyDateData() {
+        calendar.clear()
         mYearSpinner?.apply { calendar.set(Calendar.YEAR, value) }
         mMonthSpinner?.apply { calendar.set(Calendar.MONTH, (value - 1)) }
 
@@ -192,14 +193,15 @@ class DateTimeController : BaseDateTimeController() {
      * 设置允许选择的区间
      */
     private fun limitMaxAndMin() {
-        var maxDayInMonth = getMaxDayInMonth(mYearSpinner?.value, (mMonthSpinner?.value ?: 0) - 1)
-
         if(calendar.timeInMillis < minCalendar.timeInMillis){
+            calendar.clear()
             calendar.timeInMillis = minCalendar.timeInMillis
         }
         if(calendar.timeInMillis > maxCalendar.timeInMillis){
+            calendar.clear()
             calendar.timeInMillis = maxCalendar.timeInMillis
         }
+        var maxDayInMonth = getMaxDayInMonth(calendar?.get(Calendar.YEAR), calendar?.get(Calendar.MONTH))
 
         mMonthSpinner?.apply {
             minValue =
@@ -230,7 +232,6 @@ class DateTimeController : BaseDateTimeController() {
             maxValue =
                 if (calendar.isSameMinute(maxCalendar)) maxCalendar.get(Calendar.SECOND) else 59
         }
-
         mYearSpinner?.value = calendar.get(Calendar.YEAR)
         mMonthSpinner?.value = calendar.get(Calendar.MONTH) + 1
         mDaySpinner?.value = calendar.get(Calendar.DAY_OF_MONTH)
@@ -255,13 +256,11 @@ class DateTimeController : BaseDateTimeController() {
     }
 
     override fun setMinMillisecond(time: Long) {
-
         if (time == 0L) return
         if (maxCalendar?.timeInMillis in 1 until time) return
         if (minCalendar == null)
             minCalendar = Calendar.getInstance()
         minCalendar?.timeInMillis = time
-
         mYearSpinner?.minValue = minCalendar?.get(Calendar.YEAR)
 
         setDefaultMillisecond(calendar.timeInMillis)
