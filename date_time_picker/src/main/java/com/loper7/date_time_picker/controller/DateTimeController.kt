@@ -25,7 +25,7 @@ import kotlin.math.min
  * @Author:         LOPER7
  * @Email:          loper7@163.com
  */
-class DateTimeController : BaseDateTimeController() {
+open class DateTimeController : BaseDateTimeController() {
     private var mYearSpinner: NumberPicker? = null
     private var mMonthSpinner: NumberPicker? = null
     private var mDaySpinner: NumberPicker? = null

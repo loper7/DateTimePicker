@@ -23,7 +23,7 @@ import com.loper7.tab_expand.ext.px2dip
 import org.jetbrains.annotations.NotNull
 import java.lang.Exception
 
-class DateTimePicker : FrameLayout, DateTimeInterface {
+open class DateTimePicker : FrameLayout, DateTimeInterface {
 
     private var mYearSpinner: NumberPicker? = null
     private var mMonthSpinner: NumberPicker? = null

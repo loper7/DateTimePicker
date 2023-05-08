@@ -15,6 +15,7 @@
         android:tag="np_datetime_year"
         app:np_dividerColor="#E5E5E5"
         app:np_dividerThickness="0.6dp"
+        app:np_fadingEdgeEnabled="false"
         app:np_height="184dp"
         app:np_wheelItemCount="3" />
 
@@ -26,6 +27,7 @@
         android:layout_weight="1"
         app:np_dividerColor="#E5E5E5"
         app:np_dividerThickness="0.6dp"
+        app:np_fadingEdgeEnabled="false"
         app:np_height="184dp"
         app:np_wheelItemCount="3" />
 
@@ -37,6 +39,7 @@
         android:layout_weight="1"
         app:np_dividerColor="#E5E5E5"
         app:np_dividerThickness="0.6dp"
+        app:np_fadingEdgeEnabled="false"
         app:np_height="184dp"
         app:np_wheelItemCount="3" />
 
@@ -47,6 +50,7 @@
         android:layout_weight="1"
         app:np_dividerColor="#E5E5E5"
         app:np_dividerThickness="0.6dp"
+        app:np_fadingEdgeEnabled="false"
         app:np_height="184dp"
         app:np_wheelItemCount="3" />
 
@@ -58,6 +62,7 @@
         android:layout_weight="1"
         app:np_dividerColor="#E5E5E5"
         app:np_dividerThickness="0.6dp"
+        app:np_fadingEdgeEnabled="false"
         app:np_height="184dp"
         app:np_wheelItemCount="3" />
 
@@ -68,6 +73,7 @@
         android:layout_weight="1"
         app:np_dividerColor="#E5E5E5"
         app:np_dividerThickness="0.6dp"
+        app:np_fadingEdgeEnabled="false"
         app:np_height="184dp"
         app:np_wheelItemCount="3" />
 

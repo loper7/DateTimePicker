@@ -10,7 +10,7 @@ import com.loper7.date_time_picker.utils.lunar.LunarConstants.LUNAR_TG
 import com.loper7.date_time_picker.utils.lunar.LunarConstants.MIN_LUNAR_YEAR
 import java.util.*
 
-class Lunar(
+open class Lunar(
     var year: Int,
     var month: Int,
     var isLeapMonth: Boolean,

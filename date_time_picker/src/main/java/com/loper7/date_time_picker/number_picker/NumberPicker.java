@@ -17,6 +17,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.LayoutInflater.Filter;
@@ -839,15 +840,15 @@ public class NumberPicker extends LinearLayout {
         // draw() method to be called. Therefore, we declare we will draw.
         setWillNotDraw(false);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.dt_number_picker_material, this, true);
-
-
         // input text
-        mSelectedText = findViewById(R.id.np__numberpicker_input);
+        mSelectedText = new EditText(context);
+        mSelectedText.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+        mSelectedText.setGravity(Gravity.CENTER);
+        mSelectedText.setSingleLine(true);
+        mSelectedText.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
         mSelectedText.setEnabled(false);
         mSelectedText.setFocusable(false);
+        mSelectedText.setVisibility(View.INVISIBLE);
         mSelectedText.setImeOptions(EditorInfo.IME_ACTION_NONE);
 
         // create the selector wheel paint
@@ -2703,6 +2704,7 @@ public class NumberPicker extends LinearLayout {
     public void setDividerColor(@ColorInt int color) {
         mDividerColor = color;
         mDividerDrawable = new ColorDrawable(color);
+        invalidate();
     }
 
     public void setDividerColorResource(@ColorRes int colorId) {
@@ -2787,6 +2789,7 @@ public class NumberPicker extends LinearLayout {
     public void setSelectedTextColor(@ColorInt int color) {
         mSelectedTextColor = color;
         mSelectedText.setTextColor(mSelectedTextColor);
+        invalidate();
     }
 
     public void setSelectedTextColorResource(@ColorRes int colorId) {
@@ -2796,6 +2799,7 @@ public class NumberPicker extends LinearLayout {
     public void setSelectedTextSize(float textSize) {
         mSelectedTextSize = textSize;
         mSelectedText.setTextSize(pxToSp(mSelectedTextSize));
+        invalidate();
     }
 
     public void setSelectedTextSize(@DimenRes int dimenId) {
@@ -2819,6 +2823,7 @@ public class NumberPicker extends LinearLayout {
         } else {
             mSelectorWheelPaint.setTypeface(Typeface.MONOSPACE);
         }
+        invalidate();
     }
 
     public void setSelectedTypeface(String string, int style) {
@@ -2847,6 +2852,7 @@ public class NumberPicker extends LinearLayout {
     public void setTextColor(@ColorInt int color) {
         mTextColor = color;
         mSelectorWheelPaint.setColor(mTextColor);
+        invalidate();
     }
 
     public void setTextColorResource(@ColorRes int colorId) {
@@ -2856,6 +2862,7 @@ public class NumberPicker extends LinearLayout {
     public void setTextSize(float textSize) {
         mTextSize = textSize;
         mSelectorWheelPaint.setTextSize(mTextSize);
+        invalidate();
     }
 
     public void setTextSize(@DimenRes int dimenId) {
@@ -2878,6 +2885,7 @@ public class NumberPicker extends LinearLayout {
         } else {
             mSelectedText.setTypeface(Typeface.MONOSPACE);
         }
+        invalidate();
     }
 
     public void setTypeface(String string, int style) {
