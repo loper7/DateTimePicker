@@ -1,6 +1,6 @@
 ![](https://github.com/loperSeven/DateTimePicker/blob/master/images/title.png)
 <br/>
-[![](https://www.jitpack.io/v/loperSeven/DateTimePicker.svg)](https://www.jitpack.io/#loperSeven/DateTimePicker)
+[![](https://www.jitpack.io/v/loper7/DateTimePicker.svg)](https://www.jitpack.io/#loperSeven/DateTimePicker)
 &ensp;[![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)&ensp;[![](https://img.shields.io/badge/platform-android-green)](https://github.com/loperSeven)&ensp;[![](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/licenses/MIT)
 <br/>
 ## Language
